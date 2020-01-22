@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="27-create-table-v_entrustments">
+        <createTable tableName="V_Entrustments">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints
+                        primaryKey="true" primaryKeyName="v_entrustments_id_pk"
+                        nullable="false" notNullConstraintName="v_entrustments_id_nn"
+                        referencedTableName="Entrustments" referencedColumnNames="id" foreignKeyName="v_entrustments_id_fk"/>
+            </column>
+            <column name="version" type="int">
+                <constraints
+                        primaryKey="true" primaryKeyName="v_entrustments_id_pk"
+                        nullable="false" notNullConstraintName="v_entrustments_last_version_nn"/>
+            </column>
+            <column name="number_of_hours" type="int">
+                <constraints
+                        nullable="false" notNullConstraintName="v_entrustments_number_of_hours_nn"/>
+            </column>
+            <column name="id_entrustment_plan" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="v_entrustments_id_ent_plan_nn"
+                        referencedTableName="Entrustment_Plans" referencedColumnNames="id" foreignKeyName="v_entrustments_id_ent_plan_fk"/>
+            </column>
+            <column name="id_course" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="v_entrustments_id_course_nn"
+                        referencedTableName="Courses" referencedColumnNames="id" foreignKeyName="v_entrustments_id_course_fk"/>
+            </column>
+            <column name="id_course_instructor" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="v_entrustments_id_instruct_nn"
+                        referencedTableName="Course_Instructors" referencedColumnNames="id" foreignKeyName="v_entrustments_id_instruct_fk"/>
+            </column>
+            <column name="id_entrustment_status" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="v_entrustments_id_ent_stat_nn"
+                        referencedTableName="Entrustment_Statuses" referencedColumnNames="id" foreignKeyName="v_entrustments_id_ent_stat_fk"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="V_Entrustments"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

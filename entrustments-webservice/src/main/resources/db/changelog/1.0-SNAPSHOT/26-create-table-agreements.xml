@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="26-create-table-agreements">
+        <createTable tableName="Agreements">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints
+                        primaryKey="true" primaryKeyName="agreements_id_pk"
+                        nullable="false" notNullConstraintName="agreements_id_nn"/>
+            </column>
+            <column name="agreement_start_date" type="date">
+                <constraints
+                        nullable="false" notNullConstraintName="agreements_start_date_nn"/>
+            </column>
+            <column name="agreement_end_date" type="date">
+                <constraints
+                        nullable="false" notNullConstraintName="agreements_end_date_nn"/>
+            </column>
+            <column name="id_course_instructor" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="agreements_id_instructor_nn"
+                        referencedTableName="Course_Instructors" referencedColumnNames="id" foreignKeyName="agreements_id_instructor_fk"/>
+            </column>
+            <column name="id_didactic_form" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="agreements_id_didactic_form_nn"
+                        referencedTableName="Didactic_Forms" referencedColumnNames="id" foreignKeyName="agreements_id_didactic_form_fk"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Agreements"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

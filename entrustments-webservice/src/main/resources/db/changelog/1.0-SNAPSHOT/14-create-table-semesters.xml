@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="14-create-table-semesters">
+        <createTable tableName="Semesters">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints
+                        primaryKey="true" primaryKeyName="semesters_id_pk"
+                        nullable="false" notNullConstraintName="semesters_id_nn"/>
+            </column>
+            <column name="id_study_plan" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="semesters_id_study_plan_nn"
+                        referencedTableName="Study_Plans" referencedColumnNames="id" foreignKeyName="semesters_id_study_plan_fk" />
+            </column>
+            <column name="id_entrustment_plan" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="semesters_id_entr_plan_nn"
+                        referencedTableName="Entrustment_Plans" referencedColumnNames="id" foreignKeyName="semesters_id_entr_plan_fk" />
+            </column>
+            <column name="academic_year" type="varchar(255)">
+                <constraints
+                        nullable="false" notNullConstraintName="semesters_academic_year_nn"/>
+            </column>
+            <column name="semester_number" type="int">
+                <constraints
+                        nullable="false" notNullConstraintName="semesters_semester_number_nn"/>
+            </column>
+            <column name="id_semester_name" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="semesters_id_sem_name_nn"
+                        referencedTableName="Semester_Names" referencedColumnNames="id" foreignKeyName="semesters_id_sem_name_fk" />
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Semesters"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="11-create-table-specialties">
+        <createTable tableName="Specialties">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints
+                        primaryKey="true" primaryKeyName="specialties_id_pk"
+                        nullable="false" notNullConstraintName="specialties_id_nn"/>
+            </column>
+            <column name="id_field_of_study" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="specialties_id_fos_nn"
+                        referencedTableName="Fields_Of_Study" referencedColumnNames="id" foreignKeyName="specialties_id_fos_fk" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints
+                        nullable="false" notNullConstraintName="fields_of_study_name_nn"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Specialties"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

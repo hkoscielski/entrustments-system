@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="05-create-table-faculties">
+        <createTable tableName="Faculties">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints
+                        primaryKey="true" primaryKeyName="faculties_id_pk"
+                        nullable="false" notNullConstraintName="faculties_id_nn"/>
+            </column>
+            <column name="symbol" type="varchar(255)">
+                <constraints
+                        unique="true" uniqueConstraintName="faculties_symbol_uk"
+                        nullable="false" notNullConstraintName="faculties_symbol_nn"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints
+                        unique="true" uniqueConstraintName="faculties_name_uk"
+                        nullable="false" notNullConstraintName="faculties_name_nn"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Faculties"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

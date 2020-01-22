@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="19-create-table-entrustments">
+        <createTable tableName="Entrustments">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints
+                        primaryKey="true" primaryKeyName="entrustments_id_pk"
+                        nullable="false" notNullConstraintName="entrustments_id_nn"/>
+            </column>
+            <column name="last_version" type="int">
+                <constraints
+                        nullable="false" notNullConstraintName="entrustments_last_version_nn"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Entrustments"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="22-create-table-instructors_didactic_forms">
+        <createTable tableName="Instructors_Didactic_Forms">
+            <column name="id_course_instructor" type="bigint">
+                <constraints
+                        primaryKey="true" primaryKeyName="idf_id_pk"
+                        nullable="false" notNullConstraintName="idf_id_course_instructor_nn"
+                        referencedTableName="Course_Instructors" referencedColumnNames="id" foreignKeyName="idf_id_course_instructor_fk"/>
+            </column>
+            <column name="id_didactic_form" type="bigint">
+                <constraints
+                        primaryKey="true" primaryKeyName="idf_id_pk"
+                        nullable="false" notNullConstraintName="idf_id_didactic_form_nn"
+                        referencedTableName="Didactic_Forms" referencedColumnNames="id" foreignKeyName="idf_id_didactic_form_fk"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Instructors_Didactic_Forms"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="21-create-table-course_instructors">
+        <createTable tableName="Course_Instructors">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints
+                        primaryKey="true" primaryKeyName="course_instructors_id_pk"
+                        nullable="false" notNullConstraintName="course_instructors_id_nn"/>
+            </column>
+            <column name="id_user" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="course_instructors_id_user_nn"
+                        referencedTableName="Users" referencedColumnNames="id" foreignKeyName="course_instructors_id_user_fk"/>
+            </column>
+            <column name="id_academic_degree" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="course_instructors_id_adegr_nn"
+                        referencedTableName="Academic_Degrees" referencedColumnNames="id" foreignKeyName="course_instructors_id_adegr_fk"/>
+            </column>
+            <column name="firstname" type="varchar(255)">
+                <constraints
+                        nullable="false" notNullConstraintName="course_instructors_firstname_nn"/>
+            </column>
+            <column name="surname" type="varchar(255)">
+                <constraints
+                        nullable="false" notNullConstraintName="course_instructors_surname_nn"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Course_Instructors"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

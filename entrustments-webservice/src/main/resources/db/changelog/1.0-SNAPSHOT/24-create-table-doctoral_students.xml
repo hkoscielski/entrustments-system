@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="24-create-table-doctoral_students">
+        <createTable tableName="Doctoral_Students">
+            <column name="id_course_instructor" type="bigint" autoIncrement="true">
+                <constraints
+                        primaryKey="true" primaryKeyName="doctoral_stud_id_instructor_pk"
+                        nullable="false" notNullConstraintName="doctoral_stud_id_instructor_nn"
+                        referencedTableName="Course_Instructors" referencedColumnNames="id" foreignKeyName="doctoral_stud_id_instructor_fk"/>
+            </column>
+            <column name="pensum" type="int">
+                <constraints
+                        nullable="false" notNullConstraintName="doctoral_stud_pensum_nn"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Doctoral_Students"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

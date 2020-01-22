@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="18-create-table-semesters_courses">
+        <createTable tableName="Semesters_Courses">
+            <column name="id_semester" type="bigint">
+                <constraints
+                        primaryKey="true" primaryKeyName="semesters_courses_id_pk"
+                        nullable="false" notNullConstraintName="semesters_courses_id_sem_nn"
+                        referencedTableName="Semesters" referencedColumnNames="id" foreignKeyName="semesters_courses_id_sem_fk"/>
+            </column>
+            <column name="id_course" type="bigint">
+                <constraints
+                        primaryKey="true" primaryKeyName="semesters_courses_id_pk"
+                        nullable="false" notNullConstraintName="semesters_courses_id_course_nn"
+                        referencedTableName="Courses" referencedColumnNames="id" foreignKeyName="semesters_courses_id_course_fk"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Semesters_Courses"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

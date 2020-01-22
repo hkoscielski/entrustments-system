@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="23-create-table-specialists">
+        <createTable tableName="Specialists">
+            <column name="id_course_instructor" type="bigint" autoIncrement="true">
+                <constraints
+                        primaryKey="true" primaryKeyName="specialists_id_instructor_pk"
+                        nullable="false" notNullConstraintName="specialists_id_instructor_nn"
+                        referencedTableName="Course_Instructors" referencedColumnNames="id" foreignKeyName="specialists_id_instructor_fk"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Specialists"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

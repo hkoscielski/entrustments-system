@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="25-create-table-teachers">
+        <createTable tableName="Teachers">
+            <column name="id_course_instructor" type="bigint" autoIncrement="true">
+                <constraints
+                        primaryKey="true" primaryKeyName="teachers_id_instructor_pk"
+                        nullable="false" notNullConstraintName="teachers_id_instructor_nn"
+                        referencedTableName="Course_Instructors" referencedColumnNames="id" foreignKeyName="teachers_id_instructor_fk"/>
+            </column>
+            <column name="pensum" type="int">
+                <constraints
+                        nullable="false" notNullConstraintName="teachers_pensum_nn"/>
+            </column>
+            <column name="time_basis" type="int">
+                <constraints
+                        nullable="false" notNullConstraintName="teachers_time_basis_nn"/>
+            </column>
+            <column name="id_position" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="teachers_id_position_nn"
+                        referencedTableName="Positions" referencedColumnNames="id" foreignKeyName="teachers_id_position_fk"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Teachers"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="02-create-table-didactic_forms">
+        <createTable tableName="Didactic_Forms">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints
+                        primaryKey="true" primaryKeyName="didactic_forms_id_pk"
+                        nullable="false" notNullConstraintName="didactic_forms_id_nn"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints
+                        unique="true" uniqueConstraintName="didactic_forms_name_uk"
+                        nullable="false" notNullConstraintName="didactic_forms_name_nn"/>
+            </column>
+            <column name="short_name" type="varchar(255)">
+                <constraints nullable="false" notNullConstraintName="didactic_forms_short_name_nn"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Didactic_Forms"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

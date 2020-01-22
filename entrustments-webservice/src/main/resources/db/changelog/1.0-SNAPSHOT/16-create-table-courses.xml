@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="16-create-table-courses">
+        <createTable tableName="Courses">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints
+                        primaryKey="true" primaryKeyName="courses_id_pk"
+                        nullable="false" notNullConstraintName="courses_id_nn"/>
+            </column>
+            <column name="code" type="varchar(255)">
+                <constraints
+                        nullable="false" notNullConstraintName="courses_code_nn"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints
+                        nullable="false" notNullConstraintName="courses_name_nn"/>
+            </column>
+            <column name="zzu_hours" type="int">
+                <constraints
+                        nullable="false" notNullConstraintName="courses_zzu_hours_nn"/>
+            </column>
+            <column name="id_module" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="courses_id_module_nn"
+                        referencedTableName="Modules" referencedColumnNames="id" foreignKeyName="courses_id_module_fk"/>
+            </column>
+            <column name="id_didactic_form" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="courses_id_didactic_form_nn"
+                        referencedTableName="Didactic_Forms" referencedColumnNames="id" foreignKeyName="courses_id_didactic_form_fk"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Courses"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

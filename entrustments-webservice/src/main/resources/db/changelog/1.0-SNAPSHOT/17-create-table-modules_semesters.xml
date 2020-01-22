@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="17-create-table-modules_semesters">
+        <createTable tableName="Modules_Semesters">
+            <column name="id_module" type="bigint">
+                <constraints
+                        primaryKey="true" primaryKeyName="modules_semesters_id_pk"
+                        nullable="false" notNullConstraintName="modules_semesters_id_module_nn"
+                        referencedTableName="Modules" referencedColumnNames="id" foreignKeyName="modules_semesters_id_module_fk"/>
+            </column>
+            <column name="id_semester" type="bigint">
+                <constraints
+                        primaryKey="true" primaryKeyName="modules_semesters_id_pk"
+                        nullable="false" notNullConstraintName="modules_semesters_id_sem_nn"
+                        referencedTableName="Semesters" referencedColumnNames="id" foreignKeyName="modules_semesters_id_sem_fk"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Modules_Semesters"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

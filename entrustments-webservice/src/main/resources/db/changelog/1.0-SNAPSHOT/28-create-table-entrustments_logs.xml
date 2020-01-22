@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="28-create-table-entrustments_logs">
+        <createTable tableName="Entrustments_Logs">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints
+                        primaryKey="true" primaryKeyName="entrustments_logs_id_pk"
+                        nullable="false" notNullConstraintName="entrustments_logs_id_nn"/>
+            </column>
+            <column name="id_entrustment" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="entrustments_logs_id_entr_nn"/>
+            </column>
+            <column name="entrustment_version" type="int">
+                <constraints
+                        nullable="false" notNullConstraintName="entrustments_logs_entr_ver_nn"/>
+            </column>
+            <column name="id_user" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="entrustments_logs_id_user_nn"
+                        referencedTableName="Users" referencedColumnNames="id" foreignKeyName="entrustments_logs_id_user_fk"/>
+            </column>
+            <column name="change_date" type="date">
+                <constraints
+                        nullable="false" notNullConstraintName="entrustments_logs_ch_date_nn"/>
+            </column>
+            <column name="change_type" type="varchar(1)">
+                <constraints
+                        nullable="false" notNullConstraintName="entrustments_logs_ch_type_nn"
+                        checkConstraint="change_type in ('I', 'U', 'D')"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Entrustments_Logs"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

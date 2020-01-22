@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <include file="01-create-table-academic_degrees.xml" relativeToChangelogFile="true"/>
+    <include file="02-create-table-didactic_forms.xml" relativeToChangelogFile="true"/>
+    <include file="03-create-table-positions.xml" relativeToChangelogFile="true"/>
+    <include file="04-create-table-entrustment_statuses.xml" relativeToChangelogFile="true"/>
+    <include file="05-create-table-faculties.xml" relativeToChangelogFile="true"/>
+    <include file="06-create-table-forms_of_studies.xml" relativeToChangelogFile="true"/>
+    <include file="07-create-table-study_levels.xml" relativeToChangelogFile="true"/>
+    <include file="08-create-table-study_languages.xml" relativeToChangelogFile="true"/>
+    <include file="09-create-table-semester_names.xml" relativeToChangelogFile="true"/>
+    <include file="10-create-table-fields_of_study.xml" relativeToChangelogFile="true"/>
+    <include file="11-create-table-specialties.xml" relativeToChangelogFile="true"/>
+    <include file="12-create-table-study_plans.xml" relativeToChangelogFile="true"/>
+    <include file="13-create-table-entrustment_plans.xml" relativeToChangelogFile="true"/>
+    <include file="14-create-table-semesters.xml" relativeToChangelogFile="true"/>
+    <include file="15-create-table-modules.xml" relativeToChangelogFile="true"/>
+    <include file="16-create-table-courses.xml" relativeToChangelogFile="true"/>
+    <include file="17-create-table-modules_semesters.xml" relativeToChangelogFile="true"/>
+    <include file="18-create-table-semesters_courses.xml" relativeToChangelogFile="true"/>
+    <include file="19-create-table-entrustments.xml" relativeToChangelogFile="true"/>
+    <include file="20-create-table-users.xml" relativeToChangelogFile="true"/>
+    <include file="21-create-table-course_instructors.xml" relativeToChangelogFile="true"/>
+    <include file="22-create-table-instructors_didactic_forms.xml" relativeToChangelogFile="true"/>
+    <include file="23-create-table-specialists.xml" relativeToChangelogFile="true"/>
+    <include file="24-create-table-doctoral_students.xml" relativeToChangelogFile="true"/>
+    <include file="25-create-table-teachers.xml" relativeToChangelogFile="true"/>
+    <include file="26-create-table-agreements.xml" relativeToChangelogFile="true"/>
+    <include file="27-create-table-v_entrustments.xml" relativeToChangelogFile="true"/>
+    <include file="28-create-table-entrustments_logs.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

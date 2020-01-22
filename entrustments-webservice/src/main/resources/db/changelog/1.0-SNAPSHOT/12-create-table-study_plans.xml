@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="12-create-table-study_plans">
+        <createTable tableName="Study_Plans">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints
+                        primaryKey="true" primaryKeyName="study_plans_id_pk"
+                        nullable="false" notNullConstraintName="study_plans_id_nn"/>
+            </column>
+            <column name="id_specialty" type="bigint">
+                <constraints
+                        nullable="true"
+                        referencedTableName="Specialties" referencedColumnNames="id" foreignKeyName="study_plans_id_specialty_fk" />
+            </column>
+            <column name="id_field_of_study" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="study_plans_id_fos_nn"
+                        referencedTableName="Fields_Of_Study" referencedColumnNames="id" foreignKeyName="study_plans_id_fos_fk" />
+            </column>
+            <column name="id_study_level" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="study_plans_id_study_level_nn"
+                        referencedTableName="Study_Levels" referencedColumnNames="id" foreignKeyName="study_plans_id_study_level_fk" />
+            </column>
+            <column name="id_form_of_studies" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="study_plans_id_foos_nn"
+                        referencedTableName="Forms_Of_Studies" referencedColumnNames="id" foreignKeyName="study_plans_id_foos_fk" />
+            </column>
+            <column name="id_study_language" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="study_plans_id_lang_nn"
+                        referencedTableName="Study_Languages" referencedColumnNames="id" foreignKeyName="study_plans_id_lang_fk" />
+            </column>
+            <column name="id_start_semester_name" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="study_plans_id_ssname_nn"
+                        referencedTableName="Semester_Names" referencedColumnNames="id" foreignKeyName="study_plans_id_ss_name_fk" />
+            </column>
+            <column name="start_academic_year" type="varchar(255)">
+                <constraints
+                        nullable="false" notNullConstraintName="study_plans_sa_year_nn"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Study_Plans"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
