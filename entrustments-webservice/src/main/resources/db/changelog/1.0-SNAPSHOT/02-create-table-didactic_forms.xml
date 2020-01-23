@@ -17,9 +17,6 @@
                         unique="true" uniqueConstraintName="didactic_forms_name_uk"
                         nullable="false" notNullConstraintName="didactic_forms_name_nn"/>
             </column>
-            <column name="short_name" type="varchar(255)">
-                <constraints nullable="false" notNullConstraintName="didactic_forms_short_name_nn"/>
-            </column>
         </createTable>
         <rollback>
             <dropTable tableName="Didactic_Forms"/>
