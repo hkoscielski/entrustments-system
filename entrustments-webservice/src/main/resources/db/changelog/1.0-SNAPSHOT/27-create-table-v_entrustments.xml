@@ -22,11 +22,6 @@
                 <constraints
                         nullable="false" notNullConstraintName="v_entrustments_number_of_hours_nn"/>
             </column>
-            <column name="id_entrustment_plan" type="bigint">
-                <constraints
-                        nullable="false" notNullConstraintName="v_entrustments_id_ent_plan_nn"
-                        referencedTableName="Entrustment_Plans" referencedColumnNames="id" foreignKeyName="v_entrustments_id_ent_plan_fk"/>
-            </column>
             <column name="id_course" type="bigint">
                 <constraints
                         nullable="false" notNullConstraintName="v_entrustments_id_course_nn"
