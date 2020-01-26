@@ -7,11 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import pl.edu.pwr.psi.entrustmentswebservice.common.mapping.ComplexModelMapper;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.CourseInstructor;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.DoctoralStudent;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.Specialist;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.Teacher;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.*;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.CourseInstructorResponseDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.FieldOfStudyResponseDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.SemesterResponseDTO;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +27,8 @@ public class MappingConfiguration {
 				.addMappings(specialistToDTOMapping());
 		modelMapper.createTypeMap(Teacher.class, CourseInstructorResponseDTO.class)
 				.addMappings(teacherToDTOMapping());
+		modelMapper.createTypeMap(Semester.class, SemesterResponseDTO.class)
+				.addMappings(semesterToDTOMapping());
 		return modelMapper;
 	}
 
@@ -88,5 +89,22 @@ public class MappingConfiguration {
 
 	private Converter<CourseInstructor, String> getCourseInstructorTypeConverter() {
 		return mappingContext -> mappingContext.getSource().getClass().getSimpleName();
+	}
+
+
+	private ExpressionMap<Semester, SemesterResponseDTO> semesterToDTOMapping() {
+		Converter<FieldOfStudy, FieldOfStudyResponseDTO> fieldOfStudyConverter =
+				mappingContext -> new FieldOfStudyResponseDTO(mappingContext.getSource().getName(), mappingContext.getSource().getShortName());
+
+		return mapping -> {
+			mapping.map(sg -> sg.getSemesterName().getName(), SemesterResponseDTO::setSemesterName);
+			mapping.map(sg -> sg.getStudyPlan().getStartAcademicYear(), SemesterResponseDTO::setStartAcademicYear);
+			mapping.map(sg -> sg.getStudyPlan().getStartSemesterName().getName(), SemesterResponseDTO::setStartSemesterName);
+			mapping.using(fieldOfStudyConverter).map(sg -> sg.getStudyPlan().getFieldOfStudy(), SemesterResponseDTO::setFieldOfStudy);
+			mapping.map(sg -> sg.getStudyPlan().getSpecialty().getName(), SemesterResponseDTO::setSpecialty);
+			mapping.map(sg -> sg.getStudyPlan().getStudyLevel().getName(), SemesterResponseDTO::setStudyLevel);
+			mapping.map(sg -> sg.getStudyPlan().getFormOfStudy().getName(), SemesterResponseDTO::setFormOfStudy);
+			mapping.map(sg -> sg.getStudyPlan().getStudyLanguage().getName(), SemesterResponseDTO::setStudyLanguage);
+		};
 	}
 }

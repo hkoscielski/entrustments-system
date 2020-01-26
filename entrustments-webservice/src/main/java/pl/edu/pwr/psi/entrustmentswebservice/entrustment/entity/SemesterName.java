@@ -8,12 +8,12 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Academic_Degrees")
+@Table(name = "Semester_Names")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class AcademicDegree {
+public class SemesterName {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,4 @@ public class AcademicDegree {
 
 	@Column(unique = true, updatable = false, nullable = false)
 	private String name;
-
-	@Column(name = "short_name", updatable = false, nullable = false)
-	private String shortName;
 }
