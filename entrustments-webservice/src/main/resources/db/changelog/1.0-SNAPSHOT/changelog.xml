@@ -17,8 +17,8 @@
     <include file="10-create-table-fields_of_study.xml" relativeToChangelogFile="true"/>
     <include file="11-create-table-specialties.xml" relativeToChangelogFile="true"/>
     <include file="12-create-table-study_plans.xml" relativeToChangelogFile="true"/>
-    <include file="13-create-table-entrustment_plans.xml" relativeToChangelogFile="true"/>
-    <include file="14-create-table-semesters.xml" relativeToChangelogFile="true"/>
+    <include file="13-create-table-semesters.xml" relativeToChangelogFile="true"/>
+    <include file="14-create-table-entrustment_plans.xml" relativeToChangelogFile="true"/>
     <include file="15-create-table-modules.xml" relativeToChangelogFile="true"/>
     <include file="16-create-table-courses.xml" relativeToChangelogFile="true"/>
     <include file="17-create-table-modules_semesters.xml" relativeToChangelogFile="true"/>
@@ -33,5 +33,7 @@
     <include file="26-create-table-agreements.xml" relativeToChangelogFile="true"/>
     <include file="27-create-table-v_entrustments.xml" relativeToChangelogFile="true"/>
     <include file="28-create-table-entrustments_logs.xml" relativeToChangelogFile="true"/>
+    <include file="29-create-table-roles.xml" relativeToChangelogFile="true"/>
+    <include file="30-create-table-users_roles.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

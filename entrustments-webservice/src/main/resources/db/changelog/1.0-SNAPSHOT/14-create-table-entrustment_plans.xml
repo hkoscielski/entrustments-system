@@ -16,6 +16,11 @@
                 <constraints
                         nullable="false" notNullConstraintName="entrustment_plans_num_stud_nn"/>
             </column>
+            <column name="id_semester" type="bigint">
+                <constraints
+                        nullable="false" notNullConstraintName="entrustment_plans_id_sem_nn"
+                        referencedTableName="Semesters" referencedColumnNames="id" foreignKeyName="entrustment_plans_id_sem_fk" />
+            </column>
         </createTable>
         <rollback>
             <dropTable tableName="Entrustment_Plans"/>

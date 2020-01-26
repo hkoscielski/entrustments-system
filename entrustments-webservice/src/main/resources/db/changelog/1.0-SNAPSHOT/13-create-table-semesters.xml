@@ -17,11 +17,6 @@
                         nullable="false" notNullConstraintName="semesters_id_study_plan_nn"
                         referencedTableName="Study_Plans" referencedColumnNames="id" foreignKeyName="semesters_id_study_plan_fk" />
             </column>
-            <column name="id_entrustment_plan" type="bigint">
-                <constraints
-                        nullable="false" notNullConstraintName="semesters_id_entr_plan_nn"
-                        referencedTableName="Entrustment_Plans" referencedColumnNames="id" foreignKeyName="semesters_id_entr_plan_fk" />
-            </column>
             <column name="academic_year" type="varchar(255)">
                 <constraints
                         nullable="false" notNullConstraintName="semesters_academic_year_nn"/>

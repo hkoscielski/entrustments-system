@@ -17,7 +17,7 @@
                 <constraints
                         nullable="false" notNullConstraintName="teachers_pensum_nn"/>
             </column>
-            <column name="time_basis" type="int">
+            <column name="time_basis" type="number(3,2)">
                 <constraints
                         nullable="false" notNullConstraintName="teachers_time_basis_nn"/>
             </column>

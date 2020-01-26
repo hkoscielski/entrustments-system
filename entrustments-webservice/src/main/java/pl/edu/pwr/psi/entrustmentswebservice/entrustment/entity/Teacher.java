@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "Teachers")
@@ -19,8 +20,8 @@ public class Teacher extends CourseInstructor {
 	@Column(nullable = false)
 	private int pensum;
 
-	@Column(name = "time_basis", nullable = false)
-	private int timeBasis;
+	@Column(name = "time_basis", nullable = false, precision = 3, scale = 2)
+	private BigDecimal timeBasis;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "id_position", referencedColumnName = "id", nullable = false)
