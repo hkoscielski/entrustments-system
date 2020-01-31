@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="TEST-25-insert-into-teachers">
+        <insert tableName="Teachers">
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'jan.kowalski@pwr.edu.pl'))"/>
+            <column name="pensum">150</column>
+            <column name="time_basis">0.75</column>
+            <column name="id_position" valueComputed="(select id from Positions where name = 'Wykładowca')"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

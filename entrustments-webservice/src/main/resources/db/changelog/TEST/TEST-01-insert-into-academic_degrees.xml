@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="TEST-01-insert-into-academic_degrees">
+        <insert tableName="Academic_Degrees">
+            <column name="name">Magister</column>
+            <column name="short_name">mgr</column>
+        </insert>
+        <insert tableName="Academic_Degrees">
+            <column name="name">Doktor</column>
+            <column name="short_name">dr</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="TEST-10-insert-into-fields_of_study">
+        <insert tableName="Fields_Of_Study">
+            <column name="id_faculty" valueComputed="(select id from Faculties where symbol = 'W08')"/>
+            <column name="name">Informatyka</column>
+            <column name="short_name">inf</column>
+        </insert>
+        <insert tableName="Fields_Of_Study">
+            <column name="id_faculty" valueComputed="(select id from Faculties where symbol = 'W08')"/>
+            <column name="name">Inżynieria Systemów</column>
+            <column name="short_name">inż. sys.</column>
+        </insert>
+        <insert tableName="Fields_Of_Study">
+            <column name="id_faculty" valueComputed="(select id from Faculties where symbol = 'W08')"/>
+            <column name="name">Zarządzanie</column>
+            <column name="short_name">zarz.</column>
+        </insert>
+        <insert tableName="Fields_Of_Study">
+            <column name="id_faculty" valueComputed="(select id from Faculties where symbol = 'W10')"/>
+            <column name="name">Automatyka i Robotyka</column>
+            <column name="short_name">air</column>
+        </insert>
+        <insert tableName="Fields_Of_Study">
+            <column name="id_faculty" valueComputed="(select id from Faculties where symbol = 'W10')"/>
+            <column name="name">Mechanika i Budowa Maszyn</column>
+            <column name="short_name">mbm</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

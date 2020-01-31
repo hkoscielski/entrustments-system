@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="TEST-16-insert-into-courses">
+        <insert tableName="Courses">
+            <column name="code">INZ004448L</column>
+            <column name="name">Programowanie funkcyjne i współbieżne</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Laboratorium')"/>
+            <column name="zzu_hours">30</column>
+        </insert>
+        <insert tableName="Courses">
+            <column name="code">INZ004448W</column>
+            <column name="name">Programowanie funkcyjne i współbieżne</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Wykład')"/>
+            <column name="zzu_hours">30</column>
+        </insert>
+        <insert tableName="Courses">
+            <column name="code">MAT001656W</column>
+            <column name="name">Metody planowania i analizy eksperymentów</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Wykład')"/>
+            <column name="zzu_hours">15</column>
+        </insert>
+        <insert tableName="Courses">
+            <column name="code">INZ002411W</column>
+            <column name="name">Analiza biznesowa i systemowa</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Wykład')"/>
+            <column name="zzu_hours">15</column>
+        </insert>
+
+        <insert tableName="Courses">
+            <column name="code">INZ002418L</column>
+            <column name="name">Bezpieczeństwo systemów webowych i mobilnych</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Laboratorium')"/>
+            <column name="zzu_hours">30</column>
+        </insert>
+        <insert tableName="Courses">
+            <column name="code">INZ002418S</column>
+            <column name="name">Bezpieczeństwo systemów webowych i mobilnych</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Seminarium')"/>
+            <column name="zzu_hours">30</column>
+        </insert>
+        <insert tableName="Courses">
+            <column name="code">INZ002418W</column>
+            <column name="name">Bezpieczeństwo systemów webowych i mobilnych</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Wykład')"/>
+            <column name="zzu_hours">30</column>
+        </insert>
+        <insert tableName="Courses">
+            <column name="code">INZ002419P</column>
+            <column name="name">Przetwarzanie dużych zbiorów danych</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Projekt')"/>
+            <column name="zzu_hours">30</column>
+        </insert>
+        <insert tableName="Courses">
+            <column name="code">INZ002419W</column>
+            <column name="name">Przetwarzanie dużych zbiorów danych</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Wykład')"/>
+            <column name="zzu_hours">30</column>
+        </insert>
+        <insert tableName="Courses">
+            <column name="code">INZ003854P</column>
+            <column name="name">Projektowanie systemów informatycznych</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Projekt')"/>
+            <column name="zzu_hours">30</column>
+        </insert>
+        <insert tableName="Courses">
+            <column name="code">INZ003854W</column>
+            <column name="name">Projektowanie systemów informatycznych</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Wykład')"/>
+            <column name="zzu_hours">15</column>
+        </insert>
+
+        <insert tableName="Courses">
+            <column name="code">INZ002380D</column>
+            <column name="name">Praca dyplomowa II</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Praca Magisterska')"/>
+            <column name="zzu_hours">150</column>
+        </insert>
+        <insert tableName="Courses">
+            <column name="code">INZ002381S</column>
+            <column name="name">Seminarium dyplomowe</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Seminarium')"/>
+            <column name="zzu_hours">30</column>
+        </insert>
+        <insert tableName="Courses">
+            <column name="code">INZ002421P</column>
+            <column name="name">Zaawansowane systemy baz danych</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Projekt')"/>
+            <column name="zzu_hours">30</column>
+        </insert>
+        <insert tableName="Courses">
+            <column name="code">INZ002421W</column>
+            <column name="name">Zaawansowane systemy baz danych</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Wykład')"/>
+            <column name="zzu_hours">30</column>
+        </insert>
+        <insert tableName="Courses">
+            <column name="code">INZ002422P</column>
+            <column name="name">Systemy wyszukiwania informacji</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Projekt')"/>
+            <column name="zzu_hours">30</column>
+        </insert>
+        <insert tableName="Courses">
+            <column name="code">INZ002422W</column>
+            <column name="name">Systemy wyszukiwania informacji</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Wykład')"/>
+            <column name="zzu_hours">15</column>
+        </insert>
+        <insert tableName="Courses">
+            <column name="code">INZ003965S</column>
+            <column name="name">Etyka nowych technologii</column>
+            <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Seminarium')"/>
+            <column name="zzu_hours">15</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

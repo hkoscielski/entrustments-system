@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="TEST-19-insert-into-entrustments">
+        <insert tableName="Entrustments">
+            <column name="last_version">2</column>
+            <column name="id_entrustment_plan" valueComputed="(select id from Entrustment_Plans where id_semester = (select id from Semesters where academic_year = '2018/2019' and semester_number = 1 and id_study_plan = (select id from Study_Plans where start_academic_year = '2018/2019' and id_field_of_study = (select id from Fields_Of_Study where short_name = 'inf') and id_specialty = (select id from Specialties where name = 'Inżynieria Oprogramowania'))))"/>
+        </insert>
+        <insert tableName="Entrustments">
+            <column name="last_version">2</column>
+            <column name="id_entrustment_plan" valueComputed="(select id from Entrustment_Plans where id_semester = (select id from Semesters where academic_year = '2018/2019' and semester_number = 1 and id_study_plan = (select id from Study_Plans where start_academic_year = '2018/2019' and id_field_of_study = (select id from Fields_Of_Study where short_name = 'inf') and id_specialty = (select id from Specialties where name = 'Inżynieria Oprogramowania'))))"/>
+        </insert>
+
+        <insert tableName="Entrustments">
+            <column name="last_version">1</column>
+            <column name="id_entrustment_plan" valueComputed="(select id from Entrustment_Plans where id_semester = (select id from Semesters where academic_year = '2018/2019' and semester_number = 2 and id_study_plan = (select id from Study_Plans where start_academic_year = '2018/2019' and id_field_of_study = (select id from Fields_Of_Study where short_name = 'inf') and id_specialty = (select id from Specialties where name = 'Inżynieria Oprogramowania'))))"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="TEST-12-insert-into-study_plans">
+        <insert tableName="Study_Plans">
+            <column name="id_specialty" valueComputed="(select id from Specialties where name = 'Inżynieria Oprogramowania')"/>
+            <column name="id_field_of_study" valueComputed="(select id from Fields_Of_Study where short_name = 'inf')"/>
+            <column name="id_study_level" valueComputed="(select id from Study_Levels where name = 'II stopień')"/>
+            <column name="id_form_of_studies" valueComputed="(select id from Forms_Of_Studies where name = 'Stacjonarne')"/>
+            <column name="id_study_language" valueComputed="(select id from Study_Languages where name = 'Polski')"/>
+            <column name="id_start_semester_name" valueComputed="(select id from Semester_Names where name = 'Letni')"/>
+            <column name="start_academic_year">2017/2018</column>
+        </insert>
+        <insert tableName="Study_Plans">
+            <column name="id_specialty" valueComputed="(select id from Specialties where name = 'Inżynieria Oprogramowania')"/>
+            <column name="id_field_of_study" valueComputed="(select id from Fields_Of_Study where short_name = 'inf')"/>
+            <column name="id_study_level" valueComputed="(select id from Study_Levels where name = 'II stopień')"/>
+            <column name="id_form_of_studies" valueComputed="(select id from Forms_Of_Studies where name = 'Stacjonarne')"/>
+            <column name="id_study_language" valueComputed="(select id from Study_Languages where name = 'Polski')"/>
+            <column name="id_start_semester_name" valueComputed="(select id from Semester_Names where name = 'Letni')"/>
+            <column name="start_academic_year">2018/2019</column>
+        </insert>
+        <insert tableName="Study_Plans">
+            <column name="id_specialty" valueComputed="(select id from Specialties where name = 'Inżynieria Oprogramowania')"/>
+            <column name="id_field_of_study" valueComputed="(select id from Fields_Of_Study where short_name = 'inf')"/>
+            <column name="id_study_level" valueComputed="(select id from Study_Levels where name = 'II stopień')"/>
+            <column name="id_form_of_studies" valueComputed="(select id from Forms_Of_Studies where name = 'Stacjonarne')"/>
+            <column name="id_study_language" valueComputed="(select id from Study_Languages where name = 'Polski')"/>
+            <column name="id_start_semester_name" valueComputed="(select id from Semester_Names where name = 'Letni')"/>
+            <column name="start_academic_year">2019/2020</column>
+        </insert>
+        <insert tableName="Study_Plans">
+            <column name="id_specialty" valueComputed="(select id from Specialties where name = 'Inżynieria Oprogramowania')"/>
+            <column name="id_field_of_study" valueComputed="(select id from Fields_Of_Study where short_name = 'inf')"/>
+            <column name="id_study_level" valueComputed="(select id from Study_Levels where name = 'II stopień')"/>
+            <column name="id_form_of_studies" valueComputed="(select id from Forms_Of_Studies where name = 'Stacjonarne')"/>
+            <column name="id_study_language" valueComputed="(select id from Study_Languages where name = 'Polski')"/>
+            <column name="id_start_semester_name" valueComputed="(select id from Semester_Names where name = 'Letni')"/>
+            <column name="start_academic_year">2020/2021</column>
+        </insert>
+        <insert tableName="Study_Plans">
+            <column name="id_specialty" valueComputed="(select id from Specialties where name = 'Danologia')"/>
+            <column name="id_field_of_study" valueComputed="(select id from Fields_Of_Study where short_name = 'inf')"/>
+            <column name="id_study_level" valueComputed="(select id from Study_Levels where name = 'II stopień')"/>
+            <column name="id_form_of_studies" valueComputed="(select id from Forms_Of_Studies where name = 'Stacjonarne')"/>
+            <column name="id_study_language" valueComputed="(select id from Study_Languages where name = 'Polski')"/>
+            <column name="id_start_semester_name" valueComputed="(select id from Semester_Names where name = 'Letni')"/>
+            <column name="start_academic_year">2019/2020</column>
+        </insert>
+        <insert tableName="Study_Plans">
+            <column name="id_field_of_study" valueComputed="(select id from Fields_Of_Study where short_name = 'mbm')"/>
+            <column name="id_study_level" valueComputed="(select id from Study_Levels where name = 'II stopień')"/>
+            <column name="id_form_of_studies" valueComputed="(select id from Forms_Of_Studies where name = 'Stacjonarne')"/>
+            <column name="id_study_language" valueComputed="(select id from Study_Languages where name = 'Polski')"/>
+            <column name="id_start_semester_name" valueComputed="(select id from Semester_Names where name = 'Letni')"/>
+            <column name="start_academic_year">2019/2020</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

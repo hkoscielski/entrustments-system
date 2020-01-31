@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="TEST-11-insert-into-specialties">
+        <insert tableName="Specialties">
+            <column name="id_field_of_study" valueComputed="(select id from Fields_Of_Study where short_name = 'inf')"/>
+            <column name="name">Inżynieria Oprogramowania</column>
+        </insert>
+        <insert tableName="Specialties">
+            <column name="id_field_of_study" valueComputed="(select id from Fields_Of_Study where short_name = 'inf')"/>
+            <column name="name">Projektowanie Systemów Informatycznych</column>
+        </insert>
+        <insert tableName="Specialties">
+            <column name="id_field_of_study" valueComputed="(select id from Fields_Of_Study where short_name = 'inf')"/>
+            <column name="name">Danologia</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

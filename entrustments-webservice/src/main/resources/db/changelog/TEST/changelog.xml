@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <include file="TEST-01-insert-into-academic_degrees.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-02-insert-into-didactic_forms.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-03-insert-into-positions.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-04-insert-into-entrustment_statuses.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-05-insert-into-faculties.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-06-insert-into-forms_of_studies.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-07-insert-into-study_levels.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-08-insert-into-study_languages.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-09-insert-into-semester_names.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-10-insert-into-fields_of_study.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-11-insert-into-specialties.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-12-insert-into-study_plans.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-13-insert-into-semesters.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-14-insert-into-entrustment_plans.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-15-insert-into-modules.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-16-insert-into-courses.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-18-insert-into-semesters_courses.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-19-insert-into-entrustments.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-20-insert-into-users.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-21-insert-into-course_instructors.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-22-insert-into-instructors_didactic_forms.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-23-insert-into-specialists.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-24-insert-into-doctoral_students.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-25-insert-into-teachers.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-27-insert-into-v_entrustments.xml" relativeToChangelogFile="true"/>
+    <include file="TEST-28-insert-into-entrustments_logs.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

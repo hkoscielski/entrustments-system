@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="TEST-15-insert-into-modules">
+        <insert tableName="Modules">
+            <column name="code">M_1</column>
+            <column name="name">Programowanie aplikacji internetowych</column>
+        </insert>
+        <insert tableName="Modules">
+            <column name="code">M_2</column>
+            <column name="name">Multimedia</column>
+        </insert>
+        <insert tableName="Modules">
+            <column name="code">M_3</column>
+            <column name="name">Projektowanie baz danych</column>
+        </insert>
+        <insert tableName="Modules">
+            <column name="code">M_4</column>
+            <column name="name">Zarządzanie projektami informatycznymi</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

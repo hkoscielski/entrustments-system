@@ -5,10 +5,10 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <property name="now" value="now()" dbms="mysql"/>
-    <property name="now" value="now()" dbms="postgresql"/>
-
-    <include file="1.0-SNAPSHOT/changelog.xml" relativeToChangelogFile="true"/>
-    <include file="TEST/changelog.xml" relativeToChangelogFile="true"/>
+    <changeSet author="hkoscielski" id="TEST-23-insert-into-specialists">
+        <insert tableName="Specialists">
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'andrzej.kruk@pwr.edu.pl'))"/>
+        </insert>
+    </changeSet>
 
 </databaseChangeLog>

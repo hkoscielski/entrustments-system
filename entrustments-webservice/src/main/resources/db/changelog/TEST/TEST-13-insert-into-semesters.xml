@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="TEST-13-insert-into-semesters">
+        <insert tableName="Semesters">
+            <column name="id_study_plan" valueComputed="(select id from Study_Plans where start_academic_year = '2018/2019' and id_specialty = (select id from Specialties where name = 'Inżynieria Oprogramowania') and id_field_of_study = (select id from Fields_Of_Study where short_name = 'inf' and id_faculty = (select id from Faculties where symbol = 'W08')))"/>
+            <column name="academic_year">2018/2019</column>
+            <column name="semester_number">1</column>
+            <column name="id_semester_name" valueComputed="(select id from Semester_Names where name = 'Letni')"/>
+        </insert>
+        <insert tableName="Semesters">
+            <column name="id_study_plan" valueComputed="(select id from Study_Plans where start_academic_year = '2018/2019' and id_specialty = (select id from Specialties where name = 'Inżynieria Oprogramowania') and id_field_of_study = (select id from Fields_Of_Study where short_name = 'inf' and id_faculty = (select id from Faculties where symbol = 'W08')))"/>
+            <column name="academic_year">2018/2019</column>
+            <column name="semester_number">2</column>
+            <column name="id_semester_name" valueComputed="(select id from Semester_Names where name = 'Zimowy')"/>
+        </insert>
+        <insert tableName="Semesters">
+            <column name="id_study_plan" valueComputed="(select id from Study_Plans where start_academic_year = '2018/2019' and id_specialty = (select id from Specialties where name = 'Inżynieria Oprogramowania') and id_field_of_study = (select id from Fields_Of_Study where short_name = 'inf' and id_faculty = (select id from Faculties where symbol = 'W08')))"/>
+            <column name="academic_year">2019/2020</column>
+            <column name="semester_number">3</column>
+            <column name="id_semester_name" valueComputed="(select id from Semester_Names where name = 'Letni')"/>
+        </insert>
+        <insert tableName="Semesters">
+            <column name="id_study_plan" valueComputed="(select id from Study_Plans where start_academic_year = '2019/2020' and id_field_of_study = (select id from Fields_Of_Study where short_name = 'mbm' and id_faculty = (select id from Faculties where symbol = 'W10')))"/>
+            <column name="academic_year">2019/2020</column>
+            <column name="semester_number">1</column>
+            <column name="id_semester_name" valueComputed="(select id from Semester_Names where name = 'Letni')"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
