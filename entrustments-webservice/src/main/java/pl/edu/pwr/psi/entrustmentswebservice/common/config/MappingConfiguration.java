@@ -8,9 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import pl.edu.pwr.psi.entrustmentswebservice.common.mapping.ComplexModelMapper;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.*;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.CourseInstructorResponseDTO;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.FieldOfStudyResponseDTO;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.SemesterResponseDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +27,8 @@ public class MappingConfiguration {
 				.addMappings(teacherToDTOMapping());
 		modelMapper.createTypeMap(Semester.class, SemesterResponseDTO.class)
 				.addMappings(semesterToDTOMapping());
+		modelMapper.createTypeMap(VEntrustment.class, EntrustmentResponseDTO.class)
+				.addMappings(ventrustmentToDTOMapping());
 		return modelMapper;
 	}
 
@@ -105,6 +105,28 @@ public class MappingConfiguration {
 			mapping.map(sg -> sg.getStudyPlan().getStudyLevel().getName(), SemesterResponseDTO::setStudyLevel);
 			mapping.map(sg -> sg.getStudyPlan().getFormOfStudy().getName(), SemesterResponseDTO::setFormOfStudy);
 			mapping.map(sg -> sg.getStudyPlan().getStudyLanguage().getName(), SemesterResponseDTO::setStudyLanguage);
+		};
+	}
+
+	private ExpressionMap<VEntrustment, EntrustmentResponseDTO> ventrustmentToDTOMapping() {
+		Converter<Course, CourseResponseDTO> courseConverter =
+				mappingContext -> new CourseResponseDTO(
+						mappingContext.getSource().getCode(),
+						mappingContext.getSource().getName()
+				);
+		Converter<CourseInstructor, EntrustmentResponseDTO.CourseInstructorResponseDTO> courseInstructorConverter =
+				mappingContext -> new EntrustmentResponseDTO.CourseInstructorResponseDTO(
+						mappingContext.getSource().getId(),
+						mappingContext.getSource().getFirstName(),
+						mappingContext.getSource().getSurname(),
+						mappingContext.getSource().getAcademicDegree().getName()
+				);
+
+		return mapping -> {
+			mapping.map(sg -> sg.getId().getEntrustment().getId(), EntrustmentResponseDTO::setId);
+			mapping.using(courseConverter).map(VEntrustment::getCourse, EntrustmentResponseDTO::setCourse);
+			mapping.using(courseInstructorConverter).map(VEntrustment::getCourseInstructor, EntrustmentResponseDTO::setCourseInstructor);
+			mapping.map(sg -> sg.getEntrustmentStatus().getName(), EntrustmentResponseDTO::setStatus);
 		};
 	}
 }

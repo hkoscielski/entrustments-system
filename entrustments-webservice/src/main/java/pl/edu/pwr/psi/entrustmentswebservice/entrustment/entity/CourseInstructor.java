@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Course_Instructors")
@@ -30,4 +32,11 @@ public class CourseInstructor {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "id_academic_degree", referencedColumnName = "id", nullable = false)
 	private AcademicDegree academicDegree;
+
+	@ManyToMany
+	@JoinTable(name = "Instructors_Didactic_Forms",
+			joinColumns = {@JoinColumn(name = "id_course_instructor", nullable = false)},
+			inverseJoinColumns = {@JoinColumn(name = "id_didactic_form", nullable = false)}
+	)
+	private Set<DidacticForm> didacticForms = new HashSet<>();
 }

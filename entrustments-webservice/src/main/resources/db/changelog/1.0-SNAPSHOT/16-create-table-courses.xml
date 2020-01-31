@@ -26,7 +26,6 @@
             </column>
             <column name="id_module" type="bigint">
                 <constraints
-                        nullable="false" notNullConstraintName="courses_id_module_nn"
                         referencedTableName="Modules" referencedColumnNames="id" foreignKeyName="courses_id_module_fk"/>
             </column>
             <column name="id_didactic_form" type="bigint">

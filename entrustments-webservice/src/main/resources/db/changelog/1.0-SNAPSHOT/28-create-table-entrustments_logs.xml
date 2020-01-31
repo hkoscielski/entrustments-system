@@ -25,7 +25,7 @@
                         nullable="false" notNullConstraintName="entrustments_logs_id_user_nn"
                         referencedTableName="Users" referencedColumnNames="id" foreignKeyName="entrustments_logs_id_user_fk"/>
             </column>
-            <column name="change_date" type="date">
+            <column name="change_date" type="datetime">
                 <constraints
                         nullable="false" notNullConstraintName="entrustments_logs_ch_date_nn"/>
             </column>

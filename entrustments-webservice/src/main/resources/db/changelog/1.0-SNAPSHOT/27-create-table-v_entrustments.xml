@@ -7,7 +7,7 @@
 
     <changeSet author="hkoscielski" id="27-create-table-v_entrustments">
         <createTable tableName="V_Entrustments">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="bigint">
                 <constraints
                         primaryKey="true" primaryKeyName="v_entrustments_id_pk"
                         nullable="false" notNullConstraintName="v_entrustments_id_nn"
