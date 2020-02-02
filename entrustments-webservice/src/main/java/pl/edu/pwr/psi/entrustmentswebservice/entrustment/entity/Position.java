@@ -21,5 +21,8 @@ public class Position {
 	private Long id;
 
 	@Column(unique = true, updatable = false, nullable = false)
+	private String code;
+
+	@Column(unique = true, updatable = false, nullable = false)
 	private String name;
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@Accessors(chain = true)
 public class CourseInstructor {
 
 	@Id
@@ -39,4 +41,8 @@ public class CourseInstructor {
 			inverseJoinColumns = {@JoinColumn(name = "id_didactic_form", nullable = false)}
 	)
 	private Set<DidacticForm> didacticForms = new HashSet<>();
+
+	@OneToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_user", nullable = false)
+	private User user;
 }

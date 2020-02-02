@@ -1,0 +1,44 @@
+[
+  {
+    "id": 4,
+    "userId": 5,
+    "firstName": "Mateusz",
+    "surname": "Nowy",
+    "email": "mateusz.nowy@pwr.edu.pl",
+    "username": "pwr555555",
+    "password": "password5",
+    "academicDegree": "dr",
+    "didacticForms": [
+      "W", "C", "L", "P", "PDI"
+    ],
+    "agreements": [],
+    "courseInstructorType": "Teacher",
+    "additionalAttributes": {
+      "pensum": 180,
+      "timeBasis": 1,
+      "position": "Wykładowca"
+    }
+  },
+  {
+    "id": 5,
+    "userId": 6,
+    "firstName": "Natalia",
+    "surname": "Nowa",
+    "email": "natalia.nowa@pwr.edu.pl",
+    "username": "pwr666666",
+    "password": "password6",
+    "academicDegree": "mgr",
+    "didacticForms": [
+      "C", "L", "P"
+    ],
+    "agreements": [
+      {
+        "didacticForm": "PDI",
+        "startDate": "2019-08-12T00:00:00.000",
+        "endDate": "2020-02-12T00:00:00.000"
+      }
+    ],
+    "courseInstructorType": "Specialist",
+    "additionalAttributes": {}
+  }
+]

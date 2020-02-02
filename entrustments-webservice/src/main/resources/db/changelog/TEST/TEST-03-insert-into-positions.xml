@@ -7,9 +7,11 @@
 
     <changeSet author="hkoscielski" id="TEST-03-insert-into-positions">
         <insert tableName="Positions">
+            <column name="code">W</column>
             <column name="name">Wykładowca</column>
         </insert>
         <insert tableName="Positions">
+            <column name="code">SW</column>
             <column name="name">Starszy wykładowca</column>
         </insert>
     </changeSet>
