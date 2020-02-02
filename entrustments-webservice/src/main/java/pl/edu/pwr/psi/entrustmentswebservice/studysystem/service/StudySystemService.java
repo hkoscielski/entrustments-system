@@ -3,9 +3,9 @@ package pl.edu.pwr.psi.entrustmentswebservice.studysystem.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import pl.edu.pwr.psi.entrustmentswebservice.common.entity.*;
 import pl.edu.pwr.psi.entrustmentswebservice.common.exception.ResourceInternalServerError;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.*;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.repository.*;
+import pl.edu.pwr.psi.entrustmentswebservice.common.repository.*;
 import pl.edu.pwr.psi.entrustmentswebservice.studysystem.config.StudySystemProperties;
 import pl.edu.pwr.psi.entrustmentswebservice.studysystem.payload.response.CourseInstructorResponseDTO;
 

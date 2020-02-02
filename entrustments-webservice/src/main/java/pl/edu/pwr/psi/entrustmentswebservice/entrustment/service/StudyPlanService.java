@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.pwr.psi.entrustmentswebservice.common.mapping.ComplexModelMapper;
 import pl.edu.pwr.psi.entrustmentswebservice.common.util.DateUtil;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.Faculty;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.Semester;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.FacultyResponseDTO;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.SemesterResponseDTO;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.repository.FacultyRepository;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.repository.SemesterRepository;
+import pl.edu.pwr.psi.entrustmentswebservice.common.entity.Faculty;
+import pl.edu.pwr.psi.entrustmentswebservice.common.entity.Semester;
+import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.FacultyResponseDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.SemesterResponseDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.common.repository.FacultyRepository;
+import pl.edu.pwr.psi.entrustmentswebservice.common.repository.SemesterRepository;
 
 import java.util.List;
 

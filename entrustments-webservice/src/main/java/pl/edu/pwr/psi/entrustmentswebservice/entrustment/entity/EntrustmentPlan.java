@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.edu.pwr.psi.entrustmentswebservice.common.entity.Semester;
 
 import javax.persistence.*;
 
