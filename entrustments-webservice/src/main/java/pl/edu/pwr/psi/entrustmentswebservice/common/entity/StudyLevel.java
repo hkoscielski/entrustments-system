@@ -20,6 +20,14 @@ public class StudyLevel {
 	@Column(updatable = false, nullable = false)
 	private Long id;
 
+	@Enumerated(EnumType.STRING)
+	@Column(updatable = false, nullable = false)
+	private Level code;
+
 	@Column(unique = true, updatable = false, nullable = false)
 	private String name;
+
+	public enum Level {
+		FIRST_DEGREE, SECOND_DEGREE
+	}
 }

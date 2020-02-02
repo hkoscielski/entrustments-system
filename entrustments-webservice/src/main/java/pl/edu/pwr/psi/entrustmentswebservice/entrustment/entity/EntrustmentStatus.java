@@ -20,6 +20,14 @@ public class EntrustmentStatus {
 	@Column(updatable = false, nullable = false)
 	private Long id;
 
+	@Enumerated(EnumType.STRING)
+	@Column(updatable = false, nullable = false)
+	private StatusCode code;
+
 	@Column(unique = true, updatable = false, nullable = false)
 	private String name;
+
+	public enum StatusCode {
+		PROPOSED, ACCEPTED, REJECTED
+	}
 }

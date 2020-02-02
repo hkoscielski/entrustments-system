@@ -7,12 +7,15 @@
 
     <changeSet author="hkoscielski" id="04-insert-into-entrustment_statuses">
         <insert tableName="Entrustment_Statuses">
+            <column name="code">PROPOSED</column>
             <column name="name">Zaproponowane</column>
         </insert>
         <insert tableName="Entrustment_Statuses">
+            <column name="code">ACCEPTED</column>
             <column name="name">Zaakceptowane</column>
         </insert>
         <insert tableName="Entrustment_Statuses">
+            <column name="code">REJECTED</column>
             <column name="name">Odrzucone</column>
         </insert>
     </changeSet>

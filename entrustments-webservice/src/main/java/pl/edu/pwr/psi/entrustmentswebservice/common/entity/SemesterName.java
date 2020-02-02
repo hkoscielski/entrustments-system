@@ -20,6 +20,14 @@ public class SemesterName {
 	@Column(updatable = false, nullable = false)
 	private Long id;
 
+	@Enumerated(EnumType.STRING)
+	@Column(updatable = false, nullable = false)
+	private SemesterType code;
+
 	@Column(unique = true, updatable = false, nullable = false)
 	private String name;
+
+	public enum SemesterType {
+		SUMMER, WINTER
+	}
 }

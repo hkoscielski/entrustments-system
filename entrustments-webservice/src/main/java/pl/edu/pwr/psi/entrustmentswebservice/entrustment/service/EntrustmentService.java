@@ -66,7 +66,7 @@ public class EntrustmentService {
 	public EntrustmentResponseDTO createEntrustment(long semesterId, EntrustmentRequestDTO entrustment) {
 		User user = userRepository.findByEmail("anna.sekretarz@pwr.edu.pl")
 				.orElseThrow(() -> new ResourceInternalServerError("User"));
-		EntrustmentStatus initialEntrustmentStatus = entrustmentStatusRepository.findByName("Zaproponowane")
+		EntrustmentStatus initialEntrustmentStatus = entrustmentStatusRepository.findByCode(EntrustmentStatus.StatusCode.PROPOSED)
 				.orElseThrow(() -> new ResourceInternalServerError("EntrustmentStatus"));
 		CourseInstructor instructor = courseInstructorRepository.findById(entrustment.getCourseInstructorId())
 				.orElseThrow(() -> new ResourceNotFoundException("Course Instructor", "id", String.valueOf(entrustment.getCourseInstructorId())));

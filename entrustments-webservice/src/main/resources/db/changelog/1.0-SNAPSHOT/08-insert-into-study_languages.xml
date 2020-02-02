@@ -7,9 +7,11 @@
 
     <changeSet author="hkoscielski" id="08-insert-into-study_languages">
         <insert tableName="Study_Languages">
+            <column name="code">PL</column>
             <column name="name">Polski</column>
         </insert>
         <insert tableName="Study_Languages">
+            <column name="code">EN</column>
             <column name="name">Angielski</column>
         </insert>
     </changeSet>

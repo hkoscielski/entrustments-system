@@ -12,6 +12,11 @@
                         primaryKey="true" primaryKeyName="semester_names_id_pk"
                         nullable="false" notNullConstraintName="semester_names_id_nn"/>
             </column>
+            <column name="code" type="varchar(255)">
+                <constraints
+                        unique="true" uniqueConstraintName="semester_names_code_uk"
+                        nullable="false" notNullConstraintName="semester_names_code_nn"/>
+            </column>
             <column name="name" type="varchar(255)">
                 <constraints
                         unique="true" uniqueConstraintName="semester_names_name_uk"

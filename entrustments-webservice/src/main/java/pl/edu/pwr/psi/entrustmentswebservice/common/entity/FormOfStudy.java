@@ -20,6 +20,14 @@ public class FormOfStudy {
 	@Column(updatable = false, nullable = false)
 	private Long id;
 
+	@Enumerated(EnumType.STRING)
+	@Column(updatable = false, nullable = false)
+	private FormType code;
+
 	@Column(unique = true, updatable = false, nullable = false)
 	private String name;
+
+	public enum FormType {
+		ST, NS
+	}
 }

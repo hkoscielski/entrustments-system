@@ -20,6 +20,14 @@ public class StudyLanguage {
 	@Column(updatable = false, nullable = false)
 	private Long id;
 
+	@Enumerated(EnumType.STRING)
+	@Column(updatable = false, nullable = false)
+	private LanguageCode code;
+
 	@Column(unique = true, updatable = false, nullable = false)
 	private String name;
+
+	public enum LanguageCode {
+		PL, EN
+	}
 }

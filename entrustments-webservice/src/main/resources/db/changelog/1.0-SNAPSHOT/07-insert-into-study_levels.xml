@@ -7,9 +7,11 @@
 
     <changeSet author="hkoscielski" id="07-insert-into-study_levels">
         <insert tableName="Study_Levels">
+            <column name="code">FIRST_DEGREE</column>
             <column name="name">I stopień</column>
         </insert>
         <insert tableName="Study_Levels">
+            <column name="code">SECOND_DEGREE</column>
             <column name="name">II stopień</column>
         </insert>
     </changeSet>

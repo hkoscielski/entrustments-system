@@ -7,9 +7,11 @@
 
     <changeSet author="hkoscielski" id="09-insert-into-semester_names">
         <insert tableName="Semester_Names">
+            <column name="code">SUMMER</column>
             <column name="name">Letni</column>
         </insert>
         <insert tableName="Semester_Names">
+            <column name="code">WINTER</column>
             <column name="name">Zimowy</column>
         </insert>
     </changeSet>
