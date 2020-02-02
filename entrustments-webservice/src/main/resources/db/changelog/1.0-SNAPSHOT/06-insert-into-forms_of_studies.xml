@@ -5,14 +5,12 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet author="hkoscielski" id="TEST-05-insert-into-faculties">
-        <insert tableName="Faculties">
-            <column name="symbol">W08</column>
-            <column name="name">Wydział Informatyki i Zarządzania</column>
+    <changeSet author="hkoscielski" id="06-insert-into-forms_of_studies">
+        <insert tableName="Forms_Of_Studies">
+            <column name="name">Stacjonarne</column>
         </insert>
-        <insert tableName="Faculties">
-            <column name="symbol">W10</column>
-            <column name="name">Wydział Mechaniczny</column>
+        <insert tableName="Forms_Of_Studies">
+            <column name="name">Niestacjonarne</column>
         </insert>
     </changeSet>
 

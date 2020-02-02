@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet author="hkoscielski" id="TEST-02-insert-into-didactic_forms">
+    <changeSet author="hkoscielski" id="02-insert-into-didactic_forms">
         <insert tableName="Didactic_Forms">
             <column name="code">W</column>
             <column name="name">Wykład</column>

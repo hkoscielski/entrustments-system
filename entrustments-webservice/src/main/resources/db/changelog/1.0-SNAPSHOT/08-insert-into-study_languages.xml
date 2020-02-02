@@ -5,14 +5,12 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet author="hkoscielski" id="TEST-01-insert-into-academic_degrees">
-        <insert tableName="Academic_Degrees">
-            <column name="name">Magister</column>
-            <column name="short_name">mgr</column>
+    <changeSet author="hkoscielski" id="08-insert-into-study_languages">
+        <insert tableName="Study_Languages">
+            <column name="name">Polski</column>
         </insert>
-        <insert tableName="Academic_Degrees">
-            <column name="name">Doktor</column>
-            <column name="short_name">dr</column>
+        <insert tableName="Study_Languages">
+            <column name="name">Angielski</column>
         </insert>
     </changeSet>
 
