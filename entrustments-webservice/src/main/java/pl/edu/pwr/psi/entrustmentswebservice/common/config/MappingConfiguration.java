@@ -17,6 +17,8 @@ import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Configuration
 public class MappingConfiguration {
@@ -52,9 +54,11 @@ public class MappingConfiguration {
 					additionalAttributes.put("pensum", String.valueOf(mappingContext.getSource().getPensum()));
 					return additionalAttributes;
 				};
+		Converter<Set<Agreement>, Set<CourseInstructorResponseDTO.AgreementResponseDTO>> agreementsToDTOConverter = getSetAgreementToDTOConverter();
 
 		return mapping -> {
 			mapping.map(sg -> sg.getAcademicDegree().getName(), CourseInstructorResponseDTO::setAcademicDegree);
+			mapping.using(agreementsToDTOConverter).map(CourseInstructor::getAgreements, CourseInstructorResponseDTO::setAgreements);
 			mapping.using(courseInstructorTypeConverter).map(sg -> sg, CourseInstructorResponseDTO::setCourseInstructorType);
 			mapping.using(additionalAttrConverter).map(sg -> sg, CourseInstructorResponseDTO::setAdditionalAttributes);
 		};
@@ -65,9 +69,11 @@ public class MappingConfiguration {
 				getCourseInstructorTypeConverter();
 		Converter<DoctoralStudent, Map<String, String>> additionalAttrConverter =
 				mappingContext -> new HashMap<>();
+		Converter<Set<Agreement>, Set<CourseInstructorResponseDTO.AgreementResponseDTO>> agreementsToDTOConverter = getSetAgreementToDTOConverter();
 
 		return mapping -> {
 			mapping.map(sg -> sg.getAcademicDegree().getName(), CourseInstructorResponseDTO::setAcademicDegree);
+			mapping.using(agreementsToDTOConverter).map(CourseInstructor::getAgreements, CourseInstructorResponseDTO::setAgreements);
 			mapping.using(courseInstructorTypeConverter).map(sg -> sg, CourseInstructorResponseDTO::setCourseInstructorType);
 			mapping.using(additionalAttrConverter).map(sg -> sg, CourseInstructorResponseDTO::setAdditionalAttributes);
 		};
@@ -84,9 +90,11 @@ public class MappingConfiguration {
 					additionalAttributes.put("position", String.valueOf(mappingContext.getSource().getPosition().getName()));
 					return additionalAttributes;
 				};
+		Converter<Set<Agreement>, Set<CourseInstructorResponseDTO.AgreementResponseDTO>> agreementsToDTOConverter = getSetAgreementToDTOConverter();
 
 		return mapping -> {
 			mapping.map(sg -> sg.getAcademicDegree().getName(), CourseInstructorResponseDTO::setAcademicDegree);
+			mapping.using(agreementsToDTOConverter).map(CourseInstructor::getAgreements, CourseInstructorResponseDTO::setAgreements);
 			mapping.using(courseInstructorTypeConverter).map(sg -> sg, CourseInstructorResponseDTO::setCourseInstructorType);
 			mapping.using(additionalAttrConverter).map(sg -> sg, CourseInstructorResponseDTO::setAdditionalAttributes);
 		};
@@ -96,6 +104,15 @@ public class MappingConfiguration {
 		return mappingContext -> mappingContext.getSource().getClass().getSimpleName();
 	}
 
+	private Converter<Set<Agreement>, Set<CourseInstructorResponseDTO.AgreementResponseDTO>> getSetAgreementToDTOConverter() {
+		return mappingContext -> mappingContext.getSource().stream().map(a ->
+				new CourseInstructorResponseDTO.AgreementResponseDTO(
+					a.getStartDate(),
+					a.getEndDate(),
+					a.getDidacticForm().getCode()
+				)
+		).collect(Collectors.toSet());
+	}
 
 	private ExpressionMap<Semester, SemesterResponseDTO> semesterToDTOMapping() {
 		Converter<FieldOfStudy, FieldOfStudyResponseDTO> fieldOfStudyConverter =

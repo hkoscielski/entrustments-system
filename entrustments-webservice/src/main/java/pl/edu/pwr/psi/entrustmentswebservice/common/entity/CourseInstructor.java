@@ -35,6 +35,10 @@ public class CourseInstructor {
 	@JoinColumn(name = "id_academic_degree", referencedColumnName = "id", nullable = false)
 	private AcademicDegree academicDegree;
 
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_course_instructor")
+	private Set<Agreement> agreements;
+
 	@ManyToMany
 	@JoinTable(name = "Instructors_Didactic_Forms",
 			joinColumns = {@JoinColumn(name = "id_course_instructor", nullable = false)},
