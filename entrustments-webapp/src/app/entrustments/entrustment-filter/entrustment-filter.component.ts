@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {debounceTime, map} from 'rxjs/operators';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {merge, Observable, Subject} from 'rxjs';
+import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
+import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-entrustment-filter',
@@ -22,6 +23,7 @@ export class EntrustmentFilterComponent implements OnInit {
     { name: 'dr inż. Bogumiła Hnatkowska', hours: 120, pensum: 240 },
     { name: 'dr inż. Artur Wilczek', hours: 180, pensum: 120 }
   ];
+  pickedAcademicYear: string;
   readonly academicYears: {name: string}[] = [
     {name: '2014/15'},
     {name: '2015/16'},
@@ -42,27 +44,52 @@ export class EntrustmentFilterComponent implements OnInit {
     {name: 'Inżynieria Systemów', facultySymbol: 'W08'}
   ];
 
+  pickedSemester: number;
+  readonly semesters: {number: number}[] = [
+    {number: 1},
+    {number: 2},
+    {number: 3},
+    {number: 4},
+    {number: 5},
+    {number: 6},
+    {number: 7}
+  ];
+
   facultySelectId: Selection;
   @Input() isCourseInstructor = false;
 
-  public modelCourse;
-  public modelCourseInstructor;
+  modelCourse: any;
+  modelCourseInstructor: any;
 
-  searchCourses = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(200),
-      map(term => term === '' ? []
-        : this.courses.filter(v => v.code.toLowerCase().concat(' ', v.name.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10))
-    )
+  @ViewChild('coursesTextBox', {static: true}) coursesTextBox: NgbTypeahead;
+  focusCoursesTextBox$ = new Subject<string>();
+  clickCoursesTextBox$ = new Subject<string>();
+
+  @ViewChild('courseInstructorsTextBox', {static: true}) courseInstructorsTextBox: NgbTypeahead;
+  focusCourseInstructorsTextBox$ = new Subject<string>();
+  clickCourseInstructorsTextBox$ = new Subject<string>();
+
+  searchCourses = (text$: Observable<string>) => {
+    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+    const clicksWithClosedPopup$ = this.clickCoursesTextBox$.pipe(filter(() => !this.coursesTextBox.isPopupOpen()));
+    const inputFocus$ = this.focusCoursesTextBox$;
+
+    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+      map(term => term === '' ? this.courses
+        : this.courses.filter(v => v.code.toLowerCase().concat(' ', v.name.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
+  }
 
   formatterCourse = (x: {code: string, name: string}) => x.code + ' ' + x.name;
 
-  searchCourseInstructors = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(200),
-      map(term => term === '' ? []
-        : this.courseInstructors.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
-    )
+  searchCourseInstructors = (text$: Observable<string>) => {
+    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+    const clicksWithClosedPopup$ = this.clickCourseInstructorsTextBox$.pipe(filter(() => !this.courseInstructorsTextBox.isPopupOpen()));
+    const inputFocus$ = this.focusCourseInstructorsTextBox$;
+
+    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+      map(term => term === '' ? this.courseInstructors
+        : this.courseInstructors.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)));
+  }
 
   formatterCourseInstructor = (x: {name: string}) => x.name;
 
@@ -75,6 +102,7 @@ export class EntrustmentFilterComponent implements OnInit {
   }
 
   onClearFiltersClicked() {
+    this.pickedAcademicYear = undefined;
   }
 
   shouldShowFaculties() {
