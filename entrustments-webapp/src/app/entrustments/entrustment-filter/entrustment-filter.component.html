@@ -7,11 +7,13 @@
 <select *ngIf="shouldShowFaculties()" [disabled]="shouldLockFaculties()" class="form-control top-buffer">
   <option selected disabled hidden>Kierunek</option>
 </select>
-<select class="form-control" [class.top-buffer]="shouldShowFaculties()">
-  <option selected disabled hidden>Rok akademicki</option>
+<select class="form-control" [class.top-buffer]="shouldShowFaculties()" [(ngModel)]="pickedAcademicYear">
+  <option disabled hidden [selected]="!pickedAcademicYear" [value]="undefined">Rok akademicki</option>
+  <option *ngFor="let x of academicYears" [value]="x.name" [selected]="pickedAcademicYear == x.name">{{x.name}}</option>
 </select>
-<select class="form-control top-buffer">
-  <option selected disabled hidden>Semestr</option>
+<select class="form-control top-buffer" [(ngModel)]="pickedSemester">
+  <option disabled hidden [selected]="!pickedSemester" [value]="undefined">Semestr</option>
+  <option *ngFor="let x of semesters" [value]="x.number" [selected]="pickedSemester == x.number">{{x.number}}</option>
 </select>
 <select class="form-control top-buffer">
   <option selected disabled hidden>Stopień</option>
@@ -23,16 +25,20 @@
   <option selected disabled hidden>Kurs</option>
 </select>
 <label class="text-center top-buffer d-block mx-auto">LUB</label>
-<input type="text" class="form-control top-buffer" placeholder="Wpisz kod lub nazwę kursu" [(ngModel)]="modelCourse" [ngbTypeahead]="searchCourses" [resultTemplate]="rtCourse"
-       [inputFormatter]="formatterCourse" />
+<input type="text" class="form-control top-buffer" placeholder="Wpisz kod lub nazwę kursu"
+       [(ngModel)]="modelCourse" [ngbTypeahead]="searchCourses" [resultTemplate]="rtCourse"
+       (focus)="focusCoursesTextBox$.next($event.target.value)"
+       (click)="clickCoursesTextBox$.next($event.target.value)"
+       [inputFormatter]="formatterCourse"
+       #coursesTextBox="ngbTypeahead"/>
 <!--<pre>Model: {{ modelCourse | json }}</pre>-->
-<input *ngIf="!isCourseInstructor" type="text" class="form-control top-buffer" placeholder="Wpisz prowadzącego" [(ngModel)]="modelCourseInstructor" [ngbTypeahead]="searchCourseInstructors" [resultTemplate]="rtCourseInstructor"
-       [inputFormatter]="formatterCourseInstructor" />
+<input [hidden]="isCourseInstructor" type="text" class="form-control top-buffer" placeholder="Wpisz prowadzącego"
+       [(ngModel)]="modelCourseInstructor" [ngbTypeahead]="searchCourseInstructors" [resultTemplate]="rtCourseInstructor"
+       (focus)="focusCourseInstructorsTextBox$.next($event.target.value)"
+       (click)="clickCourseInstructorsTextBox$.next($event.target.value)"
+       [inputFormatter]="formatterCourseInstructor"
+       #courseInstructorsTextBox="ngbTypeahead"/>
 <!--<pre>Model: {{ modelCourseInstructor | json }}</pre>-->
-<div *ngIf="!isCourseInstructor" class="form-check top-buffer">
-  <input class="form-check-input" type="checkbox" value="" id="checkboxId">
-  <label class="form-check-label" for="checkboxId" style="font-size: medium;">Pokaż kursy bez powierzeń</label>
-</div>
 <select *ngIf="isCourseInstructor" class="form-control top-buffer">
   <option selected disabled hidden>Status</option>
 </select>
@@ -48,11 +54,8 @@
 
 <ng-template ngbPanelContent #rtCourse let-r="result" let-t="term">
   <ngb-highlight [result]="r.code + ' - ' + r.name " [term]="t"></ngb-highlight>
-  <!--  <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/' + r['flag']" class="mr-1" style="width: 16px">-->
-<!--  <span class="col flex-column justify-content-end"><span [ngStyle]="{ color: r.hours > r.pensum ? 'red' : 'green' }"> {{r.hours}}</span> / {{r.pensum}}</span>-->
 </ng-template>
 <ng-template ngbPanelContent #rtCourseInstructor let-r="result" let-t="term">
     <ngb-highlight class="col" [result]="r.name" [term]="t"></ngb-highlight>
-<!--  <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/' + r['flag']" class="mr-1" style="width: 16px">-->
     <span class="col flex-column justify-content-end"><span [ngStyle]="{ color: r.hours > r.pensum ? 'red' : 'green' }"> {{r.hours}}</span> / {{r.pensum}}</span>
 </ng-template>
