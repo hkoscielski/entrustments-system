@@ -1,10 +1,6 @@
 package pl.edu.pwr.psi.entrustmentswebservice.common.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import pl.edu.pwr.psi.entrustmentswebservice.common.entity.*;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -14,6 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class StudyPlan {
 
 	@Id

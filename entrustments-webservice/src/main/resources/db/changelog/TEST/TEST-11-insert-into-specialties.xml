@@ -9,14 +9,17 @@
         <insert tableName="Specialties">
             <column name="id_field_of_study" valueComputed="(select id from Fields_Of_Study where short_name = 'inf')"/>
             <column name="name">Inżynieria Oprogramowania</column>
+            <column name="short_name">IO</column>
         </insert>
         <insert tableName="Specialties">
             <column name="id_field_of_study" valueComputed="(select id from Fields_Of_Study where short_name = 'inf')"/>
             <column name="name">Projektowanie Systemów Informatycznych</column>
+            <column name="short_name">PSI</column>
         </insert>
         <insert tableName="Specialties">
             <column name="id_field_of_study" valueComputed="(select id from Fields_Of_Study where short_name = 'inf')"/>
             <column name="name">Danologia</column>
+            <column name="short_name">DAN</column>
         </insert>
     </changeSet>
 

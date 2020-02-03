@@ -1,9 +1,7 @@
 package pl.edu.pwr.psi.entrustmentswebservice.common.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -14,6 +12,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@Accessors(chain = true)
+@Builder
 public class Course {
 
 	@Id
@@ -25,10 +25,10 @@ public class Course {
 	@Column(updatable = false, nullable = false)
 	private String code;
 
-	@Column(updatable = false, nullable = false)
+	@Column(nullable = false)
 	private String name;
 
-	@Column(name = "zzu_hours", updatable = false, nullable = false)
+	@Column(name = "zzu_hours", nullable = false)
 	private int zzuHours;
 
 	@ManyToOne(optional = false)

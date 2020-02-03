@@ -19,7 +19,11 @@
             </column>
             <column name="name" type="varchar(255)">
                 <constraints
-                        nullable="false" notNullConstraintName="fields_of_study_name_nn"/>
+                        nullable="false" notNullConstraintName="specialties_name_nn"/>
+            </column>
+            <column name="short_name" type="varchar(255)">
+                <constraints
+                        nullable="false" notNullConstraintName="specialties_short_name_nn"/>
             </column>
         </createTable>
         <rollback>
