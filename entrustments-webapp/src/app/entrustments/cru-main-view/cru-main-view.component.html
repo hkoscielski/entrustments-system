@@ -18,15 +18,15 @@
 
 <div class="container-lg">
   <div class="row">
-    <div class="col-3">
+    <div class="row-cols-1">
       <div class="card card-outline-secondary mx-auto shadow-sm rounded">
         <div class="card-header-pills" style="margin: 10px; font-size: medium; text-align: center">Wyszukiwarka</div>
         <div class="card-body" style="padding: 1rem; border-top: 1px solid rgb(200, 200, 200)">
-          <app-entrustment-filter></app-entrustment-filter>
+          <app-entrustment-filter [isCourseInstructor]="false" ></app-entrustment-filter>
         </div>
       </div>
     </div>
-    <div class="col-8">
+    <div class="col-8" style="width: 60%">
       <button class="btn btn-primary" style="margin-bottom: 20px" routerLink="/entrustment-add-panel">Dodaj powierzenie</button>
       <div>
         <label class="text-center top-buffer d-block mx-auto" >Parametry wyszukiwania</label>

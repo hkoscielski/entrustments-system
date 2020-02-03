@@ -2,3 +2,7 @@
 .top-buffer {
   margin-top: 10px;
 }
+
+/*::ng-deep .dropdown-menu {*/
+/*  min-width: 350px;*/
+/*}*/

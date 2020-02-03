@@ -30,7 +30,7 @@ export class EntrustmentCardComponent implements OnInit {
     this.ddY = event.clientY;
     document.documentElement.style.setProperty('--ddX', event.clientX);
     document.documentElement.style.setProperty('--ddY', event.clientY);
-    console.log('VALUE == ' + document.documentElement.style.getPropertyValue('--ddX'));
+    // console.log('VALUE == ' + document.documentElement.style.getPropertyValue('--ddX'));
     if (this.isCardEditable()) {
       this.dropdown.toggle();
     }

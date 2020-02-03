@@ -22,23 +22,37 @@
 <select class="form-control top-buffer">
   <option selected disabled hidden>Kurs</option>
 </select>
+<label class="text-center top-buffer d-block mx-auto">LUB</label>
+<input type="text" class="form-control top-buffer" placeholder="Wpisz kod lub nazwę kursu" [(ngModel)]="modelCourse" [ngbTypeahead]="searchCourses" [resultTemplate]="rtCourse"
+       [inputFormatter]="formatterCourse" />
+<!--<pre>Model: {{ modelCourse | json }}</pre>-->
+<input *ngIf="!isCourseInstructor" type="text" class="form-control top-buffer" placeholder="Wpisz prowadzącego" [(ngModel)]="modelCourseInstructor" [ngbTypeahead]="searchCourseInstructors" [resultTemplate]="rtCourseInstructor"
+       [inputFormatter]="formatterCourseInstructor" />
+<!--<pre>Model: {{ modelCourseInstructor | json }}</pre>-->
+<div *ngIf="!isCourseInstructor" class="form-check top-buffer">
+  <input class="form-check-input" type="checkbox" value="" id="checkboxId">
+  <label class="form-check-label" for="checkboxId" style="font-size: medium;">Pokaż kursy bez powierzeń</label>
+</div>
 <select *ngIf="isCourseInstructor" class="form-control top-buffer">
   <option selected disabled hidden>Status</option>
 </select>
-<label class="text-center top-buffer d-block mx-auto">LUB</label>
-<input type="text" class="form-control top-buffer" placeholder="Wpisz kod lub nazwę kursu">
-<input *ngIf="!isCourseInstructor" type="text" class="form-control top-buffer" placeholder="Wpisz prowadzącego">
-<div *ngIf="!isCourseInstructor" class="form-check top-buffer">
-  <input class="form-check-input" type="checkbox" value="" id="checkboxId">
-  <label class="form-check-label" for="checkboxId">
-    Pokaż kursy bez powierzeń
-  </label>
-</div>
 <div class="row top-buffer">
   <div class="col">
-    <button class="btn btn-secondary" style="width: 100%" (click)="onSearchClicked()">Szukaj</button>
+    <button *ngIf="!isCourseInstructor" class="btn btn-secondary" style="width: 100%" (click)="onSearchClicked()">Szukaj</button>
+    <button *ngIf="isCourseInstructor" class="btn btn-secondary" style="width: 100%" (click)="onSearchClicked()">Filtruj</button>
   </div>
   <div class="col">
-    <button class="btn btn-secondary" style="width: 100%; height: 100%; font-size: small" (click)="onClearFiltersClicked()">Czyść filtry</button>
+    <button class="btn btn-secondary" style="width: 100%; height: 100%; font-size: 14px" (click)="onClearFiltersClicked()">Czyść filtry</button>
   </div>
 </div>
+
+<ng-template ngbPanelContent #rtCourse let-r="result" let-t="term">
+  <ngb-highlight [result]="r.code + ' - ' + r.name " [term]="t"></ngb-highlight>
+  <!--  <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/' + r['flag']" class="mr-1" style="width: 16px">-->
+<!--  <span class="col flex-column justify-content-end"><span [ngStyle]="{ color: r.hours > r.pensum ? 'red' : 'green' }"> {{r.hours}}</span> / {{r.pensum}}</span>-->
+</ng-template>
+<ng-template ngbPanelContent #rtCourseInstructor let-r="result" let-t="term">
+    <ngb-highlight class="col" [result]="r.name" [term]="t"></ngb-highlight>
+<!--  <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/' + r['flag']" class="mr-1" style="width: 16px">-->
+    <span class="col flex-column justify-content-end"><span [ngStyle]="{ color: r.hours > r.pensum ? 'red' : 'green' }"> {{r.hours}}</span> / {{r.pensum}}</span>
+</ng-template>

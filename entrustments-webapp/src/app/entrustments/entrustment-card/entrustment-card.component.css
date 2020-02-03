@@ -3,9 +3,9 @@
   --ddY: 0;
 }
 
-.dropdown-toggle::after {
-  display:none;
-}
+/*.dropdown-toggle::after {*/
+/*  display:none;*/
+/*}*/
 
 /*.my-drop-down .dropdown-menu.show {*/
 /*  !*top: var(--ddX)px !important;*!*/

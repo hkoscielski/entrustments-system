@@ -8,7 +8,7 @@ import { EntrustmentAddPanelComponent } from './entrustment-add-panel/entrustmen
 import { EntrustmentPreviewPanelComponent } from './entrustment-preview-panel/entrustment-preview-panel.component';
 import { SuggestionsMainViewComponent } from './suggestions-main-view/suggestions-main-view.component';
 import {AppRoutingModule} from "../app-routing.module";
-import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbAccordionModule, NgbDropdownModule, NgbTypeaheadModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule} from "@angular/forms";
 
 
@@ -18,11 +18,13 @@ import {FormsModule} from "@angular/forms";
   exports: [
     EntrustmentFilterComponent
   ],
-    imports: [
-        CommonModule,
-        AppRoutingModule,
-        NgbDropdownModule,
-        FormsModule
-    ]
+  imports: [
+    CommonModule,
+    AppRoutingModule,
+    NgbDropdownModule,
+    FormsModule,
+    NgbTypeaheadModule,
+    NgbAccordionModule
+  ]
 })
 export class EntrustmentsModule { }
