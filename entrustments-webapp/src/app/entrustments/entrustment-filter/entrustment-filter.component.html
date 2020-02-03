@@ -1,0 +1,44 @@
+
+
+
+<select *ngIf="shouldShowFaculties()" [disabled]="shouldLockFaculties()" class="form-control" [id]="facultySelectId">
+  <option selected disabled hidden>Wydział</option>
+</select>
+<select *ngIf="shouldShowFaculties()" [disabled]="shouldLockFaculties()" class="form-control top-buffer">
+  <option selected disabled hidden>Kierunek</option>
+</select>
+<select class="form-control" [class.top-buffer]="shouldShowFaculties()">
+  <option selected disabled hidden>Rok akademicki</option>
+</select>
+<select class="form-control top-buffer">
+  <option selected disabled hidden>Semestr</option>
+</select>
+<select class="form-control top-buffer">
+  <option selected disabled hidden>Stopień</option>
+</select>
+<select class="form-control top-buffer">
+  <option selected disabled hidden>Specjalność</option>
+</select>
+<select class="form-control top-buffer">
+  <option selected disabled hidden>Kurs</option>
+</select>
+<select *ngIf="isCourseInstructor" class="form-control top-buffer">
+  <option selected disabled hidden>Status</option>
+</select>
+<label class="text-center top-buffer d-block mx-auto">LUB</label>
+<input type="text" class="form-control top-buffer" placeholder="Wpisz kod lub nazwę kursu">
+<input *ngIf="!isCourseInstructor" type="text" class="form-control top-buffer" placeholder="Wpisz prowadzącego">
+<div *ngIf="!isCourseInstructor" class="form-check top-buffer">
+  <input class="form-check-input" type="checkbox" value="" id="checkboxId">
+  <label class="form-check-label" for="checkboxId">
+    Pokaż kursy bez powierzeń
+  </label>
+</div>
+<div class="row top-buffer">
+  <div class="col">
+    <button class="btn btn-secondary" style="width: 100%" (click)="onSearchClicked()">Szukaj</button>
+  </div>
+  <div class="col">
+    <button class="btn btn-secondary" style="width: 100%; height: 100%; font-size: small" (click)="onClearFiltersClicked()">Czyść filtry</button>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="container" style="width: 35%">
+  <div class="card card-outline-secondary mx-auto shadow-sm rounded">
+    <div class="card-header-pills" style="margin: 10px; font-size: medium; text-align: center; ">Podgląd powierzenia</div>
+    <div class="card-body" style="padding: 1rem; border-top: 1px solid rgb(200, 200, 200)">
+      <div>
+        <label style="margin: 0">W08</label>
+        <span style="margin: 0"> &#9679; </span>
+        <label style="margin: 0">II st.</label>
+        <span style="margin: 0"> &#9679; </span>
+        <label style="margin: 0">Informatyka</label>
+        <span style="margin: 0"> &#9679; </span>
+        <label style="margin: 0">Inżynieria Oprogramowania</label>
+      </div>
+      <div>
+        <label style="margin: 0">INZ003854P</label>
+        <span style="margin: 0"> &#9679; </span>
+        <label style="margin: 0">Projektowanie sys. informat.</label>
+      </div>
+      <div>
+        <label style="margin: 0">Prowadzący: Dr inż. Bogumiła Hnatkowska</label>
+      </div>
+      <div>
+        <div class="row" style="width: 100%; margin-top: 20px">
+          <label for="liczbaGodzinId" class="col col-form-label">Liczba godzin:</label>
+          <div class="col">
+            <input type="number" class="form-control" style="text-align: center" id="liczbaGodzinId" (keyup)="onValueChanged()" [(ngModel)]="numberOfHours">
+          </div>
+          <label class="col col-form-label" style="margin-left: -20px; color: blue">{{ this.difference > 0 ? "+"+ this.difference : difference}}</label>
+        </div>
+        <div style="margin-top: 20px">
+          <span>Status: </span>
+          <label style="margin: 0; color: forestgreen;">ZATWIERDZONE</label>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 5%">
+        <div class="col">
+          <button class="btn btn-secondary top-buffer d-block mx-auto" style="width: 80%;" [disabled]="!wasChanged()" (click)="onSuggestClicked()">Zaproponuj zmiany</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-secondary top-buffer d-block mx-auto" style="width: 80%" [disabled]="wasChanged()" (click)="onAcceptClicked()">Akceptuj bez zmian</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-secondary top-buffer d-block mx-auto" style="width: 80%" [disabled]="!wasChanged()" (click)="onUndoClicked()">Cofnij zmiany</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-secondary top-buffer d-block mx-auto" style="width: 80%" [disabled]="wasChanged()" (click)="onDiscardClicked()">Odrzuć</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="d-block float-md-right btn-link top-buffer" style="border: none; background: none" (click)="onBackClicked()">< Powrót</button>
+</div>

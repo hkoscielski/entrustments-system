@@ -5,16 +5,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MainMenuComponent } from './main-menu/main-menu.component';
+import { EntrustmentsModule } from './entrustments/entrustments.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MainMenuComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    EntrustmentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

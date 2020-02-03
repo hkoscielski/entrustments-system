@@ -1,0 +1,15 @@
+:root {
+  --ddX: 0;
+  --ddY: 0;
+}
+
+.dropdown-toggle::after {
+  display:none;
+}
+
+/*.my-drop-down .dropdown-menu.show {*/
+/*  !*top: var(--ddX)px !important;*!*/
+/*  !*left: var(--ddY)px !important;*!*/
+/*  !*top: 100px+var(--ddY)px !important;*!*/
+/*  !*left: 200px+var(--ddX)px !important;*!*/
+/*}*/
