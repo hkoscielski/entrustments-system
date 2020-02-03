@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-entrustment-filter',
@@ -6,10 +6,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./entrustment-filter.component.css']
 })
 export class EntrustmentFilterComponent implements OnInit {
+  facultySelectId: Selection;
+  @Input() isCourseInstructor = false;
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  onSearchClicked() {
+  }
+
+  onClearFiltersClicked() {
+  }
+
+  shouldShowFaculties() {
+    return true;
+  }
+
+  shouldLockFaculties() {
+    return !this.isCourseInstructor;
+  }
 }

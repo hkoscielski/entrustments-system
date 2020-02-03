@@ -534,5 +534,6 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <button class="btn btn-outline-primary" style="margin: 10px" routerLink="/menu">Menu</button>
+<label *ngIf="isLogged" class="float-right" style="margin: 20px">Zalogowano jako {{ userName }}</label>
 
 <router-outlet></router-outlet>

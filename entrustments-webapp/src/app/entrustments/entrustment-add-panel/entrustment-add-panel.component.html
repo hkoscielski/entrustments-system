@@ -1,1 +1,43 @@
-<p>entrustment-add-panel works!</p>
+<div class="container" style="width: 50%">
+  <div class="card card-outline-secondary mx-auto shadow-sm rounded">
+    <div class="card-header-pills" style="margin: 10px; font-size: medium; text-align: center; ">Dodawanie powierzenia</div>
+    <div class="card-body" style="padding: 1rem; border-top: 1px solid rgb(200, 200, 200)">
+      <div class="row">
+        <div class="col">
+          <select class="form-control">
+            <option selected disabled hidden>Rok akademicki</option>
+          </select>
+          <select class="form-control top-buffer">
+            <option selected disabled hidden>Semestr</option>
+          </select>
+          <select class="form-control top-buffer">
+            <option selected disabled hidden>Stopień</option>
+          </select>
+          <select class="form-control top-buffer">
+            <option selected disabled hidden>Specjalność</option>
+          </select>
+          <select class="form-control top-buffer">
+            <option selected disabled hidden>Kurs</option>
+          </select>
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" style="text-align: center" placeholder="Wpisz kod lub nazwę kursu">
+          <div class="row top-buffer" style="margin-top: 10%">
+            <label for="prowadzacyId" class="col-5 col-form-label">Prowadzący:</label>
+            <div class="col-7">
+              <input type="text" class="form-control" id="prowadzacyId" style="text-align: center" placeholder="Prowadzący">
+            </div>
+          </div>
+          <div class="row top-buffer">
+            <label for="liczbaGodzinId" class="col-5 col-form-label">Liczba godzin:</label>
+            <div class="col-7">
+              <input type="number" class="form-control" style="text-align: center" id="liczbaGodzinId" >
+            </div>
+          </div>
+          <button class="btn btn-secondary top-buffer d-flex mx-auto" style="margin-top: 10%">Dodaj</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="d-block float-md-right btn-link top-buffer" style="border: none; background: none" (click)="onBackClicked()">< Anuluj</button>
+</div>

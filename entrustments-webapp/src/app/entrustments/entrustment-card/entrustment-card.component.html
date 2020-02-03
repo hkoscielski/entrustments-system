@@ -1,1 +1,71 @@
-<p>entrustment-card works!</p>
+<!--<div class="card card-outline-secondary mx-auto shadow-sm rounded" style="margin: 10px; width: 95%">-->
+<!--  <div class="card-body" style="padding: 10px">-->
+<!--    <div>-->
+<!--      <label style="margin: 0">kod wydziału</label>-->
+<!--      <span style="margin: 0"> &#9679; </span>-->
+<!--      <label style="margin: 0">stopień</label>-->
+<!--      <span style="margin: 0"> &#9679; </span>-->
+<!--      <label style="margin: 0">kierunek</label>-->
+<!--      <span style="margin: 0"> &#9679; </span>-->
+<!--      <label style="margin: 0">specjalność</label>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label style="margin: 0">kod kursu</label>-->
+<!--      <span style="margin: 0"> &#9679; </span>-->
+<!--      <label style="margin: 0">nazwa kursu</label>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label style="margin: 0">Prowadzący</label>-->
+<!--    </div>-->
+<!--    <div class="row">-->
+<!--      <div class="col">-->
+<!--        <label style="margin: 0">Liczba godzin: xxx</label>-->
+<!--      </div>-->
+<!--      <div class="col">-->
+<!--        <label style="margin: 0">Status: yyy</label>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css">
+<div class="card card-outline-secondary mx-auto shadow-sm rounded my-drop-down" ngbDropdown display="dynamic" placement="bottom" style="margin: 10px; width: 95%;">
+  <a class="card-body" role="button" style="padding: 10px" (click)="onCardClicked($event)">
+    <div>
+      <label style="margin: 0">W08</label>
+      <span style="margin: 0"> &#9679; </span>
+      <label style="margin: 0">II st.</label>
+      <span style="margin: 0"> &#9679; </span>
+      <label style="margin: 0">Informatyka</label>
+      <span style="margin: 0"> &#9679; </span>
+      <label style="margin: 0">Inżynieria Oprogramowania</label>
+      <a class="btn float-right" *ngIf="isCardEditable()"><i class="fas fa-pencil-alt"></i></a>
+<!--      <li class="float-right" ngbDropdown display="dynamic" placement="bottom-right">-->
+<!--        <a style="cursor: pointer" ngbDropdownToggle id="navbarDropdown3" role="button"></a>-->
+
+<!--      </li>-->
+    </div>
+    <div>
+      <label style="margin: 0">INZ003854P</label>
+      <span style="margin: 0"> &#9679; </span>
+      <label style="margin: 0">Projektowanie sys. informat.</label>
+    </div>
+    <div>
+      <label style="margin: 0">Prowadzący: Dr inż. Bogumiła Hnatkowska</label>
+    </div>
+    <div class="row">
+      <div class="col">
+        <span>Liczba godzin: </span>
+        <label style="margin: 0">90</label>
+      </div>
+      <div class="col">
+        <span>Status: </span>
+        <label style="margin: 0; color: forestgreen;">ZATWIERDZONE</label>
+      </div>
+    </div>
+  </a>
+  <div ngbDropdownMenu class="dropdown-menu my-drop-down" style="background-color: lightgrey">
+    <button ngbDropdownItem (click)="onEditClicked()">Zaproponuj zmianę</button>
+    <button ngbDropdownItem (click)="onAcceptClicked()">Zaakceptuj</button>
+    <button ngbDropdownItem (click)="onDiscardClicked()">Odrzuć</button>
+  </div>
+</div>
