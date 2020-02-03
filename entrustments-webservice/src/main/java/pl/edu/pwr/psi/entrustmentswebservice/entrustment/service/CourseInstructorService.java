@@ -18,8 +18,8 @@ public class CourseInstructorService {
 	@Autowired
 	private ComplexModelMapper complexModelMapper;
 
-	public List<CourseInstructorResponseDTO> findAllCourseInstructors() {
-		List<CourseInstructor> courseInstructors = courseInstructorRepository.findAll();
+	public List<CourseInstructorResponseDTO> findCourseInstructorsForFieldOfStudy(long fieldOfStudyId) {
+		List<CourseInstructor> courseInstructors = courseInstructorRepository.findByIdFieldOfStudy(fieldOfStudyId);
 		return complexModelMapper.mapAll(courseInstructors, CourseInstructorResponseDTO.class);
 	}
 }

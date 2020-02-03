@@ -2,10 +2,7 @@ package pl.edu.pwr.psi.entrustmentswebservice.common.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.CourseInstructorResponseDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.service.CourseInstructorService;
 import pl.edu.pwr.psi.entrustmentswebservice.studysystem.service.StudySystemService;
@@ -22,9 +19,9 @@ public class CourseInstructorController {
 	@Autowired
 	private StudySystemService studySystemService;
 
-	@GetMapping("/course-instructors")
-	public ResponseEntity<List<CourseInstructorResponseDTO>> getCourseInstructors() {
-		List<CourseInstructorResponseDTO> courseInstructors = courseInstructorService.findAllCourseInstructors();
+	@GetMapping("/fields-of-study/{fieldOfStudyId}/course-instructors")
+	public ResponseEntity<List<CourseInstructorResponseDTO>> getCourseInstructors(@PathVariable long fieldOfStudyId) {
+		List<CourseInstructorResponseDTO> courseInstructors = courseInstructorService.findCourseInstructorsForFieldOfStudy(fieldOfStudyId);
 		return ResponseEntity.ok(courseInstructors);
 	}
 
