@@ -7,6 +7,14 @@
     "email": "mateusz.nowy@pwr.edu.pl",
     "username": "pwr555555",
     "password": "password5",
+    "faculty": {
+      "symbol": "W08",
+      "name": "Wydział Informatyki i Zarządzania"
+    },
+    "fieldOfStudy": {
+      "name": "Informatyka",
+      "shortName": "inf"
+    },
     "academicDegree": "dr",
     "didacticForms": [
       "W", "C", "L", "P", "PDI"
@@ -27,6 +35,14 @@
     "email": "natalia.nowa@pwr.edu.pl",
     "username": "pwr666666",
     "password": "password6",
+    "faculty": {
+      "symbol": "W08",
+      "name": "Wydział Informatyki i Zarządzania"
+    },
+    "fieldOfStudy": {
+      "name": "Informatyka",
+      "shortName": "inf"
+    },
     "academicDegree": "mgr",
     "didacticForms": [
       "C", "L", "P"

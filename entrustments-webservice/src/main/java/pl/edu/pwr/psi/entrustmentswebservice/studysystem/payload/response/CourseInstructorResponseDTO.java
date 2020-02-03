@@ -43,6 +43,12 @@ public class CourseInstructorResponseDTO {
 	@NotBlank
 	private String password;
 
+	@NotNull
+	private FacultyResponseDTO faculty;
+
+	@NotNull
+	private FieldOfStudyResponseDTO fieldOfStudy;
+
 	@NotBlank
 	private String academicDegree;
 
@@ -57,6 +63,32 @@ public class CourseInstructorResponseDTO {
 
 	@NotNull
 	private Map<String, String> additionalAttributes;
+
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Getter
+	@Setter
+	public static class FacultyResponseDTO {
+
+		@NotBlank
+		private String symbol;
+
+		@NotBlank
+		private String name;
+	}
+
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Getter
+	@Setter
+	public static class FieldOfStudyResponseDTO {
+
+		@NotBlank
+		private String name;
+
+		@NotBlank
+		private String shortName;
+	}
 
 	@NoArgsConstructor
 	@AllArgsConstructor

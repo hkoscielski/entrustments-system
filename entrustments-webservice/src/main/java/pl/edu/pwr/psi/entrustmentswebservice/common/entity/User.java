@@ -29,4 +29,8 @@ public class User {
 
 	@Column(nullable = false)
 	private String password;
+
+	@ManyToOne
+	@JoinColumn(name = "id_field_of_study", referencedColumnName = "id")
+	private FieldOfStudy fieldOfStudy;
 }

@@ -98,11 +98,14 @@ public class StudySystemService {
 						.filter(s -> instructor.getDidacticForms().contains(s.getKey()))
 						.map(Map.Entry::getValue)
 						.collect(Collectors.toSet());
+				FieldOfStudy fieldOfStudy = fieldOfStudyRepository.findByShortNameAndFacultySymbol(instructor.getFieldOfStudy().getShortName(), instructor.getFaculty().getSymbol())
+						.orElseThrow(() -> new ResourceInternalServerError(FieldOfStudy.class.getSimpleName()));
 				User user = User.builder()
 						.id(instructor.getUserId())
 						.email(instructor.getEmail())
 						.username(instructor.getUsername())
 						.password(instructor.getPassword())
+						.fieldOfStudy(fieldOfStudy)
 						.build();
 				usersToSaveOrUpdate.add(user);
 

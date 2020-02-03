@@ -26,6 +26,11 @@
                 <constraints
                         nullable="false" notNullConstraintName="users_password_nn"/>
             </column>
+            <column name="id_field_of_study" type="bigint">
+                <constraints
+                        nullable="true"
+                        referencedTableName="Fields_Of_Study" referencedColumnNames="id" foreignKeyName="users_id_field_of_study_fk"/>
+            </column>
         </createTable>
         <rollback>
             <dropTable tableName="Users"/>
