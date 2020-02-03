@@ -29,12 +29,12 @@ public class StudySystemExternalService {
 						.withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 						.withBodyFile("course_instructors.json")));
 
-		server.stubFor(get(urlMatching("/api/study-plans"))
+		server.stubFor(get(urlMatching("/api/faculties/W08/study-plans"))
 				.atPriority(1)
 				.willReturn(aResponse()
 						.withStatus(HttpStatus.OK.value())
 						.withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-						.withBodyFile("study-plans.json")));
+						.withBodyFile("study_plans_w08.json")));
 	}
 
 	public void startServer() {

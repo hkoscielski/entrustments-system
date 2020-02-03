@@ -1,0 +1,149 @@
+[
+  {
+    "id": 7,
+    "faculty": {
+      "symbol": "W08",
+      "name": "Wydział Informatyki i Zarządzania"
+    },
+    "fieldOfStudy": {
+      "name": "Informatyka",
+      "shortName": "inf"
+    },
+    "specialty": null,
+    "studyLevel": "FIRST_DEGREE",
+    "formOfStudies": "ST",
+    "studyLanguage": "PL",
+    "startAcademicYear": "2020/2021",
+    "startSemesterName": "WINTER",
+    "semesters": [
+      {
+        "id": 5,
+        "academicYear": "2020/2021",
+        "semesterNumber": 1,
+        "semesterName": "WINTER",
+        "courses": [
+          {
+            "module": null,
+            "code": "FZP1061C",
+            "name": "Fizyka 1.1B",
+            "didacticForm": "C",
+            "zzuHours": 15
+          },
+          {
+            "module": null,
+            "code": "FZP1061W",
+            "name": "Fizyka 1.1B",
+            "didacticForm": "W",
+            "zzuHours": 30
+          },
+          {
+            "module": null,
+            "code": "INZ1519L",
+            "name": "Podstawy programowania",
+            "didacticForm": "L",
+            "zzuHours": 15
+          },
+          {
+            "module": null,
+            "code": "INZ1518C",
+            "name": "Logika dla informatyków",
+            "didacticForm": "C",
+            "zzuHours": 30
+          },
+          {
+            "module": null,
+            "code": "INZ1518W",
+            "name": "Logika dla informatyków",
+            "didacticForm": "W",
+            "zzuHours": 30
+          },
+          {
+            "module": null,
+            "code": "INZ1519W",
+            "name": "Podstawy programowania",
+            "didacticForm": "W",
+            "zzuHours": 30
+          },
+          {
+            "module": null,
+            "code": "INZ1519C",
+            "name": "Podstawy programowania",
+            "didacticForm": "C",
+            "zzuHours": 30
+          },
+          {
+            "module": null,
+            "code": "INZ1726W",
+            "name": "Organizacja systemów komputerowych",
+            "didacticForm": "W",
+            "zzuHours": 30
+          },
+          {
+            "module": null,
+            "code": "INZ1726W",
+            "name": "Organizacja systemów komputerowych",
+            "didacticForm": "C",
+            "zzuHours": 15
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "academicYear": "2020/2021",
+        "semesterNumber": 2,
+        "semesterName": "SUMMER",
+        "courses": [
+          {
+            "module": null,
+            "code": "FZP2079L",
+            "name": "Fizyka 3.1",
+            "didacticForm": "L",
+            "zzuHours": 15
+          },
+          {
+            "module": null,
+            "code": "INZ1516W",
+            "name": "Podstawy elektroniki i miernictwa",
+            "didacticForm": "W",
+            "zzuHours": 30
+          },
+          {
+            "module": null,
+            "code": "INZ1517L",
+            "name": "Algorytmy i struktury danych",
+            "didacticForm": "L",
+            "zzuHours": 30
+          },
+          {
+            "module": null,
+            "code": "INZ1521L",
+            "name": "Systemy operacyjne",
+            "didacticForm": "L",
+            "zzuHours": 30
+          },
+          {
+            "module": null,
+            "code": "INZ1521W",
+            "name": "Systemy operacyjne",
+            "didacticForm": "W",
+            "zzuHours": 30
+          },
+          {
+            "module": null,
+            "code": "MAZ1500C",
+            "name": "Matematyka dyskretna",
+            "didacticForm": "C",
+            "zzuHours": 30
+          },
+          {
+            "module": null,
+            "code": "MAZ1500W",
+            "name": "Matematyka dyskretna",
+            "didacticForm": "W",
+            "zzuHours": 45
+          }
+        ]
+      }
+    ]
+  }
+]
