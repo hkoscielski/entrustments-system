@@ -1,6 +1,8 @@
 package pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity;
 
 import lombok.*;
+import pl.edu.pwr.psi.entrustmentswebservice.common.entity.Course;
+import pl.edu.pwr.psi.entrustmentswebservice.common.entity.CourseInstructor;
 
 import javax.persistence.*;
 

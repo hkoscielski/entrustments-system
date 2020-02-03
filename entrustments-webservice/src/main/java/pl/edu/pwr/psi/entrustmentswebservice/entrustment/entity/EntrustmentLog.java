@@ -3,6 +3,7 @@ package pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import pl.edu.pwr.psi.entrustmentswebservice.common.entity.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

@@ -3,9 +3,15 @@ package pl.edu.pwr.psi.entrustmentswebservice.entrustment.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.edu.pwr.psi.entrustmentswebservice.common.entity.Course;
+import pl.edu.pwr.psi.entrustmentswebservice.common.entity.CourseInstructor;
+import pl.edu.pwr.psi.entrustmentswebservice.common.entity.User;
 import pl.edu.pwr.psi.entrustmentswebservice.common.exception.ResourceInternalServerError;
 import pl.edu.pwr.psi.entrustmentswebservice.common.exception.ResourceNotFoundException;
 import pl.edu.pwr.psi.entrustmentswebservice.common.mapping.ComplexModelMapper;
+import pl.edu.pwr.psi.entrustmentswebservice.common.repository.CourseInstructorRepository;
+import pl.edu.pwr.psi.entrustmentswebservice.common.repository.CourseRepository;
+import pl.edu.pwr.psi.entrustmentswebservice.common.repository.UserRepository;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.*;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.request.EntrustmentRequestDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentCriteriaDTO;
@@ -60,7 +66,7 @@ public class EntrustmentService {
 	public EntrustmentResponseDTO createEntrustment(long semesterId, EntrustmentRequestDTO entrustment) {
 		User user = userRepository.findByEmail("anna.sekretarz@pwr.edu.pl")
 				.orElseThrow(() -> new ResourceInternalServerError("User"));
-		EntrustmentStatus initialEntrustmentStatus = entrustmentStatusRepository.findByName("Zaproponowane")
+		EntrustmentStatus initialEntrustmentStatus = entrustmentStatusRepository.findByCode(EntrustmentStatus.StatusCode.PROPOSED)
 				.orElseThrow(() -> new ResourceInternalServerError("EntrustmentStatus"));
 		CourseInstructor instructor = courseInstructorRepository.findById(entrustment.getCourseInstructorId())
 				.orElseThrow(() -> new ResourceNotFoundException("Course Instructor", "id", String.valueOf(entrustment.getCourseInstructorId())));

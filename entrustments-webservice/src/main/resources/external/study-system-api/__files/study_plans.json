@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "faculty": {
+      "symbol": "W08",
+      "name": "Wydział Informatyki i Zarządzania"
+    },
+    "fieldOfStudy": {
+      "name": "Informatyka",
+      "shortName": "Inf"
+    },
+    "specialty": {}
+  }
+]

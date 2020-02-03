@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="hkoscielski" id="08-insert-into-study_languages">
+        <insert tableName="Study_Languages">
+            <column name="code">PL</column>
+            <column name="name">Polski</column>
+        </insert>
+        <insert tableName="Study_Languages">
+            <column name="code">EN</column>
+            <column name="name">Angielski</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

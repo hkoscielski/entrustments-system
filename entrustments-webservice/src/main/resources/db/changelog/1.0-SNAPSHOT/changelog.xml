@@ -6,14 +6,23 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <include file="01-create-table-academic_degrees.xml" relativeToChangelogFile="true"/>
+    <include file="01-insert-into-academic_degrees.xml" relativeToChangelogFile="true"/>
     <include file="02-create-table-didactic_forms.xml" relativeToChangelogFile="true"/>
+    <include file="02-insert-into-didactic_forms.xml" relativeToChangelogFile="true"/>
     <include file="03-create-table-positions.xml" relativeToChangelogFile="true"/>
+    <include file="03-insert-into-positions.xml" relativeToChangelogFile="true"/>
     <include file="04-create-table-entrustment_statuses.xml" relativeToChangelogFile="true"/>
+    <include file="04-insert-into-entrustment_statuses.xml" relativeToChangelogFile="true"/>
     <include file="05-create-table-faculties.xml" relativeToChangelogFile="true"/>
+    <include file="05-insert-into-faculties.xml" relativeToChangelogFile="true"/>
     <include file="06-create-table-forms_of_studies.xml" relativeToChangelogFile="true"/>
+    <include file="06-insert-into-forms_of_studies.xml" relativeToChangelogFile="true"/>
     <include file="07-create-table-study_levels.xml" relativeToChangelogFile="true"/>
+    <include file="07-insert-into-study_levels.xml" relativeToChangelogFile="true"/>
     <include file="08-create-table-study_languages.xml" relativeToChangelogFile="true"/>
+    <include file="08-insert-into-study_languages.xml" relativeToChangelogFile="true"/>
     <include file="09-create-table-semester_names.xml" relativeToChangelogFile="true"/>
+    <include file="09-insert-into-semester_names.xml" relativeToChangelogFile="true"/>
     <include file="10-create-table-fields_of_study.xml" relativeToChangelogFile="true"/>
     <include file="11-create-table-specialties.xml" relativeToChangelogFile="true"/>
     <include file="12-create-table-study_plans.xml" relativeToChangelogFile="true"/>

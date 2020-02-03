@@ -6,8 +6,10 @@ import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.EntrustmentStatu
 
 import java.util.Optional;
 
+import static pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.EntrustmentStatus.StatusCode;
+
 @Repository
 public interface EntrustmentStatusRepository extends CrudRepository<EntrustmentStatus, Long> {
 
-	Optional<EntrustmentStatus> findByName(String name);
+	Optional<EntrustmentStatus> findByCode(StatusCode code);
 }

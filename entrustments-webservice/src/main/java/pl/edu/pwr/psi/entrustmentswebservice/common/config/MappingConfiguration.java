@@ -6,7 +6,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import pl.edu.pwr.psi.entrustmentswebservice.common.entity.*;
 import pl.edu.pwr.psi.entrustmentswebservice.common.mapping.ComplexModelMapper;
+import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.CourseInstructorResponseDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.CourseResponseDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.FieldOfStudyResponseDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.SemesterResponseDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.*;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.*;
 
