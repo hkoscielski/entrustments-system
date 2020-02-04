@@ -57,7 +57,7 @@ public class MappingConfiguration {
 		Converter<Set<Agreement>, Set<CourseInstructorResponseDTO.AgreementResponseDTO>> agreementsToDTOConverter = getSetAgreementToDTOConverter();
 
 		return mapping -> {
-			mapping.map(sg -> sg.getAcademicDegree().getName(), CourseInstructorResponseDTO::setAcademicDegree);
+			mapping.map(sg -> sg.getAcademicDegree().getShortName(), CourseInstructorResponseDTO::setAcademicDegree);
 			mapping.using(agreementsToDTOConverter).map(CourseInstructor::getAgreements, CourseInstructorResponseDTO::setAgreements);
 			mapping.using(courseInstructorTypeConverter).map(sg -> sg, CourseInstructorResponseDTO::setCourseInstructorType);
 			mapping.using(additionalAttrConverter).map(sg -> sg, CourseInstructorResponseDTO::setAdditionalAttributes);
@@ -72,7 +72,7 @@ public class MappingConfiguration {
 		Converter<Set<Agreement>, Set<CourseInstructorResponseDTO.AgreementResponseDTO>> agreementsToDTOConverter = getSetAgreementToDTOConverter();
 
 		return mapping -> {
-			mapping.map(sg -> sg.getAcademicDegree().getName(), CourseInstructorResponseDTO::setAcademicDegree);
+			mapping.map(sg -> sg.getAcademicDegree().getShortName(), CourseInstructorResponseDTO::setAcademicDegree);
 			mapping.using(agreementsToDTOConverter).map(CourseInstructor::getAgreements, CourseInstructorResponseDTO::setAgreements);
 			mapping.using(courseInstructorTypeConverter).map(sg -> sg, CourseInstructorResponseDTO::setCourseInstructorType);
 			mapping.using(additionalAttrConverter).map(sg -> sg, CourseInstructorResponseDTO::setAdditionalAttributes);
@@ -93,7 +93,7 @@ public class MappingConfiguration {
 		Converter<Set<Agreement>, Set<CourseInstructorResponseDTO.AgreementResponseDTO>> agreementsToDTOConverter = getSetAgreementToDTOConverter();
 
 		return mapping -> {
-			mapping.map(sg -> sg.getAcademicDegree().getName(), CourseInstructorResponseDTO::setAcademicDegree);
+			mapping.map(sg -> sg.getAcademicDegree().getShortName(), CourseInstructorResponseDTO::setAcademicDegree);
 			mapping.using(agreementsToDTOConverter).map(CourseInstructor::getAgreements, CourseInstructorResponseDTO::setAgreements);
 			mapping.using(courseInstructorTypeConverter).map(sg -> sg, CourseInstructorResponseDTO::setCourseInstructorType);
 			mapping.using(additionalAttrConverter).map(sg -> sg, CourseInstructorResponseDTO::setAdditionalAttributes);
@@ -180,7 +180,7 @@ public class MappingConfiguration {
 						mappingContext.getSource().getId(),
 						mappingContext.getSource().getFirstName(),
 						mappingContext.getSource().getSurname(),
-						mappingContext.getSource().getAcademicDegree().getName()
+						mappingContext.getSource().getAcademicDegree().getShortName()
 				);
 
 		return mapping -> {
