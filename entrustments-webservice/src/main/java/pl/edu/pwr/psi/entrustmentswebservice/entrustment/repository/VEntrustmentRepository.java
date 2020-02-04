@@ -15,8 +15,8 @@ public interface VEntrustmentRepository extends JpaRepository<VEntrustment, Long
 			"join ve.id.entrustment on ve.id.version = ve.id.entrustment.lastVersion " +
 			"where (:academicYear is null or ve.id.entrustment.entrustmentPlan.semester.academicYear = :academicYear) " +
 			"and (:semester is null or ve.id.entrustment.entrustmentPlan.semester.semesterNumber = :semester) " +
-			"and (:studyLevel is null or ve.id.entrustment.entrustmentPlan.semester.studyPlan.studyLevel.name = :studyLevel) " +
-			"and (:specialty is null or ve.id.entrustment.entrustmentPlan.semester.studyPlan.specialty.name = :specialty) " +
+			"and (:studyLevel is null or lower(ve.id.entrustment.entrustmentPlan.semester.studyPlan.studyLevel.code) = lower(:studyLevel)) " +
+			"and (:specialty is null or ve.id.entrustment.entrustmentPlan.semester.studyPlan.specialty.shortName = :specialty) " +
 			"and (:courseCode is null or ve.course.code = :courseCode)")
 	List<VEntrustment> findAllEntrustmentsByPlanAndFilters(
 			@Param("academicYear") String academicYear,
