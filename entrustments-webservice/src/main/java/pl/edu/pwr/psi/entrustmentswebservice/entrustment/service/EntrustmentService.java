@@ -15,6 +15,7 @@ import pl.edu.pwr.psi.entrustmentswebservice.common.repository.UserRepository;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.*;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.request.EntrustmentRequestDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentCriteriaDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentForInstructorCriteriaDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentResponseDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.repository.*;
 
@@ -57,7 +58,23 @@ public class EntrustmentService {
 				entrustmentCriteria.getSemester(),
 				entrustmentCriteria.getStudyLevel(),
 				entrustmentCriteria.getSpecialty(),
-				entrustmentCriteria.getCourseCode()
+				entrustmentCriteria.getCourseCode(),
+				entrustmentCriteria.getCourseInstructorId(),
+				entrustmentCriteria.getEntrustmentStatus()
+		);
+		return complexModelMapper.mapAll(entrustments, EntrustmentResponseDTO.class);
+	}
+
+	@Transactional(readOnly = true)
+	public List<EntrustmentResponseDTO> findAllEntrustmentsForCourseInstructor(Long courseInstructorId, EntrustmentForInstructorCriteriaDTO entrustmentCriteria) {
+		List<VEntrustment> entrustments = ventrustmentRepository.findAllEntrustmentsByPlanAndFilters(
+				entrustmentCriteria.getAcademicYear(),
+				entrustmentCriteria.getSemester(),
+				entrustmentCriteria.getStudyLevel(),
+				entrustmentCriteria.getSpecialty(),
+				entrustmentCriteria.getCourseCode(),
+				courseInstructorId,
+				entrustmentCriteria.getEntrustmentStatus()
 		);
 		return complexModelMapper.mapAll(entrustments, EntrustmentResponseDTO.class);
 	}

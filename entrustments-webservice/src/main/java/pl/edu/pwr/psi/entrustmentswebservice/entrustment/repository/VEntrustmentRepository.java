@@ -19,13 +19,17 @@ public interface VEntrustmentRepository extends JpaRepository<VEntrustment, VEnt
 			"and (:semester is null or ve.id.entrustment.entrustmentPlan.semester.semesterNumber = :semester) " +
 			"and (:studyLevel is null or lower(ve.id.entrustment.entrustmentPlan.semester.studyPlan.studyLevel.code) = lower(:studyLevel)) " +
 			"and (:specialty is null or ve.id.entrustment.entrustmentPlan.semester.studyPlan.specialty.shortName = :specialty) " +
-			"and (:courseCode is null or ve.course.code = :courseCode)")
+			"and (:courseCode is null or ve.course.code = :courseCode) " +
+			"and (:courseInstructorId is null or ve.courseInstructor.id = :courseInstructorId) " +
+			"and (:status is null or ve.entrustmentStatus = :status)")
 	List<VEntrustment> findAllEntrustmentsByPlanAndFilters(
 			@Param("academicYear") String academicYear,
 			@Param("semester") Integer semester,
 			@Param("studyLevel") String studyLevel,
 			@Param("specialty") String specialty,
-			@Param("courseCode") String courseCode
+			@Param("courseCode") String courseCode,
+			@Param("courseInstructorId") Long courseInstructorId,
+			@Param("status") String status
 	);
 
 	Optional<VEntrustment> findByIdEntrustmentIdAndIdVersion(long entrustmentId, int version);

@@ -9,13 +9,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class EntrustmentCriteriaDTO {
+public class EntrustmentForInstructorCriteriaDTO {
 
 	private String academicYear;
 	private Integer semester;
 	private String studyLevel;
 	private String specialty;
 	private String courseCode;
-	private Long courseInstructorId;
 	private String entrustmentStatus;
 }

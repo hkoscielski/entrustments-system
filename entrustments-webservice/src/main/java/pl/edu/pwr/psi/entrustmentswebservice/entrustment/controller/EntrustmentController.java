@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.request.EntrustmentRequestDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentCriteriaDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentForInstructorCriteriaDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentResponseDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.service.EntrustmentService;
 
@@ -19,6 +20,15 @@ public class EntrustmentController {
 
 	@Autowired
 	private EntrustmentService entrustmentService;
+
+	@GetMapping("/course-instructors/{courseInstructorId}/entrustments")
+	public ResponseEntity<List<EntrustmentResponseDTO>> getActualEntrustmentsForCourseInstructor(
+			@PathVariable Long courseInstructorId,
+			EntrustmentForInstructorCriteriaDTO entrustmentCriteria
+	) {
+		List<EntrustmentResponseDTO> entrustments = entrustmentService.findAllEntrustmentsForCourseInstructor(courseInstructorId, entrustmentCriteria);
+		return ResponseEntity.ok(entrustments);
+	}
 
 	@GetMapping("/entrustments")
 	public ResponseEntity<List<EntrustmentResponseDTO>> getActualEntrustments(EntrustmentCriteriaDTO entrustmentCriteria) {
