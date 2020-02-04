@@ -37,6 +37,11 @@ public class EntrustmentController {
 		return ResponseEntity.ok(entrustments);
 	}
 
+	@GetMapping("/course-instructors/{courseInstructorId}/entrustments/hours")
+	public ResponseEntity<Integer> getEntrustedHours(@PathVariable Long courseInstructorId) {
+		return ResponseEntity.ok(entrustmentService.findSumOfEntrustmentsHoursForCourseInstructor(courseInstructorId));
+	}
+
 	@PostMapping("/semesters/{semesterId}/entrustments")
 	public ResponseEntity<Object> createEntrustment(
 			@PathVariable Long semesterId,
@@ -72,10 +77,5 @@ public class EntrustmentController {
 	public ResponseEntity<Object> rejectEntrustment(@PathVariable Long semesterId, @PathVariable Long entrustmentId) {
 		entrustmentService.rejectEntrustment(semesterId, entrustmentId);
 		return ResponseEntity.noContent().build();
-	}
-
-	@GetMapping("/entrustments/hours")
-	public ResponseEntity<Integer> getSum(@RequestParam("courseInstructorId") Long courseInstructorId) {
-		return ResponseEntity.ok(entrustmentService.findSumOfEntrustmentsHoursForCourseInstructor(courseInstructorId));
 	}
 }
