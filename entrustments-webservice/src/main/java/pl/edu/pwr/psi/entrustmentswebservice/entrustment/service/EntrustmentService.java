@@ -98,4 +98,48 @@ public class EntrustmentService {
 		entrustmentLogRepository.save(entrustmentLog);
 		return complexModelMapper.map(ventrustmentCreated, EntrustmentResponseDTO.class);
 	}
+
+	@Transactional
+	public void acceptEntrustment(Long semesterId, Long entrustmentId) {
+		EntrustmentStatus acceptedEntrustmentStatus = entrustmentStatusRepository.findByCode(EntrustmentStatus.StatusCode.ACCEPTED)
+				.orElseThrow(() -> new ResourceInternalServerError(EntrustmentStatus.class.getSimpleName()));
+
+		changeEntrustmentStatus(entrustmentId, acceptedEntrustmentStatus);
+	}
+
+	@Transactional
+	public void rejectEntrustment(Long semesterId, Long entrustmentId) {
+		EntrustmentStatus acceptedEntrustmentStatus = entrustmentStatusRepository.findByCode(EntrustmentStatus.StatusCode.REJECTED)
+				.orElseThrow(() -> new ResourceInternalServerError(EntrustmentStatus.class.getSimpleName()));
+
+		changeEntrustmentStatus(entrustmentId, acceptedEntrustmentStatus);
+	}
+
+	private void changeEntrustmentStatus(long entrustmentId, EntrustmentStatus acceptedEntrustmentStatus) {
+		User user = userRepository.findByEmail("jan.kowalski@pwr.edu.pl")
+				.orElseThrow(() -> new ResourceInternalServerError(User.class.getSimpleName()));
+		Entrustment entrustment = entrustmentRepository.findById(entrustmentId)
+				.map(e -> e.setLastVersion(e.getLastVersion() + 1))
+				.orElseThrow(() -> new ResourceNotFoundException(Entrustment.class.getName(), "id", String.valueOf(entrustmentId)));
+		VEntrustment ventrustment = ventrustmentRepository.findByIdEntrustmentIdAndIdVersion(entrustment.getId(), entrustment.getLastVersion() - 1)
+				.map(ve -> VEntrustment.builder()
+						.id(new VEntrustmentId(entrustment, entrustment.getLastVersion()))
+						.numberOfHours(ve.getNumberOfHours())
+						.course(ve.getCourse())
+						.courseInstructor(ve.getCourseInstructor())
+						.entrustmentStatus(acceptedEntrustmentStatus)
+						.build()
+				)
+				.orElseThrow(() -> new ResourceNotFoundException(VEntrustment.class.getName(), "id", String.valueOf(entrustmentId)));
+		entrustmentRepository.save(entrustment);
+		ventrustmentRepository.save(ventrustment);
+
+		EntrustmentLog entrustmentLog = EntrustmentLog.builder()
+				.entrustment(entrustment)
+				.entrustmentVersion(entrustment.getLastVersion())
+				.user(user)
+				.changeType(EntrustmentLog.ChangeType.U)
+				.build();
+		entrustmentLogRepository.save(entrustmentLog);
+	}
 }

@@ -5,11 +5,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.VEntrustment;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.VEntrustmentId;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface VEntrustmentRepository extends JpaRepository<VEntrustment, Long> {
+public interface VEntrustmentRepository extends JpaRepository<VEntrustment, VEntrustmentId> {
 
 	@Query("select ve from VEntrustment ve " +
 			"join ve.id.entrustment on ve.id.version = ve.id.entrustment.lastVersion " +
@@ -25,4 +27,6 @@ public interface VEntrustmentRepository extends JpaRepository<VEntrustment, Long
 			@Param("specialty") String specialty,
 			@Param("courseCode") String courseCode
 	);
+
+	Optional<VEntrustment> findByIdEntrustmentIdAndIdVersion(long entrustmentId, int version);
 }

@@ -40,4 +40,16 @@ public class EntrustmentController {
 
 		return ResponseEntity.created(location).build();
 	}
+
+	@PutMapping("/semesters/{semesterId}/entrustments/{entrustmentId}/accept")
+	public ResponseEntity<Object> acceptEntrustment(@PathVariable Long semesterId, @PathVariable Long entrustmentId) {
+		entrustmentService.acceptEntrustment(semesterId, entrustmentId);
+		return ResponseEntity.noContent().build();
+	}
+
+	@PutMapping("/semesters/{semesterId}/entrustments/{entrustmentId}/reject")
+	public ResponseEntity<Object> rejectEntrustment(@PathVariable Long semesterId, @PathVariable Long entrustmentId) {
+		entrustmentService.rejectEntrustment(semesterId, entrustmentId);
+		return ResponseEntity.noContent().build();
+	}
 }
