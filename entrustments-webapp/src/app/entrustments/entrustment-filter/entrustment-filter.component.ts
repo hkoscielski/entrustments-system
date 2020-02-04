@@ -2,6 +2,8 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {merge, Observable, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
+import {CourseInstructor, CourseInstructorService} from "../course-instructor.service";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-entrustment-filter',
@@ -17,12 +19,13 @@ export class EntrustmentFilterComponent implements OnInit {
     { code: 'INZ002418S', name: 'Bezpieczeństwo sys.web.i mob.' },
     { code: 'INZ003854W', name: 'Projektowanie sys. informat.' }
   ];
-  readonly courseInstructors: {name: string, hours: number, pensum: number}[] = [
-    { name: 'inż. Konrad Jakubowski', hours: 50, pensum: 100 },
-    { name: 'inż. Hubert Kościelski', hours: 90, pensum: 90 },
-    { name: 'dr inż. Bogumiła Hnatkowska', hours: 120, pensum: 240 },
-    { name: 'dr inż. Artur Wilczek', hours: 180, pensum: 120 }
-  ];
+  courseInstructors: CourseInstructor[];
+  // courseInstructors: {name: string, hours: number, pensum: number}[] = [
+  //   { name: 'inż. Konrad Jakubowski', hours: 50, pensum: 100 },
+  //   { name: 'inż. Hubert Kościelski', hours: 90, pensum: 90 },
+  //   { name: 'dr inż. Bogumiła Hnatkowska', hours: 120, pensum: 240 },
+  //   { name: 'dr inż. Artur Wilczek', hours: 180, pensum: 120 }
+  // ];
   pickedAcademicYear: string;
   readonly academicYears: {name: string}[] = [
     {name: '2014/15'},
@@ -81,6 +84,16 @@ export class EntrustmentFilterComponent implements OnInit {
 
   formatterCourse = (x: {code: string, name: string}) => x.code + ' ' + x.name;
 
+  // searchCourseInstructors = (text$: Observable<string>) => {
+  //   const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+  //   const clicksWithClosedPopup$ = this.clickCourseInstructorsTextBox$.pipe(filter(() => !this.courseInstructorsTextBox.isPopupOpen()));
+  //   const inputFocus$ = this.focusCourseInstructorsTextBox$;
+  //
+  //   return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+  //     map(term => term === '' ? this.courseInstructors
+  //       : this.courseInstructors.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)));
+  // }
+
   searchCourseInstructors = (text$: Observable<string>) => {
     const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
     const clicksWithClosedPopup$ = this.clickCourseInstructorsTextBox$.pipe(filter(() => !this.courseInstructorsTextBox.isPopupOpen()));
@@ -88,14 +101,21 @@ export class EntrustmentFilterComponent implements OnInit {
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
       map(term => term === '' ? this.courseInstructors
-        : this.courseInstructors.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)));
+        : this.courseInstructors.filter(v => v.academicDegree.toLowerCase().concat(' ', v.firstName.toLowerCase(), ' ', v.surname.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
   }
 
-  formatterCourseInstructor = (x: {name: string}) => x.name;
+  formatterCourseInstructor = (x: {academicDegree: string, firstName: string, surname: string}) => `${x.academicDegree} ${x.firstName} ${x.surname}`;
 
-  constructor() { }
+  constructor(private courseInstructorService: CourseInstructorService) { }
 
   ngOnInit() {
+    this.courseInstructorService.findAll(1).subscribe(
+      instructors => {
+        console.log("SUBSCRIBED");
+        this.courseInstructors = instructors;
+        console.log(this.courseInstructors.map(x => `${x.academicDegree} ${x.firstName} ${x.surname}`).toString());
+      }
+    );
   }
 
   onSearchClicked() {

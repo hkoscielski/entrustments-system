@@ -25,18 +25,20 @@
   <option selected disabled hidden>Kurs</option>
 </select>
 <label class="text-center top-buffer d-block mx-auto">LUB</label>
-<input type="text" class="form-control top-buffer" placeholder="Wpisz kod lub nazwę kursu"
+<input type="text" class="form-control top-buffer" [class.is-valid]="modelCourse" placeholder="Wpisz kod lub nazwę kursu"
        [(ngModel)]="modelCourse" [ngbTypeahead]="searchCourses" [resultTemplate]="rtCourse"
        (focus)="focusCoursesTextBox$.next($event.target.value)"
        (click)="clickCoursesTextBox$.next($event.target.value)"
        [inputFormatter]="formatterCourse"
+       [editable]="false"
        #coursesTextBox="ngbTypeahead"/>
 <!--<pre>Model: {{ modelCourse | json }}</pre>-->
-<input [hidden]="isCourseInstructor" type="text" class="form-control top-buffer" placeholder="Wpisz prowadzącego"
+<input [hidden]="isCourseInstructor" type="text" class="form-control top-buffer" [class.picked]="modelCourseInstructor" placeholder="Wpisz prowadzącego"
        [(ngModel)]="modelCourseInstructor" [ngbTypeahead]="searchCourseInstructors" [resultTemplate]="rtCourseInstructor"
        (focus)="focusCourseInstructorsTextBox$.next($event.target.value)"
        (click)="clickCourseInstructorsTextBox$.next($event.target.value)"
        [inputFormatter]="formatterCourseInstructor"
+       [editable]="false"
        #courseInstructorsTextBox="ngbTypeahead"/>
 <!--<pre>Model: {{ modelCourseInstructor | json }}</pre>-->
 <select *ngIf="isCourseInstructor" class="form-control top-buffer">
@@ -56,6 +58,7 @@
   <ngb-highlight [result]="r.code + ' - ' + r.name " [term]="t"></ngb-highlight>
 </ng-template>
 <ng-template ngbPanelContent #rtCourseInstructor let-r="result" let-t="term">
-    <ngb-highlight class="col" [result]="r.name" [term]="t"></ngb-highlight>
-    <span class="col flex-column justify-content-end"><span [ngStyle]="{ color: r.hours > r.pensum ? 'red' : 'green' }"> {{r.hours}}</span> / {{r.pensum}}</span>
+    <ngb-highlight class="col" [result]="r.academicDegree + ' ' + r.firstName  + ' ' + r.surname" [term]="t"></ngb-highlight>
+<!--    <ngb-highlight class="col" [result]="r.name" [term]="t"></ngb-highlight>-->
+<!--    <span class="col flex-column justify-content-end"><span [ngStyle]="{ color: r.hours > r.pensum ? 'red' : 'green' }"> {{r.hours}}</span> / {{r.pensum}}</span>-->
 </ng-template>

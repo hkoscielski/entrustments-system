@@ -3,6 +3,14 @@
   margin-top: 10px;
 }
 
+.picked {
+  box-shadow: 0 0 0 1pt lightgreen;
+}
+
+.picked:focus {
+  box-shadow: 0 0 2pt 2pt lightgreen;
+}
+
 /*::ng-deep .dropdown-menu {*/
 /*  min-width: 350px;*/
 /*}*/
