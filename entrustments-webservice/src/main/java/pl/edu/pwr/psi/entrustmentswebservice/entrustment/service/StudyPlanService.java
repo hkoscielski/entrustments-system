@@ -30,9 +30,9 @@ public class StudyPlanService {
 		return complexModelMapper.mapAll(faculties, FacultyResponseDTO.class);
 	}
 
-	public List<SemesterResponseDTO> findActualSemestersForFaculty(long facultyId) {
+	public List<SemesterResponseDTO> findActualSemestersForFieldOfStudy(long fieldOfStudyId) {
 		int currentStartAcademicYear = DateUtil.getCurrentStartAcademicYear();
-		List<Semester> semesters = semesterRepository.findAllSemestersForFieldOfStudyAfterDate(facultyId, currentStartAcademicYear);
+		List<Semester> semesters = semesterRepository.findAllSemestersForFieldOfStudyAfterDate(fieldOfStudyId, currentStartAcademicYear);
 		return complexModelMapper.mapAll(semesters, SemesterResponseDTO.class);
 	}
 }

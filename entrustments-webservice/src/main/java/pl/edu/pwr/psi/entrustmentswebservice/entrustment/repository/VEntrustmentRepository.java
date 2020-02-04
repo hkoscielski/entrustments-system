@@ -5,11 +5,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.VEntrustment;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.VEntrustmentId;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface VEntrustmentRepository extends JpaRepository<VEntrustment, Long> {
+public interface VEntrustmentRepository extends JpaRepository<VEntrustment, VEntrustmentId> {
 
 	@Query("select ve from VEntrustment ve " +
 			"join ve.id.entrustment on ve.id.version = ve.id.entrustment.lastVersion " +
@@ -25,4 +27,12 @@ public interface VEntrustmentRepository extends JpaRepository<VEntrustment, Long
 			@Param("specialty") String specialty,
 			@Param("courseCode") String courseCode
 	);
+
+	Optional<VEntrustment> findByIdEntrustmentIdAndIdVersion(long entrustmentId, int version);
+
+	@Query("select coalesce(sum(ve.numberOfHours), 0) from VEntrustment ve " +
+			"join ve.id.entrustment on ve.id.entrustment.lastVersion = ve.id.version " +
+			"where ve.courseInstructor.id = :course_instructor_id " +
+			"and ve.entrustmentStatus.code <> 'REJECTED'")
+	int calculateSumOfEntrustedHoursForCourseInstructor(@Param("course_instructor_id") long courseInstructorId);
 }

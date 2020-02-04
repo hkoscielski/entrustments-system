@@ -1,6 +1,7 @@
 package pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 import pl.edu.pwr.psi.entrustmentswebservice.common.entity.Course;
 import pl.edu.pwr.psi.entrustmentswebservice.common.entity.CourseInstructor;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@Accessors(chain = true)
 @Builder
 public class VEntrustment {
 

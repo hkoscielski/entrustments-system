@@ -4,6 +4,8 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Modules")
@@ -25,4 +27,9 @@ public class Module {
 
 	@Column(nullable = false)
 	private String name;
+
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_module")
+	private Set<Course> courses = new HashSet<>();
+
 }

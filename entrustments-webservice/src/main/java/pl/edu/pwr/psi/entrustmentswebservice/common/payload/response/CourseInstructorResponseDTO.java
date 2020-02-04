@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,6 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@Accessors(chain = true)
 public class CourseInstructorResponseDTO {
 
 	private long id;
@@ -23,6 +25,7 @@ public class CourseInstructorResponseDTO {
 	private String academicDegree;
 	private Set<AgreementResponseDTO> agreements;
 	private String courseInstructorType;
+	private int entrustedHours;
 	private Map<String, String> additionalAttributes;
 
 	@NoArgsConstructor

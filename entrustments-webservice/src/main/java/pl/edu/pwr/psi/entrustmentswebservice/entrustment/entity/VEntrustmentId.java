@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -17,6 +18,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
+@Accessors(chain = true)
 public class VEntrustmentId implements Serializable {
 
 	@ManyToOne(optional = false)
