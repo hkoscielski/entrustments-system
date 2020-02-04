@@ -1,6 +1,8 @@
 package pl.edu.pwr.psi.entrustmentswebservice.common.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.CourseInstructorResponseDTO;
@@ -19,8 +21,14 @@ public class CourseInstructorController {
 	@Autowired
 	private StudySystemService studySystemService;
 
+	@GetMapping("/course-instructors")
+	public ResponseEntity<Page<CourseInstructorResponseDTO>> getCourseInstructors(Pageable pageable) {
+		Page<CourseInstructorResponseDTO> courseInstructors = courseInstructorService.findCourseInstructors(pageable);
+		return ResponseEntity.ok(courseInstructors);
+	}
+
 	@GetMapping("/fields-of-study/{fieldOfStudyId}/course-instructors")
-	public ResponseEntity<List<CourseInstructorResponseDTO>> getCourseInstructors(@PathVariable long fieldOfStudyId) {
+	public ResponseEntity<List<CourseInstructorResponseDTO>> getCourseInstructorsForFieldOfStudy(@PathVariable long fieldOfStudyId) {
 		List<CourseInstructorResponseDTO> courseInstructors = courseInstructorService.findCourseInstructorsForFieldOfStudy(fieldOfStudyId);
 		return ResponseEntity.ok(courseInstructors);
 	}
