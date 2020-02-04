@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.request.EntrustmentRequestDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.request.EntrustmentCreateRequestDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.request.EntrustmentModifyRequestDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentCriteriaDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentForInstructorCriteriaDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentResponseDTO;
@@ -39,7 +40,7 @@ public class EntrustmentController {
 	@PostMapping("/semesters/{semesterId}/entrustments")
 	public ResponseEntity<Object> createEntrustment(
 			@PathVariable Long semesterId,
-			@Valid @RequestBody EntrustmentRequestDTO entrustmentBody
+			@Valid @RequestBody EntrustmentCreateRequestDTO entrustmentBody
 	) {
 		EntrustmentResponseDTO entrustment = entrustmentService.createEntrustment(semesterId, entrustmentBody);
 
@@ -51,13 +52,23 @@ public class EntrustmentController {
 		return ResponseEntity.created(location).build();
 	}
 
-	@PutMapping("/semesters/{semesterId}/entrustments/{entrustmentId}/accept")
+	@PatchMapping("/semesters/{semesterId}/entrustments/{entrustmentId}")
+	public ResponseEntity<Object> modifyEntrustment(
+			@PathVariable Long semesterId,
+			@PathVariable Long entrustmentId,
+			@Valid @RequestBody EntrustmentModifyRequestDTO entrustmentBody
+	) {
+		entrustmentService.modifyEntrustment(semesterId, entrustmentId, entrustmentBody);
+		return ResponseEntity.noContent().build();
+	}
+
+	@PatchMapping("/semesters/{semesterId}/entrustments/{entrustmentId}/accept")
 	public ResponseEntity<Object> acceptEntrustment(@PathVariable Long semesterId, @PathVariable Long entrustmentId) {
 		entrustmentService.acceptEntrustment(semesterId, entrustmentId);
 		return ResponseEntity.noContent().build();
 	}
 
-	@PutMapping("/semesters/{semesterId}/entrustments/{entrustmentId}/reject")
+	@PatchMapping("/semesters/{semesterId}/entrustments/{entrustmentId}/reject")
 	public ResponseEntity<Object> rejectEntrustment(@PathVariable Long semesterId, @PathVariable Long entrustmentId) {
 		entrustmentService.rejectEntrustment(semesterId, entrustmentId);
 		return ResponseEntity.noContent().build();

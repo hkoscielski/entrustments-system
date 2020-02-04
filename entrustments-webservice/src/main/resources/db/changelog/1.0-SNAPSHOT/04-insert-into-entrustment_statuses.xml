@@ -18,6 +18,10 @@
             <column name="code">REJECTED</column>
             <column name="name">Odrzucone</column>
         </insert>
+        <insert tableName="Entrustment_Statuses">
+            <column name="code">MODIFIED</column>
+            <column name="name">Zmodyfikowane</column>
+        </insert>
     </changeSet>
 
 </databaseChangeLog>

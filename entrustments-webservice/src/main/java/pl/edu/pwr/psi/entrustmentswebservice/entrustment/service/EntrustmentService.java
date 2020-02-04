@@ -13,7 +13,8 @@ import pl.edu.pwr.psi.entrustmentswebservice.common.repository.CourseInstructorR
 import pl.edu.pwr.psi.entrustmentswebservice.common.repository.CourseRepository;
 import pl.edu.pwr.psi.entrustmentswebservice.common.repository.UserRepository;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.*;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.request.EntrustmentRequestDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.request.EntrustmentCreateRequestDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.request.EntrustmentModifyRequestDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentCriteriaDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentForInstructorCriteriaDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentResponseDTO;
@@ -80,7 +81,7 @@ public class EntrustmentService {
 	}
 
 	@Transactional
-	public EntrustmentResponseDTO createEntrustment(long semesterId, EntrustmentRequestDTO entrustment) {
+	public EntrustmentResponseDTO createEntrustment(long semesterId, EntrustmentCreateRequestDTO entrustment) {
 		User user = userRepository.findByEmail("anna.sekretarz@pwr.edu.pl")
 				.orElseThrow(() -> new ResourceInternalServerError("User"));
 		EntrustmentStatus initialEntrustmentStatus = entrustmentStatusRepository.findByCode(EntrustmentStatus.StatusCode.PROPOSED)
@@ -114,6 +115,38 @@ public class EntrustmentService {
 				.build();
 		entrustmentLogRepository.save(entrustmentLog);
 		return complexModelMapper.map(ventrustmentCreated, EntrustmentResponseDTO.class);
+	}
+
+	@Transactional
+	public void modifyEntrustment(Long semesterId, Long entrustmentId, EntrustmentModifyRequestDTO entrustmentBody) {
+		User user = userRepository.findByEmail("jan.kowalski@pwr.edu.pl")
+				.orElseThrow(() -> new ResourceInternalServerError(User.class.getSimpleName()));
+		EntrustmentStatus modifiedEntrustmentStatus = entrustmentStatusRepository.findByCode(EntrustmentStatus.StatusCode.PROPOSED)
+				.orElseThrow(() -> new ResourceInternalServerError(EntrustmentStatus.class.getSimpleName()));
+
+		Entrustment entrustment = entrustmentRepository.findById(entrustmentId)
+				.map(e -> e.setLastVersion(e.getLastVersion() + 1))
+				.orElseThrow(() -> new ResourceNotFoundException(Entrustment.class.getName(), "id", String.valueOf(entrustmentId)));
+		VEntrustment ventrustment = ventrustmentRepository.findByIdEntrustmentIdAndIdVersion(entrustment.getId(), entrustment.getLastVersion() - 1)
+				.map(ve -> VEntrustment.builder()
+						.id(new VEntrustmentId(entrustment, entrustment.getLastVersion()))
+						.numberOfHours(entrustmentBody.getNumberOfHours())
+						.course(ve.getCourse())
+						.courseInstructor(ve.getCourseInstructor())
+						.entrustmentStatus(modifiedEntrustmentStatus)
+						.build()
+				)
+				.orElseThrow(() -> new ResourceNotFoundException(VEntrustment.class.getName(), "id", String.valueOf(entrustmentId)));
+		entrustmentRepository.save(entrustment);
+		ventrustmentRepository.save(ventrustment);
+
+		EntrustmentLog entrustmentLog = EntrustmentLog.builder()
+				.entrustment(entrustment)
+				.entrustmentVersion(entrustment.getLastVersion())
+				.user(user)
+				.changeType(EntrustmentLog.ChangeType.U)
+				.build();
+		entrustmentLogRepository.save(entrustmentLog);
 	}
 
 	@Transactional

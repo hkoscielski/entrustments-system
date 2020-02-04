@@ -28,6 +28,6 @@ public class EntrustmentStatus {
 	private String name;
 
 	public enum StatusCode {
-		PROPOSED, ACCEPTED, REJECTED
+		PROPOSED, ACCEPTED, REJECTED, MODIFIED
 	}
 }
