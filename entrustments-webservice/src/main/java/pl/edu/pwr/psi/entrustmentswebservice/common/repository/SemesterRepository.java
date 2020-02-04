@@ -18,4 +18,8 @@ public interface SemesterRepository extends JpaRepository<Semester, Long> {
 			@Param("field_of_study_id") long fieldOfStudyId,
 			@Param("year") int year
 	);
+
+	@Query("select distinct s from Semester s join s.studyPlan left join fetch s.modules left join fetch s.courses " +
+			"where cast(substring(s.academicYear, 1, 4) as int) >= :year")
+	List<Semester> findAllSemestersAfterDate(@Param("year") int year);
 }

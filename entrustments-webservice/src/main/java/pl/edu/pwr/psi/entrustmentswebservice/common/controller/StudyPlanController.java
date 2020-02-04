@@ -33,8 +33,14 @@ public class StudyPlanController {
 	}
 
 	@GetMapping("/fields-of-study/{fieldOfStudyId}/semesters")
-	public ResponseEntity<List<SemesterResponseDTO>> getSemesters(@PathVariable long fieldOfStudyId) {
+	public ResponseEntity<List<SemesterResponseDTO>> getSemestersForFieldOfStudy(@PathVariable long fieldOfStudyId) {
 		List<SemesterResponseDTO> semesters = studyPlanService.findActualSemestersForFieldOfStudy(fieldOfStudyId);
+		return ResponseEntity.ok(semesters);
+	}
+
+	@GetMapping("/semesters")
+	public ResponseEntity<List<SemesterResponseDTO>> getSemesters() {
+		List<SemesterResponseDTO> semesters = studyPlanService.findActualSemesters();
 		return ResponseEntity.ok(semesters);
 	}
 }
