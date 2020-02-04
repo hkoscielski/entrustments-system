@@ -3,6 +3,8 @@ package pl.edu.pwr.psi.entrustmentswebservice.common.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Semesters")
@@ -31,4 +33,17 @@ public class Semester {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "id_study_plan", referencedColumnName = "id", nullable = false)
 	private StudyPlan studyPlan;
+
+	@ManyToMany
+	@JoinTable(name = "Modules_Semesters",
+			joinColumns = {@JoinColumn(name = "id_semester", nullable = false)},
+			inverseJoinColumns = {@JoinColumn(name = "id_module")})
+	private Set<Module> modules = new HashSet<>();
+
+	@ManyToMany
+	@JoinTable(name = "Semesters_Courses",
+			joinColumns = {@JoinColumn(name = "id_semester", nullable = false)},
+			inverseJoinColumns = {@JoinColumn(name = "id_course", nullable = false)}
+	)
+	private Set<Course> courses = new HashSet<>();
 }

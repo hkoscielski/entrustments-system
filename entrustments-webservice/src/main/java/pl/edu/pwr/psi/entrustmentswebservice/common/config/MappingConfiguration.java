@@ -12,8 +12,8 @@ import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.CourseInstr
 import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.CourseResponseDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.FieldOfStudyResponseDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.SemesterResponseDTO;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.*;
-import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.*;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.VEntrustment;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentResponseDTO;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -107,9 +107,9 @@ public class MappingConfiguration {
 	private Converter<Set<Agreement>, Set<CourseInstructorResponseDTO.AgreementResponseDTO>> getSetAgreementToDTOConverter() {
 		return mappingContext -> mappingContext.getSource().stream().map(a ->
 				new CourseInstructorResponseDTO.AgreementResponseDTO(
-					a.getStartDate(),
-					a.getEndDate(),
-					a.getDidacticForm().getCode()
+						a.getStartDate(),
+						a.getEndDate(),
+						a.getDidacticForm().getCode()
 				)
 		).collect(Collectors.toSet());
 	}
@@ -117,16 +117,55 @@ public class MappingConfiguration {
 	private ExpressionMap<Semester, SemesterResponseDTO> semesterToDTOMapping() {
 		Converter<FieldOfStudy, FieldOfStudyResponseDTO> fieldOfStudyConverter =
 				mappingContext -> new FieldOfStudyResponseDTO(mappingContext.getSource().getName(), mappingContext.getSource().getShortName());
+		Converter<Specialty, SemesterResponseDTO.SpecialtyResponseDTO> specialtyConverter =
+				mappingContext -> mappingContext.getSource() != null ? new SemesterResponseDTO.SpecialtyResponseDTO(mappingContext.getSource().getName(), mappingContext.getSource().getShortName()) : null;
+		Converter<StudyLevel, SemesterResponseDTO.StudyLevelResponseDTO> studyLevelConverter =
+				mappingContext -> new SemesterResponseDTO.StudyLevelResponseDTO(mappingContext.getSource().getCode().name(), mappingContext.getSource().getName());
+		Converter<FormOfStudy, SemesterResponseDTO.FormOfStudyResponseDTO> formOfStudyConverter =
+				mappingContext -> new SemesterResponseDTO.FormOfStudyResponseDTO(mappingContext.getSource().getCode().name(), mappingContext.getSource().getName());
+		Converter<StudyLanguage, SemesterResponseDTO.StudyLanguageResponseDTO> studyLanguageConverter =
+				mappingContext -> new SemesterResponseDTO.StudyLanguageResponseDTO(mappingContext.getSource().getCode().name(), mappingContext.getSource().getName());
+		Converter<Set<Course>, Set<SemesterResponseDTO.CourseResponseDTO>> courseConverter =
+				mappingContext -> mappingContext.getSource().stream()
+						.map(c -> new SemesterResponseDTO.CourseResponseDTO(
+								c.getId(),
+								c.getCode(),
+								c.getName(),
+								c.getZzuHours(),
+								new SemesterResponseDTO.DidacticFormResponseDTO(
+										c.getDidacticForm().getCode(),
+										c.getDidacticForm().getName()
+								)
+						)).collect(Collectors.toSet());
+		Converter<Set<Module>, Set<SemesterResponseDTO.ModuleResponseDTO>> moduleConverter =
+				mappingContext -> mappingContext.getSource().stream()
+						.map(m -> new SemesterResponseDTO.ModuleResponseDTO(
+								m.getCode(),
+								m.getName(),
+								m.getCourses().stream()
+										.map(c -> new SemesterResponseDTO.CourseResponseDTO(
+										c.getId(),
+										c.getCode(),
+										c.getName(),
+										c.getZzuHours(),
+										new SemesterResponseDTO.DidacticFormResponseDTO(
+												c.getDidacticForm().getCode(),
+												c.getDidacticForm().getName()
+										)
+								)).collect(Collectors.toSet())
+						)).collect(Collectors.toSet());
 
 		return mapping -> {
 			mapping.map(sg -> sg.getSemesterName().getName(), SemesterResponseDTO::setSemesterName);
 			mapping.map(sg -> sg.getStudyPlan().getStartAcademicYear(), SemesterResponseDTO::setStartAcademicYear);
 			mapping.map(sg -> sg.getStudyPlan().getStartSemesterName().getName(), SemesterResponseDTO::setStartSemesterName);
 			mapping.using(fieldOfStudyConverter).map(sg -> sg.getStudyPlan().getFieldOfStudy(), SemesterResponseDTO::setFieldOfStudy);
-			mapping.map(sg -> sg.getStudyPlan().getSpecialty().getName(), SemesterResponseDTO::setSpecialty);
-			mapping.map(sg -> sg.getStudyPlan().getStudyLevel().getName(), SemesterResponseDTO::setStudyLevel);
-			mapping.map(sg -> sg.getStudyPlan().getFormOfStudy().getName(), SemesterResponseDTO::setFormOfStudy);
-			mapping.map(sg -> sg.getStudyPlan().getStudyLanguage().getName(), SemesterResponseDTO::setStudyLanguage);
+			mapping.using(specialtyConverter).map(sg -> sg.getStudyPlan().getSpecialty(), SemesterResponseDTO::setSpecialty);
+			mapping.using(studyLevelConverter).map(sg -> sg.getStudyPlan().getStudyLevel(), SemesterResponseDTO::setStudyLevel);
+			mapping.using(formOfStudyConverter).map(sg -> sg.getStudyPlan().getFormOfStudy(), SemesterResponseDTO::setFormOfStudy);
+			mapping.using(studyLanguageConverter).map(sg -> sg.getStudyPlan().getStudyLanguage(), SemesterResponseDTO::setStudyLanguage);
+			mapping.using(courseConverter).map(Semester::getCourses, SemesterResponseDTO::setCourses);
+			mapping.using(moduleConverter).map(Semester::getModules, SemesterResponseDTO::setModules);
 		};
 	}
 

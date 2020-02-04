@@ -32,9 +32,9 @@ public class StudyPlanController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@GetMapping("/semesters")
-	public ResponseEntity<List<SemesterResponseDTO>> getSemesters(@RequestParam("facultyId") long facultyId) {
-		List<SemesterResponseDTO> semesters = studyPlanService.findActualSemestersForFaculty(facultyId);
+	@GetMapping("/fields-of-study/{fieldOfStudyId}/semesters")
+	public ResponseEntity<List<SemesterResponseDTO>> getSemesters(@PathVariable long fieldOfStudyId) {
+		List<SemesterResponseDTO> semesters = studyPlanService.findActualSemestersForFieldOfStudy(fieldOfStudyId);
 		return ResponseEntity.ok(semesters);
 	}
 }
