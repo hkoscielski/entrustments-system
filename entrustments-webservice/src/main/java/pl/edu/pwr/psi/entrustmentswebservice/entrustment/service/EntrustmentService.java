@@ -142,4 +142,8 @@ public class EntrustmentService {
 				.build();
 		entrustmentLogRepository.save(entrustmentLog);
 	}
+
+	public int findSumOfEntrustmentsHoursForCourseInstructor(Long courseInstructorId) {
+		return ventrustmentRepository.calculateSumOfEntrustedHoursForCourseInstructor(courseInstructorId);
+	}
 }

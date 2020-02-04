@@ -29,4 +29,10 @@ public interface VEntrustmentRepository extends JpaRepository<VEntrustment, VEnt
 	);
 
 	Optional<VEntrustment> findByIdEntrustmentIdAndIdVersion(long entrustmentId, int version);
+
+	@Query("select coalesce(sum(ve.numberOfHours), 0) from VEntrustment ve " +
+			"join ve.id.entrustment on ve.id.entrustment.lastVersion = ve.id.version " +
+			"where ve.courseInstructor.id = :course_instructor_id " +
+			"and ve.entrustmentStatus.code <> 'REJECTED'")
+	int calculateSumOfEntrustedHoursForCourseInstructor(@Param("course_instructor_id") long courseInstructorId);
 }

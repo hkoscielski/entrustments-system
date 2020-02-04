@@ -52,4 +52,9 @@ public class EntrustmentController {
 		entrustmentService.rejectEntrustment(semesterId, entrustmentId);
 		return ResponseEntity.noContent().build();
 	}
+
+	@GetMapping("/entrustments/hours")
+	public ResponseEntity<Integer> getSum(@RequestParam("courseInstructorId") Long courseInstructorId) {
+		return ResponseEntity.ok(entrustmentService.findSumOfEntrustmentsHoursForCourseInstructor(courseInstructorId));
+	}
 }
