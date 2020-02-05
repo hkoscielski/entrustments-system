@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.FacultyResponseDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.FieldOfStudyDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.SemesterResponseDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.service.StudyPlanService;
 import pl.edu.pwr.psi.entrustmentswebservice.studysystem.service.StudySystemService;
@@ -24,6 +25,12 @@ public class StudyPlanController {
 	public ResponseEntity<List<FacultyResponseDTO>> getFaculties() {
 		List<FacultyResponseDTO> faculties = studyPlanService.findAllFaculties();
 		return ResponseEntity.ok(faculties);
+	}
+
+	@GetMapping("/faculties/{facultySymbol}/fields-of-study")
+	public ResponseEntity<List<FieldOfStudyDTO>> getFieldsOfStudyForFaculty(@PathVariable String facultySymbol) {
+		List<FieldOfStudyDTO> fieldsOfStudy = studyPlanService.findAllFieldsOfStudyForFaculty(facultySymbol);
+		return ResponseEntity.ok(fieldsOfStudy);
 	}
 
 	@PutMapping("/faculties/{facultySymbol}/study-plans")

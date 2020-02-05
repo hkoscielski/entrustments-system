@@ -2,7 +2,10 @@ package pl.edu.pwr.psi.entrustmentswebservice.entrustment.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.edu.pwr.psi.entrustmentswebservice.common.entity.FieldOfStudy;
 import pl.edu.pwr.psi.entrustmentswebservice.common.mapping.ComplexModelMapper;
+import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.FieldOfStudyDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.common.repository.FieldOfStudyRepository;
 import pl.edu.pwr.psi.entrustmentswebservice.common.util.DateUtil;
 import pl.edu.pwr.psi.entrustmentswebservice.common.entity.Faculty;
 import pl.edu.pwr.psi.entrustmentswebservice.common.entity.Semester;
@@ -20,6 +23,9 @@ public class StudyPlanService {
 	private FacultyRepository facultyRepository;
 
 	@Autowired
+	private FieldOfStudyRepository fieldOfStudyRepository;
+
+	@Autowired
 	private SemesterRepository semesterRepository;
 
 	@Autowired
@@ -28,6 +34,11 @@ public class StudyPlanService {
 	public List<FacultyResponseDTO> findAllFaculties() {
 		List<Faculty> faculties = facultyRepository.findAll();
 		return complexModelMapper.mapAll(faculties, FacultyResponseDTO.class);
+	}
+
+	public List<FieldOfStudyDTO> findAllFieldsOfStudyForFaculty(String facultySymbol) {
+		List<FieldOfStudy> fieldsOfStudy = fieldOfStudyRepository.findAllByFacultySymbol(facultySymbol);
+		return complexModelMapper.mapAll(fieldsOfStudy, FieldOfStudyDTO.class);
 	}
 
 	public List<SemesterResponseDTO> findActualSemestersForFieldOfStudy(long fieldOfStudyId) {
