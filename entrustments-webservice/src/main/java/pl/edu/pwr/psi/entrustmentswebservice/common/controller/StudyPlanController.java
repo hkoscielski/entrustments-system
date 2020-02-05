@@ -11,6 +11,7 @@ import pl.edu.pwr.psi.entrustmentswebservice.studysystem.service.StudySystemServ
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 public class StudyPlanController {
