@@ -1,10 +1,11 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {merge, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, merge, Observable, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, map, switchAll} from 'rxjs/operators';
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 import {CourseInstructor, CourseInstructorService} from "../course-instructor.service";
 import {Entrustment, EntrustmentService, ReversedStatus, Status} from "../entrustment.service";
 import {Course, Faculty, FieldOfStudy, Semester, Specialty, StudyLevel, StudyPlanService} from "../study-plan.service";
+import {identifierModuleUrl} from "@angular/compiler";
 
 @Component({
   selector: 'app-entrustment-filter',
@@ -12,34 +13,21 @@ import {Course, Faculty, FieldOfStudy, Semester, Specialty, StudyLevel, StudyPla
   styleUrls: ['./entrustment-filter.component.css']
 })
 export class EntrustmentFilterComponent implements OnInit {
-  public foundEntrustments: Entrustment[];
+  public foundEntrustments: BehaviorSubject<Entrustment[]> = new BehaviorSubject<Entrustment[]>(undefined);
+  public filterOptions = new FilterOptions();
 
-  pickedFaculty: Faculty;
   faculties: Faculty[];
-
-  pickedFieldOfStudy: FieldOfStudy;
   fieldsOfStudy: FieldOfStudy[];
-
-  pickedAcademicYear: string;
   academicYears: string[];
-
-  pickedSemester: Semester;
   semesters: Semester[];
-
-  pickedStudyLevel: StudyLevel;
   studyLevels: StudyLevel[];
-
-  pickedSpecialty: Specialty;
   specialties: Specialty[];
-
-  pickedCourse: Course;
   courses: Course[];
-
-  pickedCourseInstrucor: CourseInstructor;
   courseInstructors: CourseInstructor[];
-
-  pickedStatus: Status;
   statuses: Status[];
+
+  showFoundHint = false;
+  foundCount = 0;
 
   @Input() isCourseInstructor = false;
 
@@ -83,6 +71,13 @@ export class EntrustmentFilterComponent implements OnInit {
     this.studyPlanService.findAllFaculties().subscribe(
       faculties => {
         this.faculties = faculties;
+        faculties.forEach(x => this.studyPlanService.findAllFieldsOfStudyByFacultySymbol(x.symbol).subscribe(
+          fieldsOfStudy => {
+          if (this.fieldsOfStudy)
+            this.fieldsOfStudy.concat(fieldsOfStudy);
+          else
+            this.fieldsOfStudy = fieldsOfStudy;
+        }));
       }
     );
 
@@ -118,38 +113,34 @@ export class EntrustmentFilterComponent implements OnInit {
   }
 
   onSearchClicked() {
-    // academicYear=2019/2020&semester=1&studyLevel=FIRST_DEGREE&specialty=IO&courseCode=INZ000W&entrustmentStatus=ACCEPTED&courseInstructorId=1
-    console.log(JSON.stringify(this.pickedSemester));
-    console.log(this.pickedSemester ? this.pickedSemester.semesterNumber : undefined);
-
     this.entrustmentService.findAllEntrustments(
-      this.pickedAcademicYear,
-      this.pickedSemester ? this.pickedSemester.semesterNumber : undefined,
-      this.pickedStudyLevel ? this.pickedStudyLevel.code : undefined,
-      this.pickedSpecialty ? this.pickedSpecialty.shortName : undefined,
-      this.pickedCourse ? this.pickedCourse.code : undefined,
-      ReversedStatus[this.pickedStatus],
-      this.pickedCourseInstrucor ? this.pickedCourseInstrucor.id : undefined
+      this.filterOptions.academicYear,
+      this.filterOptions.semester ? this.filterOptions.semester.semesterNumber : undefined,
+      this.filterOptions.studyLevel ? this.filterOptions.studyLevel.code : undefined,
+      this.filterOptions.specialty ? this.filterOptions.specialty.shortName : undefined,
+      this.filterOptions.course ? this.filterOptions.course.code : undefined,
+      ReversedStatus[this.filterOptions.status],
+      this.filterOptions.courseInstrucor ? this.filterOptions.courseInstrucor.id : undefined
       ).subscribe(
         entrustments => {
-      this.foundEntrustments = entrustments;
+          this.showFoundHint = true;
+          this.foundCount = entrustments.length;
+          this.foundEntrustments.next(entrustments);
       console.log(JSON.stringify(entrustments));
     });
   }
 
   onClearFiltersClicked() {
+    let newFilterOptions = new FilterOptions();
     if (this.shouldLockFieldOfStudy()) {
-      this.pickedFaculty = undefined;
-      this.pickedFieldOfStudy = undefined;
+      newFilterOptions.faculty = this.filterOptions.faculty;
+      newFilterOptions.fieldOfStudy = this.filterOptions.fieldOfStudy;
     }
 
-    this.pickedAcademicYear = undefined;
-    this.pickedSemester = undefined;
-    this.pickedStudyLevel = undefined;
-    this.pickedSpecialty = undefined;
-    this.pickedCourse = undefined;
-    this.pickedCourseInstrucor = undefined;
-    this.pickedStatus = undefined;
+    this.filterOptions = newFilterOptions;
+
+    // this.showFoundHint = false;
+    // this.foundCount = 0;
   }
 
   shouldShowFieldOfStudy() {
@@ -158,5 +149,41 @@ export class EntrustmentFilterComponent implements OnInit {
 
   shouldLockFieldOfStudy() {
     return !this.isCourseInstructor;
+  }
+
+  areFilterOptionsEmpty() {
+    return !this.filterOptions.faculty &&
+      !this.filterOptions.fieldOfStudy &&
+      !this.filterOptions.academicYear &&
+      !this.filterOptions.semester &&
+      !this.filterOptions.studyLevel &&
+      !this.filterOptions.specialty &&
+      !this.filterOptions.course &&
+      !this.filterOptions.courseInstrucor &&
+      !this.filterOptions.status;
+  }
+}
+
+export class FilterOptions {
+  faculty?: Faculty;
+  fieldOfStudy?: FieldOfStudy;
+  academicYear?: string;
+  semester?: Semester;
+  studyLevel?: StudyLevel;
+  specialty?: Specialty;
+  course?: Course;
+  courseInstrucor?: CourseInstructor;
+  status?: Status;
+
+  constructor(faculty?: Faculty, fieldOfStudy?: FieldOfStudy, academicYear?: string, semester?: Semester, studyLevel?: StudyLevel, specialty?: Specialty, course?: Course, courseInstrucor?: CourseInstructor, status?: Status) {
+    this.faculty = faculty;
+    this.fieldOfStudy = fieldOfStudy;
+    this.academicYear = academicYear;
+    this.semester = semester;
+    this.studyLevel = studyLevel;
+    this.specialty = specialty;
+    this.course = course;
+    this.courseInstrucor = courseInstrucor;
+    this.status = status;
   }
 }

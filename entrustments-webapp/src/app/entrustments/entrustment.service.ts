@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {CourseInstructor} from "./course-instructor.service";
@@ -26,6 +26,24 @@ export class EntrustmentService {
 
   findAll(courseInstructorId: number): Observable<number> {
     return this.httpClient.get<number>(`${environment.apiBaseUrl}/api/v1/course-instructors/${courseInstructorId}/entrustments/hours`);
+  }
+
+  acceptEntrustment(semesterId: number, entrustmentId: number) {
+    return this.httpClient.patch(`${environment.apiBaseUrl}/api/v1/semesters/${semesterId}/entrustments/${entrustmentId}/accept`, { description: "Accepted entrustment" });
+  }
+
+  rejectEntrustment(semesterId: number, entrustmentId: number) {
+    return this.httpClient.patch(`${environment.apiBaseUrl}/api/v1/semesters/${semesterId}/entrustments/${entrustmentId}/reject`, { description: "Rejected entrustment" });
+  }
+
+  addEntrustment(semesterId: number, courseInstructorId: number, numberOfHours: number, courseCode: string): Observable<Object>  {
+    let body =
+      {
+        "courseInstructorId": courseInstructorId,
+        "numberOfHours": numberOfHours,
+        "courseCode": courseCode
+      };
+    return this.httpClient.post(`${environment.apiBaseUrl}/api/v1/semesters/${semesterId}/entrustments`, body, {observe: 'response'});
   }
 }
 

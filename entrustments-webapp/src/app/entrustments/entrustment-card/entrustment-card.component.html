@@ -45,27 +45,27 @@
 <!--      </li>-->
     </div>
     <div>
-      <label style="margin: 0">INZ003854P</label>
+      <label style="margin: 0">{{entrustment.course.code}}</label>
       <span style="margin: 0"> &#9679; </span>
-      <label style="margin: 0">Projektowanie sys. informat.</label>
+      <label style="margin: 0">{{entrustment.course.name}}</label>
     </div>
     <div>
-      <label style="margin: 0">Prowadzący: Dr inż. Bogumiła Hnatkowska</label>
+      <label style="margin: 0">Prowadzący: {{entrustment.courseInstructor.academicDegree}} {{entrustment.courseInstructor.firstName}} {{entrustment.courseInstructor.surname}}</label>
     </div>
     <div class="row">
       <div class="col">
         <span>Liczba godzin: </span>
-        <label style="margin: 0">90</label>
+        <label style="margin: 0">{{entrustment.numberOfHours}}</label>
       </div>
       <div class="col">
         <span>Status: </span>
-        <label style="margin: 0; color: forestgreen;">ZATWIERDZONE</label>
+        <label [style.color]="getStatusColor()" style="margin: 0;">{{entrustment.status.toString().toUpperCase()}}</label>
       </div>
     </div>
   </a>
   <div ngbDropdownMenu class="dropdown-menu my-drop-down" style="background-color: lightgrey">
-    <button ngbDropdownItem (click)="onEditClicked()">Zaproponuj zmianę</button>
-    <button ngbDropdownItem (click)="onAcceptClicked()">Zaakceptuj</button>
-    <button ngbDropdownItem (click)="onDiscardClicked()">Odrzuć</button>
+    <button ngbDropdownItem [disabled]="!canBeModified()" (click)="onEditClicked()">Zaproponuj zmianę</button>
+    <button ngbDropdownItem [disabled]="!canBeAccepted()" (click)="onAcceptClicked()">Zaakceptuj</button>
+    <button ngbDropdownItem [disabled]="!canBeRejected()" (click)="onRejectClicked()">Odrzuć</button>
   </div>
 </div>

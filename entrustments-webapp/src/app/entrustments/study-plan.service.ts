@@ -12,15 +12,19 @@ export class StudyPlanService {
   constructor(private httpClient: HttpClient) { }
 
   findAllFaculties(): Observable<Faculty[]> {
-    return this.httpClient.get<Faculty[]>(`${environment.apiBaseUrl}/api/v1/faculties/`);
+    return this.httpClient.get<Faculty[]>(`${environment.apiBaseUrl}/api/v1/faculties`);
   }
 
   findAllSemesters(): Observable<Semester[]> {
-    return this.httpClient.get<Semester[]>(`${environment.apiBaseUrl}/api/v1/semesters/`);
+    return this.httpClient.get<Semester[]>(`${environment.apiBaseUrl}/api/v1/semesters`);
   }
 
   findAllSemestersByFieldOfStudyId(fieldOfStudyId: number): Observable<Semester[]> {
-    return this.httpClient.get<Semester[]>(`${environment.apiBaseUrl}/api/v1/fields-of-study/${fieldOfStudyId}/semesters/`);
+    return this.httpClient.get<Semester[]>(`${environment.apiBaseUrl}/api/v1/fields-of-study/${fieldOfStudyId}/semesters`);
+  }
+
+  findAllFieldsOfStudyByFacultySymbol(facultySymbol: string): Observable<FieldOfStudy[]> {
+    return this.httpClient.get<FieldOfStudy[]>(`${environment.apiBaseUrl}/api/v1/faculties/${facultySymbol}/fields-of-study`);
   }
 }
 
@@ -69,10 +73,12 @@ export class Semester {
 }
 
 export class FieldOfStudy {
+  id?: number;
   name: string;
   shortName: string;
 
-  constructor(name?: string, shortName?: string) {
+  constructor(id?: number, name?: string, shortName?: string) {
+    this.id = id;
     this.name = name;
     this.shortName = shortName;
   }
