@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Entrustment} from "../entrustment.service";
 
 @Component({
   selector: 'app-entrustment-list',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EntrustmentListComponent implements OnInit {
 
+  // @Input() foundEntrustments: Entrustment[];
+
   constructor() { }
 
   ngOnInit() {
   }
-
 }
