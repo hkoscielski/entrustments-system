@@ -37,6 +37,12 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.200</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
             <version>3.8.5</version>
@@ -106,12 +112,30 @@
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>3.8.4</version>
                 <configuration>
-                    <propertyFile>src/main/resources/db/conf/liquibase.properties</propertyFile>
+                    <propertyFile>src/main/resources/application-${activatedProperties}.properties</propertyFile>
                     <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>mysql</id>
+            <properties>
+                <activatedProperties>mysql</activatedProperties>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>postgres</id>
+            <properties>
+                <activatedProperties>postgres</activatedProperties>
+            </properties>
+        </profile>
+    </profiles>
 
     <repositories>
         <repository>
