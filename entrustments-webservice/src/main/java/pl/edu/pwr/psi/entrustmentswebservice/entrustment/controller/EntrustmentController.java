@@ -54,7 +54,7 @@ public class EntrustmentController {
 	}
 
 	@PostMapping("/semesters/{semesterId}/entrustments")
-	public ResponseEntity<Object> createEntrustment(
+	public ResponseEntity<EntrustmentResponseDTO> createEntrustment(
 			@PathVariable Long semesterId,
 			@Valid @RequestBody EntrustmentCreateRequestDTO entrustmentBody
 	) {
@@ -68,7 +68,7 @@ public class EntrustmentController {
 		OnCreateEntrustmentEvent onCreateEntrustmentEvent = new OnCreateEntrustmentEvent(this, user.getEmail(), entrustment);
 		applicationEventPublisher.publishEvent(onCreateEntrustmentEvent);
 
-		return ResponseEntity.created(location).build();
+		return ResponseEntity.created(location).body(entrustment);
 	}
 
 	@PatchMapping("/semesters/{semesterId}/entrustments/{entrustmentId}")
