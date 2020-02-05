@@ -1,14 +1,18 @@
 package pl.edu.pwr.psi.entrustmentswebservice.entrustment.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import pl.edu.pwr.psi.entrustmentswebservice.common.event.OnCreateEntrustmentEvent;
+import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.UserResponseDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.request.EntrustmentCreateRequestDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.request.EntrustmentModifyRequestDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentCriteriaDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentForInstructorCriteriaDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.EntrustmentResponseDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.service.CourseInstructorService;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.service.EntrustmentService;
 
 import javax.validation.Valid;
@@ -18,6 +22,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 public class EntrustmentController {
+
+	@Autowired
+	private ApplicationEventPublisher applicationEventPublisher;
+
+	@Autowired
+	private CourseInstructorService courseInstructorService;
 
 	@Autowired
 	private EntrustmentService entrustmentService;
@@ -48,11 +58,14 @@ public class EntrustmentController {
 			@Valid @RequestBody EntrustmentCreateRequestDTO entrustmentBody
 	) {
 		EntrustmentResponseDTO entrustment = entrustmentService.createEntrustment(semesterId, entrustmentBody);
+		UserResponseDTO user = courseInstructorService.findUserForCourseInstructor(entrustment.getCourseInstructor().getId());
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}")
 				.buildAndExpand(entrustment.getId())
 				.toUri();
+		OnCreateEntrustmentEvent onCreateEntrustmentEvent = new OnCreateEntrustmentEvent(this, user.getEmail(), entrustment);
+		applicationEventPublisher.publishEvent(onCreateEntrustmentEvent);
 
 		return ResponseEntity.created(location).build();
 	}
