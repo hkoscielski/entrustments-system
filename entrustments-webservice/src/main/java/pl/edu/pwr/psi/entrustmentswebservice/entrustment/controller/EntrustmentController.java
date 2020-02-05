@@ -77,19 +77,19 @@ public class EntrustmentController {
 			@PathVariable Long entrustmentId,
 			@Valid @RequestBody EntrustmentModifyRequestDTO entrustmentBody
 	) {
-		entrustmentService.modifyEntrustment(semesterId, entrustmentId, entrustmentBody);
-		return ResponseEntity.noContent().build();
+		EntrustmentResponseDTO entrustment = entrustmentService.modifyEntrustment(semesterId, entrustmentId, entrustmentBody);
+		return ResponseEntity.ok(entrustment);
 	}
 
 	@PatchMapping("/semesters/{semesterId}/entrustments/{entrustmentId}/accept")
-	public ResponseEntity<Object> acceptEntrustment(@PathVariable Long semesterId, @PathVariable Long entrustmentId) {
-		entrustmentService.acceptEntrustment(semesterId, entrustmentId);
-		return ResponseEntity.noContent().build();
+	public ResponseEntity<EntrustmentResponseDTO> acceptEntrustment(@PathVariable Long semesterId, @PathVariable Long entrustmentId) {
+		EntrustmentResponseDTO entrustment = entrustmentService.acceptEntrustment(semesterId, entrustmentId);
+		return ResponseEntity.ok(entrustment);
 	}
 
 	@PatchMapping("/semesters/{semesterId}/entrustments/{entrustmentId}/reject")
 	public ResponseEntity<Object> rejectEntrustment(@PathVariable Long semesterId, @PathVariable Long entrustmentId) {
-		entrustmentService.rejectEntrustment(semesterId, entrustmentId);
-		return ResponseEntity.noContent().build();
+		EntrustmentResponseDTO entrustment = entrustmentService.rejectEntrustment(semesterId, entrustmentId);
+		return ResponseEntity.ok(entrustment);
 	}
 }

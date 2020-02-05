@@ -12,11 +12,11 @@
                         primaryKey="true" primaryKeyName="agreements_id_pk"
                         nullable="false" notNullConstraintName="agreements_id_nn"/>
             </column>
-            <column name="agreement_start_date" type="date">
+            <column name="agreement_start_date" type="timestamp">
                 <constraints
                         nullable="false" notNullConstraintName="agreements_start_date_nn"/>
             </column>
-            <column name="agreement_end_date" type="date">
+            <column name="agreement_end_date" type="timestamp">
                 <constraints
                         nullable="false" notNullConstraintName="agreements_end_date_nn"/>
             </column>
