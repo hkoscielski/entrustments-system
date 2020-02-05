@@ -1,49 +1,53 @@
 
-
-
-<select *ngIf="shouldShowFaculties()" [disabled]="shouldLockFaculties()" class="form-control" [id]="facultySelectId">
-  <option selected disabled hidden>Wydział</option>
+<select *ngIf="shouldShowFieldOfStudy()" [disabled]="shouldLockFieldOfStudy()" class="form-control" [(ngModel)]="pickedFaculty">
+  <option [selected]="!pickedFaculty" [ngValue]="undefined">Wydział</option>
+  <option *ngFor="let x of faculties" [ngValue]="x" [selected]="pickedFaculty == x">{{x.symbol}} {{x.name}}</option>
 </select>
-<select *ngIf="shouldShowFaculties()" [disabled]="shouldLockFaculties()" class="form-control top-buffer">
-  <option selected disabled hidden>Kierunek</option>
+<select *ngIf="shouldShowFieldOfStudy()" [disabled]="shouldLockFieldOfStudy()" class="form-control top-buffer" [(ngModel)]="pickedFieldOfStudy">
+  <option [selected]="!pickedFieldOfStudy" [ngValue]="undefined">Kierunek</option>
+  <option *ngFor="let x of fieldsOfStudy" [ngValue]="x" [selected]="pickedFieldOfStudy == x">{{x.name}}</option>
 </select>
-<select class="form-control" [class.top-buffer]="shouldShowFaculties()" [(ngModel)]="pickedAcademicYear">
-  <option disabled hidden [selected]="!pickedAcademicYear" [value]="undefined">Rok akademicki</option>
-  <option *ngFor="let x of academicYears" [value]="x.name" [selected]="pickedAcademicYear == x.name">{{x.name}}</option>
+<select class="form-control" [class.top-buffer]="shouldShowFieldOfStudy()" [(ngModel)]="pickedAcademicYear">
+  <option [selected]="!pickedAcademicYear" [ngValue]="undefined">Rok akademicki</option>
+  <option *ngFor="let x of academicYears" [ngValue]="x" [selected]="pickedAcademicYear == x">{{x}}</option>
 </select>
+<!--<pre>pickedAcademicYear: {{ pickedAcademicYear | json }}</pre>-->
 <select class="form-control top-buffer" [(ngModel)]="pickedSemester">
-  <option disabled hidden [selected]="!pickedSemester" [value]="undefined">Semestr</option>
-  <option *ngFor="let x of semesters" [value]="x.number" [selected]="pickedSemester == x.number">{{x.number}}</option>
+  <option [selected]="!pickedSemester" [ngValue]="undefined">Semestr</option>
+  <option *ngFor="let x of semesters" [ngValue]="x" [selected]="pickedSemester == x">{{x.semesterNumber}}</option>
 </select>
-<select class="form-control top-buffer">
-  <option selected disabled hidden>Stopień</option>
+<!--<pre>pickedSemester: {{ pickedSemester | json }}</pre>-->
+<select class="form-control top-buffer" [(ngModel)]="pickedStudyLevel">
+  <option [selected]="!pickedStudyLevel" [ngValue]="undefined">Stopień</option>
+  <option *ngFor="let x of studyLevels" [ngValue]="x" [selected]="pickedStudyLevel == x">{{x.name}}</option>
 </select>
-<select class="form-control top-buffer">
-  <option selected disabled hidden>Specjalność</option>
+<!--<pre>pickedStudyLevel: {{ pickedStudyLevel | json }}</pre>-->
+<select class="form-control top-buffer" [(ngModel)]="pickedSpecialty">
+  <option [selected]="!pickedSpecialty" [ngValue]="undefined">Specjalność</option>
+  <option *ngFor="let x of specialties" [ngValue]="x" [selected]="pickedSpecialty == x">{{x.shortName}} - {{x.name}}</option>
 </select>
-<select class="form-control top-buffer">
-  <option selected disabled hidden>Kurs</option>
-</select>
-<label class="text-center top-buffer d-block mx-auto">LUB</label>
-<input type="text" class="form-control top-buffer" [class.is-valid]="modelCourse" placeholder="Wpisz kod lub nazwę kursu"
-       [(ngModel)]="modelCourse" [ngbTypeahead]="searchCourses" [resultTemplate]="rtCourse"
+<!--<pre>pickedSpecialty: {{ pickedSpecialty | json }}</pre>-->
+<input type="text" class="form-control top-buffer" [class.is-valid]="pickedCourse" placeholder="Wpisz kod lub nazwę kursu"
+       [(ngModel)]="pickedCourse" [ngbTypeahead]="searchCourses" [resultTemplate]="rtCourse"
        (focus)="focusCoursesTextBox$.next($event.target.value)"
        (click)="clickCoursesTextBox$.next($event.target.value)"
        [inputFormatter]="formatterCourse"
        [editable]="false"
        #coursesTextBox="ngbTypeahead"/>
-<!--<pre>Model: {{ modelCourse | json }}</pre>-->
-<input [hidden]="isCourseInstructor" type="text" class="form-control top-buffer" [class.picked]="modelCourseInstructor" placeholder="Wpisz prowadzącego"
-       [(ngModel)]="modelCourseInstructor" [ngbTypeahead]="searchCourseInstructors" [resultTemplate]="rtCourseInstructor"
+<!--<pre>pickedCourse: {{ pickedCourse | json }}</pre>-->
+<input [hidden]="isCourseInstructor" type="text" class="form-control top-buffer" [class.is-valid]="pickedCourseInstrucor" placeholder="Wpisz prowadzącego"
+       [(ngModel)]="pickedCourseInstrucor" [ngbTypeahead]="searchCourseInstructors" [resultTemplate]="rtCourseInstructor"
        (focus)="focusCourseInstructorsTextBox$.next($event.target.value)"
        (click)="clickCourseInstructorsTextBox$.next($event.target.value)"
        [inputFormatter]="formatterCourseInstructor"
        [editable]="false"
        #courseInstructorsTextBox="ngbTypeahead"/>
-<!--<pre>Model: {{ modelCourseInstructor | json }}</pre>-->
-<select *ngIf="isCourseInstructor" class="form-control top-buffer">
-  <option selected disabled hidden>Status</option>
+<!--<pre>pickedCourseInstrucor: {{ pickedCourseInstrucor | json }}</pre>-->
+<select class="form-control top-buffer" [(ngModel)]="pickedStatus">
+  <option [selected]="!pickedStatus" [ngValue]="undefined">Status</option>
+  <option *ngFor="let x of statuses" [ngValue]="x" [selected]="pickedStatus == x">{{x.toString()}}</option>
 </select>
+<!--<pre>pickedStatus: {{ pickedStatus | json }}</pre>-->
 <div class="row top-buffer">
   <div class="col">
     <button *ngIf="!isCourseInstructor" class="btn btn-secondary" style="width: 100%" (click)="onSearchClicked()">Szukaj</button>
@@ -62,3 +66,4 @@
 <!--    <ngb-highlight class="col" [result]="r.name" [term]="t"></ngb-highlight>-->
 <!--    <span class="col flex-column justify-content-end"><span [ngStyle]="{ color: r.hours > r.pensum ? 'red' : 'green' }"> {{r.hours}}</span> / {{r.pensum}}</span>-->
 </ng-template>
+<!--<pre>foundEntrustments: {{ foundEntrustments | json }}</pre>-->

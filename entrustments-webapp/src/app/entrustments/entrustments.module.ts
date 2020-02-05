@@ -10,7 +10,6 @@ import { SuggestionsMainViewComponent } from './suggestions-main-view/suggestion
 import {AppRoutingModule} from '../app-routing.module';
 import {NgbAccordionModule, NgbDropdownModule, NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
-import {BrowserModule} from '@angular/platform-browser';
 
 
 @NgModule({
