@@ -118,10 +118,10 @@ public class EntrustmentService {
 	}
 
 	@Transactional
-	public void modifyEntrustment(Long semesterId, Long entrustmentId, EntrustmentModifyRequestDTO entrustmentBody) {
+	public EntrustmentResponseDTO modifyEntrustment(Long semesterId, Long entrustmentId, EntrustmentModifyRequestDTO entrustmentBody) {
 		User user = userRepository.findByEmail("jan.kowalski@pwr.edu.pl")
 				.orElseThrow(() -> new ResourceInternalServerError(User.class.getSimpleName()));
-		EntrustmentStatus modifiedEntrustmentStatus = entrustmentStatusRepository.findByCode(EntrustmentStatus.StatusCode.PROPOSED)
+		EntrustmentStatus modifiedEntrustmentStatus = entrustmentStatusRepository.findByCode(EntrustmentStatus.StatusCode.MODIFIED)
 				.orElseThrow(() -> new ResourceInternalServerError(EntrustmentStatus.class.getSimpleName()));
 
 		Entrustment entrustment = entrustmentRepository.findById(entrustmentId)
@@ -138,7 +138,7 @@ public class EntrustmentService {
 				)
 				.orElseThrow(() -> new ResourceNotFoundException(VEntrustment.class.getName(), "id", String.valueOf(entrustmentId)));
 		entrustmentRepository.save(entrustment);
-		ventrustmentRepository.save(ventrustment);
+		VEntrustment ventrustmentUpdated = ventrustmentRepository.save(ventrustment);
 
 		EntrustmentLog entrustmentLog = EntrustmentLog.builder()
 				.entrustment(entrustment)
@@ -147,25 +147,27 @@ public class EntrustmentService {
 				.changeType(EntrustmentLog.ChangeType.U)
 				.build();
 		entrustmentLogRepository.save(entrustmentLog);
+
+		return complexModelMapper.map(ventrustmentUpdated, EntrustmentResponseDTO.class);
 	}
 
 	@Transactional
-	public void acceptEntrustment(Long semesterId, Long entrustmentId) {
+	public EntrustmentResponseDTO acceptEntrustment(Long semesterId, Long entrustmentId) {
 		EntrustmentStatus acceptedEntrustmentStatus = entrustmentStatusRepository.findByCode(EntrustmentStatus.StatusCode.ACCEPTED)
 				.orElseThrow(() -> new ResourceInternalServerError(EntrustmentStatus.class.getSimpleName()));
 
-		changeEntrustmentStatus(entrustmentId, acceptedEntrustmentStatus);
+		return changeEntrustmentStatus(entrustmentId, acceptedEntrustmentStatus);
 	}
 
 	@Transactional
-	public void rejectEntrustment(Long semesterId, Long entrustmentId) {
+	public EntrustmentResponseDTO rejectEntrustment(Long semesterId, Long entrustmentId) {
 		EntrustmentStatus acceptedEntrustmentStatus = entrustmentStatusRepository.findByCode(EntrustmentStatus.StatusCode.REJECTED)
 				.orElseThrow(() -> new ResourceInternalServerError(EntrustmentStatus.class.getSimpleName()));
 
-		changeEntrustmentStatus(entrustmentId, acceptedEntrustmentStatus);
+		return changeEntrustmentStatus(entrustmentId, acceptedEntrustmentStatus);
 	}
 
-	private void changeEntrustmentStatus(long entrustmentId, EntrustmentStatus acceptedEntrustmentStatus) {
+	private EntrustmentResponseDTO changeEntrustmentStatus(long entrustmentId, EntrustmentStatus acceptedEntrustmentStatus) {
 		User user = userRepository.findByEmail("jan.kowalski@pwr.edu.pl")
 				.orElseThrow(() -> new ResourceInternalServerError(User.class.getSimpleName()));
 		Entrustment entrustment = entrustmentRepository.findById(entrustmentId)
@@ -182,7 +184,7 @@ public class EntrustmentService {
 				)
 				.orElseThrow(() -> new ResourceNotFoundException(VEntrustment.class.getName(), "id", String.valueOf(entrustmentId)));
 		entrustmentRepository.save(entrustment);
-		ventrustmentRepository.save(ventrustment);
+		VEntrustment ventrustmentUpdated = ventrustmentRepository.save(ventrustment);
 
 		EntrustmentLog entrustmentLog = EntrustmentLog.builder()
 				.entrustment(entrustment)
@@ -191,6 +193,8 @@ public class EntrustmentService {
 				.changeType(EntrustmentLog.ChangeType.U)
 				.build();
 		entrustmentLogRepository.save(entrustmentLog);
+
+		return complexModelMapper.map(ventrustmentUpdated, EntrustmentResponseDTO.class);
 	}
 
 	public int findSumOfEntrustmentsHoursForCourseInstructor(Long courseInstructorId) {
