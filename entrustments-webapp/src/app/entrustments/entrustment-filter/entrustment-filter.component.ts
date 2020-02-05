@@ -1,9 +1,10 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {merge, Observable, Subject} from 'rxjs';
-import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, filter, map, switchAll} from 'rxjs/operators';
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 import {CourseInstructor, CourseInstructorService} from "../course-instructor.service";
-import {environment} from "../../../environments/environment";
+import {Entrustment, EntrustmentService, ReversedStatus, Status} from "../entrustment.service";
+import {Course, Faculty, FieldOfStudy, Semester, Specialty, StudyLevel, StudyPlanService} from "../study-plan.service";
 
 @Component({
   selector: 'app-entrustment-filter',
@@ -11,58 +12,36 @@ import {environment} from "../../../environments/environment";
   styleUrls: ['./entrustment-filter.component.css']
 })
 export class EntrustmentFilterComponent implements OnInit {
-  readonly courses: { code: string, name: string }[] = [
-    { code: 'INZ002419P', name: 'Przetwarzanie dużych zb.danych' },
-    { code: 'INZ003854P', name: 'Projektowanie sys. informat.' },
-    { code: 'INZ002418L', name: 'Bezpieczeństwo sys.web.i mob.' },
-    { code: 'INZ002418W', name: 'Bezpieczeństwo sys.web.i mob.' },
-    { code: 'INZ002418S', name: 'Bezpieczeństwo sys.web.i mob.' },
-    { code: 'INZ003854W', name: 'Projektowanie sys. informat.' }
-  ];
-  courseInstructors: CourseInstructor[];
-  // courseInstructors: {name: string, hours: number, pensum: number}[] = [
-  //   { name: 'inż. Konrad Jakubowski', hours: 50, pensum: 100 },
-  //   { name: 'inż. Hubert Kościelski', hours: 90, pensum: 90 },
-  //   { name: 'dr inż. Bogumiła Hnatkowska', hours: 120, pensum: 240 },
-  //   { name: 'dr inż. Artur Wilczek', hours: 180, pensum: 120 }
-  // ];
+  public foundEntrustments: Entrustment[];
+
+  pickedFaculty: Faculty;
+  faculties: Faculty[];
+
+  pickedFieldOfStudy: FieldOfStudy;
+  fieldsOfStudy: FieldOfStudy[];
+
   pickedAcademicYear: string;
-  readonly academicYears: {name: string}[] = [
-    {name: '2014/15'},
-    {name: '2015/16'},
-    {name: '2016/17'},
-    {name: '2017/18'},
-    {name: '2018/19'},
-    {name: '2019/20'}
-  ];
-  readonly faculties: {symbol: string, name: string}[] = [
-    {symbol: 'W08', name: 'Wydział Informatyki i Zarządzania'},
-    {symbol: 'W04', name: 'Wydział Elektroniki'}
-  ];
-  readonly fieldsOfStudy: {name: string, facultySymbol: string}[] = [
-    {name: 'Informatyka', facultySymbol: 'W04'},
-    {name: 'Automatyka i Robotyka', facultySymbol: 'W04'},
-    {name: 'Informatyka', facultySymbol: 'W08'},
-    {name: 'Zarządzanie', facultySymbol: 'W08'},
-    {name: 'Inżynieria Systemów', facultySymbol: 'W08'}
-  ];
+  academicYears: string[];
 
-  pickedSemester: number;
-  readonly semesters: {number: number}[] = [
-    {number: 1},
-    {number: 2},
-    {number: 3},
-    {number: 4},
-    {number: 5},
-    {number: 6},
-    {number: 7}
-  ];
+  pickedSemester: Semester;
+  semesters: Semester[];
 
-  facultySelectId: Selection;
+  pickedStudyLevel: StudyLevel;
+  studyLevels: StudyLevel[];
+
+  pickedSpecialty: Specialty;
+  specialties: Specialty[];
+
+  pickedCourse: Course;
+  courses: Course[];
+
+  pickedCourseInstrucor: CourseInstructor;
+  courseInstructors: CourseInstructor[];
+
+  pickedStatus: Status;
+  statuses: Status[];
+
   @Input() isCourseInstructor = false;
-
-  modelCourse: any;
-  modelCourseInstructor: any;
 
   @ViewChild('coursesTextBox', {static: true}) coursesTextBox: NgbTypeahead;
   focusCoursesTextBox$ = new Subject<string>();
@@ -84,16 +63,6 @@ export class EntrustmentFilterComponent implements OnInit {
 
   formatterCourse = (x: {code: string, name: string}) => x.code + ' ' + x.name;
 
-  // searchCourseInstructors = (text$: Observable<string>) => {
-  //   const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
-  //   const clicksWithClosedPopup$ = this.clickCourseInstructorsTextBox$.pipe(filter(() => !this.courseInstructorsTextBox.isPopupOpen()));
-  //   const inputFocus$ = this.focusCourseInstructorsTextBox$;
-  //
-  //   return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-  //     map(term => term === '' ? this.courseInstructors
-  //       : this.courseInstructors.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)));
-  // }
-
   searchCourseInstructors = (text$: Observable<string>) => {
     const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
     const clicksWithClosedPopup$ = this.clickCourseInstructorsTextBox$.pipe(filter(() => !this.courseInstructorsTextBox.isPopupOpen()));
@@ -106,30 +75,88 @@ export class EntrustmentFilterComponent implements OnInit {
 
   formatterCourseInstructor = (x: {academicDegree: string, firstName: string, surname: string}) => `${x.academicDegree} ${x.firstName} ${x.surname}`;
 
-  constructor(private courseInstructorService: CourseInstructorService) { }
+  constructor(private courseInstructorService: CourseInstructorService, private entrustmentService: EntrustmentService, private studyPlanService: StudyPlanService) { }
 
   ngOnInit() {
-    this.courseInstructorService.findAll(1).subscribe(
-      instructors => {
-        console.log("SUBSCRIBED");
-        this.courseInstructors = instructors;
-        console.log(this.courseInstructors.map(x => `${x.academicDegree} ${x.firstName} ${x.surname}`).toString());
+    // fieldsOfStudy: FieldOfStudy[];
+
+    this.studyPlanService.findAllFaculties().subscribe(
+      faculties => {
+        this.faculties = faculties;
       }
     );
+
+    this.studyPlanService.findAllSemesters().subscribe(
+      semesters => {
+        this.academicYears = [...new Set(semesters.map(x => x.academicYear))].sort();
+        this.semesters = semesters.sort(x => x.semesterNumber);
+
+        let allStudyLevels = semesters.map(x => x.studyLevel).filter(x => x);
+        let uniqueStudyLevelNames = [...new Set(allStudyLevels.map(x => x.name))];
+        this.studyLevels = uniqueStudyLevelNames.map(unique => allStudyLevels.find(all => unique == all.name))
+          .sort((a, b) => a.name > b.name ? -1 : 1);
+
+        let allSpecialties = semesters.map(x => x.specialty).filter(x => x);
+        let uniqueSpecialtyNames = [...new Set(allSpecialties.map(x => x.shortName))];
+        this.specialties = uniqueSpecialtyNames.map(unique => allSpecialties.find(all => unique == all.shortName))
+          .sort((a, b) => a.name > b.name ? -1 : 1);
+
+        let allCourses = semesters.map(x => x.courses).reduce((accum, next) => accum.concat(next), []);
+        let uniqueCourseCodes = [...new Set(allCourses.map(x => x.code))];
+        this.courses = uniqueCourseCodes.map(unique => allCourses.find(all => unique == all.code));
+        this.courses.sort((a, b) => (a.name + a.code) >  (b.name + b.code) ? -1 : 1);
+      }
+    );
+
+    this.courseInstructorService.findAll().subscribe(
+      instructors => {
+        this.courseInstructors = instructors;
+      }
+    );
+
+    this.statuses = Object.values(Status);
   }
 
   onSearchClicked() {
+    // academicYear=2019/2020&semester=1&studyLevel=FIRST_DEGREE&specialty=IO&courseCode=INZ000W&entrustmentStatus=ACCEPTED&courseInstructorId=1
+    console.log(JSON.stringify(this.pickedSemester));
+    console.log(this.pickedSemester ? this.pickedSemester.semesterNumber : undefined);
+
+    this.entrustmentService.findAllEntrustments(
+      this.pickedAcademicYear,
+      this.pickedSemester ? this.pickedSemester.semesterNumber : undefined,
+      this.pickedStudyLevel ? this.pickedStudyLevel.code : undefined,
+      this.pickedSpecialty ? this.pickedSpecialty.shortName : undefined,
+      this.pickedCourse ? this.pickedCourse.code : undefined,
+      ReversedStatus[this.pickedStatus],
+      this.pickedCourseInstrucor ? this.pickedCourseInstrucor.id : undefined
+      ).subscribe(
+        entrustments => {
+      this.foundEntrustments = entrustments;
+      console.log(JSON.stringify(entrustments));
+    });
   }
 
   onClearFiltersClicked() {
+    if (this.shouldLockFieldOfStudy()) {
+      this.pickedFaculty = undefined;
+      this.pickedFieldOfStudy = undefined;
+    }
+
     this.pickedAcademicYear = undefined;
+    this.pickedSemester = undefined;
+    this.pickedStudyLevel = undefined;
+    this.pickedSpecialty = undefined;
+    this.pickedCourse = undefined;
+    this.pickedCourseInstrucor = undefined;
+    this.pickedStatus = undefined;
   }
 
-  shouldShowFaculties() {
+  shouldShowFieldOfStudy() {
     return true;
   }
 
-  shouldLockFaculties() {
+  shouldLockFieldOfStudy() {
     return !this.isCourseInstructor;
   }
 }
