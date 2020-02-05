@@ -10,14 +10,13 @@ export class CourseInstructorService {
 
   constructor(private httpClient: HttpClient) { }
 
-  findAll(fieldOfStudyId: number): Observable<CourseInstructor[]> {
-    // const header = new HttpHeaders().append('Access-Control-Allow-Origin', null)
-    return this.httpClient.get<CourseInstructor[]>(`${environment.apiBaseUrl}/api/v1/fields-of-study/${fieldOfStudyId}/course-instructors/`);
+  findAllByFieldOfStudyId(fieldOfStudyId: number): Observable<CourseInstructor[]> {
+    return this.httpClient.get<CourseInstructor[]>(`${environment.apiBaseUrl}/api/v1/fields-of-study/${fieldOfStudyId}/course-instructors`);
   }
 
-  // findAll(): Observable<CourseInstructor[]> {
-  //   return this.httpClient.get<CourseInstructor[]>(`${environment.apiBaseUrl}/api/v1/fields-of-study/${fieldOfStudyId}/course-instructors/`);
-  // }
+  findAll(): Observable<CourseInstructor[]> {
+    return this.httpClient.get<CourseInstructor[]>(`${environment.apiBaseUrl}/api/v1/course-instructors`);
+  }
 }
 
 export class CourseInstructor {
@@ -26,16 +25,18 @@ export class CourseInstructor {
   surname: string;
   academicDegree: string;
   agreements?: Agreement[];
-  courseInstructorType: string;
-  additionalAttributes?: AdditionalAttributes;
+  courseInstructorType: CourseInstructorType;
+  entrustedHours: number;
+  additionalAttributes: AdditionalAttributes;
 
-  constructor(id?: number, firstName?: string, surname?: string, academicDegree?: string, agreements?: Agreement[], courseInstructorType?: string, additionalAttributes?: AdditionalAttributes) {
+  constructor(id?: number, firstName?: string, surname?: string, academicDegree?: string, agreements?: Agreement[], courseInstructorType?: CourseInstructorType, entrustedHours?: number, additionalAttributes?: AdditionalAttributes) {
     this.id = id;
     this.firstName = firstName;
     this.surname = surname;
     this.academicDegree = academicDegree;
     this.agreements = agreements;
     this.courseInstructorType = courseInstructorType;
+    this.entrustedHours = entrustedHours;
     this.additionalAttributes = additionalAttributes;
   }
 }
@@ -59,11 +60,11 @@ export class Agreement {
 }
 
 export class AdditionalAttributes {
-  pensum?: string;
+  pensum?: number;
   position?: string;
-  timeBasis?: string;
+  timeBasis?: number;
 
-  constructor(pensum?: string, position?: string, timeBasis?: string) {
+  constructor(pensum?: number, position?: string, timeBasis?: number) {
     this.pensum = pensum;
     this.position = position;
     this.timeBasis = timeBasis;
