@@ -9,24 +9,24 @@
         <div class="card-body" style="padding: 1rem; border-top: 1px solid rgb(200, 200, 200)">
           <div class="row">
             <div class="col">
-              <select class="form-control top-buffer" [(ngModel)]="filterOptions.academicYear">
-                <option [selected]="!filterOptions.academicYear" [ngValue]="undefined">Rok akademicki</option>
-                <option *ngFor="let x of academicYears" [ngValue]="x" [selected]="filterOptions.academicYear == x">{{x}}</option>
+              <select class="form-control top-buffer"[(ngModel)]="sharedDataService.actualFilterOptions.academicYear" (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)">
+                <option [selected]="!sharedDataService.actualFilterOptions.academicYear" [ngValue]="undefined">Rok akademicki</option>
+                <option *ngFor="let x of filteredAcademicYears" [ngValue]="x" [selected]="sharedDataService.actualFilterOptions.academicYear == x">{{x}}</option>
               </select>
               <!--<pre>pickedAcademicYear: {{ pickedAcademicYear | json }}</pre>-->
-              <select class="form-control top-buffer" [(ngModel)]="filterOptions.semester">
-                <option [selected]="!filterOptions.semester" [ngValue]="undefined">Semestr</option>
-                <option *ngFor="let x of semesters" [ngValue]="x" [selected]="filterOptions.semester == x">{{x.semesterNumber}}</option>
+              <select class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.semester" (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)">
+                <option [selected]="!sharedDataService.actualFilterOptions.semester" [ngValue]="undefined">Semestr</option>
+                <option *ngFor="let x of filteredSemesters" [ngValue]="x" [selected]="sharedDataService.actualFilterOptions.semester == x">{{x.semesterNumber}}</option>
               </select>
               <!--<pre>pickedSemester: {{ pickedSemester | json }}</pre>-->
-              <select class="form-control top-buffer" [(ngModel)]="filterOptions.studyLevel">
-                <option [selected]="!filterOptions.studyLevel" [ngValue]="undefined">Stopień</option>
-                <option *ngFor="let x of studyLevels" [ngValue]="x" [selected]="filterOptions.studyLevel == x">{{x.name}}</option>
+              <select class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.studyLevel" (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)">
+                <option [selected]="!sharedDataService.actualFilterOptions.studyLevel" [ngValue]="undefined">Stopień</option>
+                <option *ngFor="let x of filteredStudyLevels" [ngValue]="x" [selected]="sharedDataService.actualFilterOptions.studyLevel == x">{{x.name}}</option>
               </select>
               <!--<pre>pickedStudyLevel: {{ pickedStudyLevel | json }}</pre>-->
-              <select class="form-control top-buffer" [(ngModel)]="filterOptions.specialty">
-                <option [selected]="!filterOptions.specialty" [ngValue]="undefined">Specjalność</option>
-                <option *ngFor="let x of specialties" [ngValue]="x" [selected]="filterOptions.specialty == x">{{x.shortName}} - {{x.name}}</option>
+              <select class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.specialty" (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)">
+                <option [selected]="!sharedDataService.actualFilterOptions.specialty" [ngValue]="undefined">Specjalność</option>
+                <option *ngFor="let x of filteredSpecialties" [ngValue]="x" [selected]="sharedDataService.actualFilterOptions.specialty == x">{{x.shortName}} - {{x.name}}</option>
               </select>
             </div>
             <div class="col">

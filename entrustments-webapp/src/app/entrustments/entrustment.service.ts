@@ -33,6 +33,10 @@ export class EntrustmentService {
     return this.httpClient.get<number>(`${environment.apiBaseUrl}/api/v1/course-instructors/${courseInstructorId}/entrustments/hours`);
   }
 
+  findHoursToEntrustBySemesterIdAndCourseId(semesterId: number, courseId: number): Observable<number> {
+    return this.httpClient.get<number>(`${environment.apiBaseUrl}/api/v1/semesters/${semesterId}/course/${courseId}/entrustments/hours-to-entrust`);
+  }
+
   acceptEntrustment(semesterId: number, entrustmentId: number) {
     return this.httpClient.patch(`${environment.apiBaseUrl}/api/v1/semesters/${semesterId}/entrustments/${entrustmentId}/accept`, { description: "Accepted entrustment" });
   }

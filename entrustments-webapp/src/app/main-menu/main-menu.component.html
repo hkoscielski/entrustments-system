@@ -2,7 +2,7 @@
   <div class="card-header-pills" style="font-size: medium; text-align: center; margin-top: 1rem">Wybierz funkcjonalność:</div>
   <div class="card-body" style="padding: 1rem;">
       <button class="btn btn-success d-block mx-auto" style="width: 75%; margin: 1rem" (click)="onCruClicked()">CRU powierzeń</button>
-      <input type="text" class="form-control d-block mx-auto top-buffer" style="width: 75%; margin-top: 30px; text-align: center" [class.is-valid]="pickedCourseInstructor" placeholder="Wpisz prowadzącego"
+      <input type="text" class="form-control d-block mx-auto top-buffer" style="width: 75%; margin-top: 30px; text-align: center" [class.is-valid]="sharedDataService.actualCourseInstructor" placeholder="Wpisz prowadzącego"
              [(ngModel)]="pickedCourseInstructor" [ngbTypeahead]="searchCourseInstructors" [resultTemplate]="rtCourseInstructor"
              (focus)="focusCourseInstructorsTextBox$.next($event.target.value)"
              (click)="clickCourseInstructorsTextBox$.next($event.target.value)"

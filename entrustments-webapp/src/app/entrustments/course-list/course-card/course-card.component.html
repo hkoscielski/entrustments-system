@@ -1,14 +1,18 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css">
-<div class="card card-outline-secondary mx-auto shadow-sm rounded my-drop-down"  [style.background-color]="course.zzuHours > 15 ? 'greenyellow' : 'lightskyblue'" style="margin: 10px; width: 100%;">
+<div class="card card-outline-secondary mx-auto shadow-sm rounded my-drop-down"  [style.background-color]="course.hoursToEntrust == 0 ? 'greenyellow' : 'lightskyblue'" style="margin: 10px; width: 100%;">
   <a class="card-body" role="button" style="padding: 10px" (click)="onCardClicked()">
     <div>
       <label style="margin: 0; font-size: small">W08</label>
+<!--      <label style="margin: 0; font-size: small">{{foundFacultyName}}</label>-->
       <span style="margin: 0"> - </span>
-      <label style="margin: 0">II st.</label>
+      <label style="margin: 0">II stopień</label>
+<!--      <label style="margin: 0">{{foundStudyLevelName}}</label>-->
       <span style="margin: 0"> - </span>
-      <label style="margin: 0">Informatyka</label>
+      <label style="margin: 0">inf</label>
+<!--      <label style="margin: 0">{{foundFieldOfStudyName}}</label>-->
       <span style="margin: 0"> - </span>
       <label style="margin: 0; white-space: nowrap; text-overflow: ellipsis; max-width: 50px">Inżynieria Oprogramowania</label>
+<!--      <label style="margin: 0; white-space: nowrap; text-overflow: ellipsis; max-width: 50px">{{foundSpecialtyName}}</label>-->
       <a class="btn float-right" *ngIf="isCardEditable()"><i class="fas fa-pencil-alt"></i></a>
       <!--      <li class="float-right" ngbDropdown display="dynamic" placement="bottom-right">-->
       <!--        <a style="cursor: pointer" ngbDropdownToggle id="navbarDropdown3" role="button"></a>-->
@@ -27,7 +31,7 @@
       </div>
       <div class="col">
 <!--        <label [style.color]="getStatusColor()" style="margin: 0;">{{entrustment.status.toString().toUpperCase()}}</label>-->
-        <label style="margin: 0; white-space: nowrap;">Do przydzielenia: yyy</label>
+        <label style="margin: 0; white-space: nowrap;">Do przydzielenia: {{course.hoursToEntrust}}</label>
       </div>
     </div>
   </a>

@@ -135,6 +135,8 @@ export class Course {
   name: string;
   zzuHours: number;
   didacticForm: DidacticForm;
+  hoursToEntrust?: number;
+  semesterId?: number;
 
   constructor(id?: number, code?: string, name?: string, zzuHours?: number, didacticForm?: DidacticForm) {
     this.id = id;

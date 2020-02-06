@@ -18,13 +18,15 @@ export class EntrustmentFilterComponent implements OnInit, AfterViewInit {
 
   // faculties: Faculty[];
   // fieldsOfStudy: FieldOfStudy[] = [];
-  // academicYears: string[];
-  // semesters: Semester[];
-  // studyLevels: StudyLevel[];
-  // specialties: Specialty[];
-  // courses: Course[];
-  // courseInstructors: CourseInstructor[];
-  // statuses: Status[];
+  filteredAcademicYears: string[] = [];
+  filteredSemesters: Semester[] = [];
+  filteredStudyLevels: StudyLevel[] = [];
+  filteredSpecialties: Specialty[] = [];
+  filteredCourses: Course[] = [];
+  filteredCourseInstructors: CourseInstructor[];
+  filteredStatuses: Status[] = [];
+
+  // filteredSemesters: Semester[] = [];
 
   showFoundHint = false;
   foundCount = 0;
@@ -43,8 +45,8 @@ export class EntrustmentFilterComponent implements OnInit, AfterViewInit {
     const inputFocus$ = this.focusCoursesTextBox$;
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-      map(term => term === '' ? this.sharedDataService.courses
-        : this.sharedDataService.courses.filter(v => v.code.toLowerCase().concat(' ', v.name.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
+      map(term => term === '' ? this.filteredCourses.slice(0, 10)
+        : this.filteredCourses.filter(v => v.code.toLowerCase().concat(' ', v.name.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
   };
 
   formatterCourse = (x: {code: string, name: string}) => x.code + ' ' + x.name;
@@ -55,8 +57,8 @@ export class EntrustmentFilterComponent implements OnInit, AfterViewInit {
     const inputFocus$ = this.focusCourseInstructorsTextBox$;
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-      map(term => term === '' ? this.sharedDataService.courseInstructors
-        : this.sharedDataService.courseInstructors.filter(v => v.academicDegree.toLowerCase().concat(' ', v.firstName.toLowerCase(), ' ', v.surname.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
+      map(term => term === '' ? this.filteredCourseInstructors.slice(0, 10)
+        : this.filteredCourseInstructors.filter(v => v.academicDegree.toLowerCase().concat(' ', v.firstName.toLowerCase(), ' ', v.surname.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
   };
 
   formatterCourseInstructor = (x: {academicDegree: string, firstName: string, surname: string}) => `${x.academicDegree} ${x.firstName} ${x.surname}`;
@@ -113,10 +115,47 @@ export class EntrustmentFilterComponent implements OnInit, AfterViewInit {
     // );
     //
     // this.statuses = Object.values(Status);
+    if (this.sharedDataService.actualCourseInstructor) {
+      this.onSearchClicked();
+    }
+
+    this.sharedDataService.onFilterOptionsChanged.asObservable().subscribe(x => this.onFilterOptionsChanged(x));
+    // this.filteredSemesters;
+    //   this.sharedDataService.semesters.filter()
+    // this.semesters = semesters.sort(x => x.semesterNumber);
+    // let allSemesters = this.sharedDataService.semesters;
+    // let uniqueSemesterNumbers = [...new Set(allSemesters.map(x => x.semesterNumber))];
+    // this.filteredSemesters = uniqueSemesterNumbers.map(unique => allSemesters.find(all => unique == all.semesterNumber))
+    //   .sort((a, b) => a.semesterNumber >= b.semesterNumber ? -1 : 1);
   }
 
   ngAfterViewInit() {
     // this.filterOptions = this.sharedDataService.actualFilterOptions;
+  }
+
+  onFilterOptionsChanged(newFilter: FilterOptions) {
+    // this.onClearFiltersClicked();
+    // this.sharedDataService.actualFilterOptions = newFilter;
+    this.filteredAcademicYears = [...new Set(this.sharedDataService.semesters.map(x => x.academicYear))].sort();
+    if (newFilter.academicYear) {
+      this.filteredSemesters = this.sharedDataService.semesters.filter(s => s.academicYear == newFilter.academicYear);
+    }
+    else {
+      this.filteredSemesters = this.sharedDataService.semesters;
+    }
+
+    this.filteredCourseInstructors = this.sharedDataService.courseInstructors;
+    this.filteredSpecialties = this.sharedDataService.specialties;
+    this.filteredStatuses = this.sharedDataService.statuses;
+    this.filteredStudyLevels = this.sharedDataService.studyLevels;
+
+    if (newFilter.semester) {
+      this.filteredCourses = this.sharedDataService.courses.filter(x => newFilter.semester.courses.some(y => x.code == y.code));
+    }
+    else {
+      this.filteredCourses = this.sharedDataService.courses;
+    }
+
   }
 
   onSearchClicked() {

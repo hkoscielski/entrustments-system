@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {CourseInstructor, CourseInstructorService} from "../entrustments/course-instructor.service";
 import {merge, Observable, Subject} from "rxjs";
 import {debounceTime, distinctUntilChanged, filter, map} from "rxjs/operators";
@@ -65,6 +65,7 @@ export class MainMenuComponent implements OnInit {
 
   onSuggestionsClicked() {
     this.sharedDataService.actualCourseInstructor = this.pickedCourseInstructor;
+    this.sharedDataService.actualFilterOptions.courseInstrucor = this.pickedCourseInstructor;
     this.router.navigate(['/suggestions-main-view']);
   }
 }

@@ -61,33 +61,67 @@ export class EntrustmentAddPanelComponent implements OnInit {
   constructor(private location: Location, private courseInstructorService: CourseInstructorService, private entrustmentService: EntrustmentService, private studyPlanService: StudyPlanService, private sharedDataService: SharedDataService) { }
 
   ngOnInit() {
-    this.studyPlanService.findAllSemesters().subscribe(
-      semesters => {
-        this.academicYears = [...new Set(semesters.map(x => x.academicYear))].sort();
-        this.semesters = semesters.sort(x => x.semesterNumber);
+    // this.studyPlanService.findAllSemesters().subscribe(
+    //   semesters => {
+    //     this.academicYears = [...new Set(semesters.map(x => x.academicYear))].sort();
+    //     this.semesters = semesters.sort(x => x.semesterNumber);
+    //
+    //     let allStudyLevels = semesters.map(x => x.studyLevel).filter(x => x);
+    //     let uniqueStudyLevelNames = [...new Set(allStudyLevels.map(x => x.name))];
+    //     this.studyLevels = uniqueStudyLevelNames.map(unique => allStudyLevels.find(all => unique == all.name))
+    //       .sort((a, b) => a.name > b.name ? -1 : 1);
+    //
+    //     let allSpecialties = semesters.map(x => x.specialty).filter(x => x);
+    //     let uniqueSpecialtyNames = [...new Set(allSpecialties.map(x => x.shortName))];
+    //     this.specialties = uniqueSpecialtyNames.map(unique => allSpecialties.find(all => unique == all.shortName))
+    //       .sort((a, b) => a.name > b.name ? -1 : 1);
+    //
+    //     let allCourses = semesters.map(x => x.courses).reduce((accum, next) => accum.concat(next), []);
+    //     let uniqueCourseCodes = [...new Set(allCourses.map(x => x.code))];
+    //     this.courses = uniqueCourseCodes.map(unique => allCourses.find(all => unique == all.code));
+    //     this.courses.sort((a, b) => (a.name + a.code) >  (b.name + b.code) ? -1 : 1);
+    //   }
+    // );
+    //
+    // this.courseInstructorService.findAll().subscribe(
+    //   instructors => {
+    //     this.courseInstructors = instructors;
+    //   }
+    // );
+    this.sharedDataService.onFilterOptionsChanged.asObservable().subscribe(x => this.onFilterOptionsChanged(x));
+  }
 
-        let allStudyLevels = semesters.map(x => x.studyLevel).filter(x => x);
-        let uniqueStudyLevelNames = [...new Set(allStudyLevels.map(x => x.name))];
-        this.studyLevels = uniqueStudyLevelNames.map(unique => allStudyLevels.find(all => unique == all.name))
-          .sort((a, b) => a.name > b.name ? -1 : 1);
+  filteredAcademicYears: string[] = [];
+  filteredSemesters: Semester[] = [];
+  filteredStudyLevels: StudyLevel[] = [];
+  filteredSpecialties: Specialty[] = [];
+  filteredCourses: Course[] = [];
+  filteredCourseInstructors: CourseInstructor[];
+  filteredStatuses: Status[] = [];
 
-        let allSpecialties = semesters.map(x => x.specialty).filter(x => x);
-        let uniqueSpecialtyNames = [...new Set(allSpecialties.map(x => x.shortName))];
-        this.specialties = uniqueSpecialtyNames.map(unique => allSpecialties.find(all => unique == all.shortName))
-          .sort((a, b) => a.name > b.name ? -1 : 1);
+  onFilterOptionsChanged(newFilter: FilterOptions) {
+    // this.onClearFiltersClicked();
+    // this.sharedDataService.actualFilterOptions = newFilter;
+    this.filteredAcademicYears = [...new Set(this.sharedDataService.semesters.map(x => x.academicYear))].sort();
+    if (newFilter.academicYear) {
+      this.filteredSemesters = this.sharedDataService.semesters.filter(s => s.academicYear == newFilter.academicYear);
+    }
+    else {
+      this.filteredSemesters = this.sharedDataService.semesters;
+    }
 
-        let allCourses = semesters.map(x => x.courses).reduce((accum, next) => accum.concat(next), []);
-        let uniqueCourseCodes = [...new Set(allCourses.map(x => x.code))];
-        this.courses = uniqueCourseCodes.map(unique => allCourses.find(all => unique == all.code));
-        this.courses.sort((a, b) => (a.name + a.code) >  (b.name + b.code) ? -1 : 1);
-      }
-    );
+    this.filteredCourseInstructors = this.sharedDataService.courseInstructors;
+    this.filteredSpecialties = this.sharedDataService.specialties;
+    this.filteredStatuses = this.sharedDataService.statuses;
+    this.filteredStudyLevels = this.sharedDataService.studyLevels;
 
-    this.courseInstructorService.findAll().subscribe(
-      instructors => {
-        this.courseInstructors = instructors;
-      }
-    );
+    if (newFilter.semester) {
+      this.filteredCourses = this.sharedDataService.courses.filter(x => newFilter.semester.courses.some(y => x.code == y.code));
+    }
+    else {
+      this.filteredCourses = this.sharedDataService.courses;
+    }
+
   }
 
   areAllOptionsPicked() {

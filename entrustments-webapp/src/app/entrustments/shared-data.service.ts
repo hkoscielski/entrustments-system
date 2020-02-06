@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Entrustment, Status} from "./entrustment.service";
+import {Entrustment, EntrustmentService, Status} from "./entrustment.service";
 import {CourseInstructor, CourseInstructorService} from "./course-instructor.service";
 import {Course, Faculty, FieldOfStudy, Semester, Specialty, StudyLevel, StudyPlanService} from "./study-plan.service";
 import {BehaviorSubject} from "rxjs";
@@ -27,7 +27,7 @@ export class SharedDataService {
   courseInstructors: CourseInstructor[];
   statuses: Status[];
 
-  constructor(private studyPlanService: StudyPlanService, private courseInstructorService: CourseInstructorService) {
+  constructor(private studyPlanService: StudyPlanService, private courseInstructorService: CourseInstructorService, private entrustmentService: EntrustmentService) {
     // this.onFilterOptionsChanged.asObservable().subscribe(options => {
     //   this.actualFilterOptions = options;
     // })
@@ -64,10 +64,17 @@ export class SharedDataService {
         this.specialties = uniqueSpecialtyNames.map(unique => allSpecialties.find(all => unique == all.shortName))
           .sort((a, b) => a.name > b.name ? -1 : 1);
 
-        let allCourses = semesters.map(x => x.courses).reduce((accum, next) => accum.concat(next), []);
-        let uniqueCourseCodes = [...new Set(allCourses.map(x => x.code))];
-        this.courses = uniqueCourseCodes.map(unique => allCourses.find(all => unique == all.code));
-        this.courses.sort((a, b) => (a.name + a.code) >  (b.name + b.code) ? -1 : 1);
+        this.courses = semesters.map(x => { x.courses.forEach(c => c.semesterId = x.id); return x.courses }).reduce((accum, next) => accum.concat(next), []);
+        // console.log(JSON.stringify(this.courses));
+        this.courses.forEach(x => this.entrustmentService.findHoursToEntrustBySemesterIdAndCourseId(x.semesterId, x.id)
+          .subscribe(hours => {
+            x.hoursToEntrust = hours;
+            // console.log("course Id " + x.id + " hours = " + x.hoursToEntrust);
+        }));
+        // let allCourses = semesters.map(x => x.courses).reduce((accum, next) => accum.concat(next), []);
+        // let uniqueCourseCodes = [...new Set(allCourses.map(x => x.code))];
+        // this.courses = uniqueCourseCodes.map(unique => allCourses.find(all => unique == all.code));
+        // this.courses.sort((a, b) => (a.name + a.code) >  (b.name + b.code) ? -1 : 1);
       }
     );
 
