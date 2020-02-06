@@ -27,7 +27,7 @@ public class MailService {
 				.from(mailProperties.getUsername())
 				.to(to)
 				.subject("System Powierzeń - Otrzymano nowe powierzenie")
-				.content("Sprawdź swoją listę powierzeń w systemie.\n" + message)
+				.content("Sprawdź swoją listę powierzeń w systemie. Otrzymano nowe powierzenie: " + message)
 				.build();
 		send(mail);
 	}

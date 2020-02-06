@@ -93,7 +93,7 @@ public class EntrustmentService {
 
 	@Transactional
 	public EntrustmentResponseDTO createEntrustment(long semesterId, EntrustmentCreateRequestDTO entrustment) {
-		User user = userRepository.findByEmail("anna.sekretarz@pwr.edu.pl")
+		User user = userRepository.findByEmail("anna444444.sekretarz@pwr.edu.pl")
 				.orElseThrow(() -> new ResourceInternalServerError("User"));
 		EntrustmentStatus initialEntrustmentStatus = entrustmentStatusRepository.findByCode(EntrustmentStatus.StatusCode.PROPOSED)
 				.orElseThrow(() -> new ResourceInternalServerError("EntrustmentStatus"));
@@ -133,7 +133,7 @@ public class EntrustmentService {
 
 	@Transactional
 	public EntrustmentResponseDTO modifyEntrustment(Long semesterId, Long entrustmentId, EntrustmentModifyRequestDTO entrustmentBody) {
-		User user = userRepository.findByEmail("jan.kowalski@pwr.edu.pl")
+		User user = userRepository.findByEmail("noreply.team14@o2.pl")
 				.orElseThrow(() -> new ResourceInternalServerError(User.class.getSimpleName()));
 		EntrustmentStatus modifiedEntrustmentStatus = entrustmentStatusRepository.findByCode(EntrustmentStatus.StatusCode.MODIFIED)
 				.orElseThrow(() -> new ResourceInternalServerError(EntrustmentStatus.class.getSimpleName()));
@@ -184,7 +184,7 @@ public class EntrustmentService {
 	}
 
 	private EntrustmentResponseDTO changeEntrustmentStatus(long entrustmentId, EntrustmentStatus acceptedEntrustmentStatus) {
-		User user = userRepository.findByEmail("jan.kowalski@pwr.edu.pl")
+		User user = userRepository.findByEmail("noreply.team14@o2.pl")
 				.orElseThrow(() -> new ResourceInternalServerError(User.class.getSimpleName()));
 		Entrustment entrustment = entrustmentRepository.findById(entrustmentId)
 				.map(e -> e.setLastVersion(e.getLastVersion() + 1))

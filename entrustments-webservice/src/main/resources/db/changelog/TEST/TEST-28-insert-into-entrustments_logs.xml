@@ -9,14 +9,14 @@
         <insert tableName="Entrustments_Logs">
             <column name="id_entrustment">1</column>
             <column name="entrustment_version">1</column>
-            <column name="id_user" valueComputed="(select id from Users where email = 'anna.sekretarz@pwr.edu.pl')"/>
+            <column name="id_user" valueComputed="(select id from Users where email = 'anna444444.sekretarz@pwr.edu.pl')"/>
             <column name="change_date" valueDate="${now}"/>
             <column name="change_type">I</column>
         </insert>
         <insert tableName="Entrustments_Logs">
             <column name="id_entrustment">1</column>
             <column name="entrustment_version">2</column>
-            <column name="id_user" valueComputed="(select id from Users where email = 'jan.kowalski@pwr.edu.pl')"/>
+            <column name="id_user" valueComputed="(select id from Users where email = 'noreply.team14@o2.pl')"/>
             <column name="change_date" valueDate="${now}"/>
             <column name="change_type">U</column>
         </insert>
@@ -24,14 +24,14 @@
         <insert tableName="Entrustments_Logs">
             <column name="id_entrustment">2</column>
             <column name="entrustment_version">1</column>
-            <column name="id_user" valueComputed="(select id from Users where email = 'anna.sekretarz@pwr.edu.pl')"/>
+            <column name="id_user" valueComputed="(select id from Users where email = 'anna444444.sekretarz@pwr.edu.pl')"/>
             <column name="change_date" valueDate="${now}"/>
             <column name="change_type">I</column>
         </insert>
         <insert tableName="Entrustments_Logs">
             <column name="id_entrustment">2</column>
             <column name="entrustment_version">2</column>
-            <column name="id_user" valueComputed="(select id from Users where email = 'andrzej.kruk@pwr.edu.pl')"/>
+            <column name="id_user" valueComputed="(select id from Users where email = 'huberto1010@op.pl')"/>
             <column name="change_date" valueDate="${now}"/>
             <column name="change_type">U</column>
         </insert>
@@ -39,7 +39,7 @@
         <insert tableName="Entrustments_Logs">
             <column name="id_entrustment">3</column>
             <column name="entrustment_version">1</column>
-            <column name="id_user" valueComputed="(select id from Users where email = 'anna.sekretarz@pwr.edu.pl')"/>
+            <column name="id_user" valueComputed="(select id from Users where email = 'anna444444.sekretarz@pwr.edu.pl')"/>
             <column name="change_date" valueDate="${now}"/>
             <column name="change_type">I</column>
         </insert>

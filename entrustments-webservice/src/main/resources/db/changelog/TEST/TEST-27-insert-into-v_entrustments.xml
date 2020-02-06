@@ -11,7 +11,7 @@
             <column name="version">1</column>
             <column name="number_of_hours">15</column>
             <column name="id_course" valueComputed="(select id from Courses where code = 'INZ004448L')"/>
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'jan.kowalski@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'noreply.team14@o2.pl'))"/>
             <column name="id_entrustment_status" valueComputed="(select id from Entrustment_Statuses where name = 'Zaproponowane')"/>
         </insert>
         <insert tableName="V_Entrustments">
@@ -19,7 +19,7 @@
             <column name="version">2</column>
             <column name="number_of_hours">15</column>
             <column name="id_course" valueComputed="(select id from Courses where code = 'INZ004448L')"/>
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'jan.kowalski@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'noreply.team14@o2.pl'))"/>
             <column name="id_entrustment_status" valueComputed="(select id from Entrustment_Statuses where name = 'Zaakceptowane')"/>
         </insert>
         <insert tableName="V_Entrustments">
@@ -27,7 +27,7 @@
             <column name="version">1</column>
             <column name="number_of_hours">15</column>
             <column name="id_course" valueComputed="(select id from Courses where code = 'MAT001656W')"/>
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'andrzej.kruk@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'huberto1010@op.pl'))"/>
             <column name="id_entrustment_status" valueComputed="(select id from Entrustment_Statuses where name = 'Zaproponowane')"/>
         </insert>
         <insert tableName="V_Entrustments">
@@ -35,7 +35,7 @@
             <column name="version">2</column>
             <column name="number_of_hours">15</column>
             <column name="id_course" valueComputed="(select id from Courses where code = 'MAT001656W')"/>
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'andrzej.kruk@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'huberto1010@op.pl'))"/>
             <column name="id_entrustment_status" valueComputed="(select id from Entrustment_Statuses where name = 'Odrzucone')"/>
         </insert>
 
@@ -44,7 +44,7 @@
             <column name="version">1</column>
             <column name="number_of_hours">30</column>
             <column name="id_course" valueComputed="(select id from Courses where code = 'INZ003854P')"/>
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'michal.nowak@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'hubson10@op.pl'))"/>
             <column name="id_entrustment_status" valueComputed="(select id from Entrustment_Statuses where name = 'Zaproponowane')"/>
         </insert>
     </changeSet>

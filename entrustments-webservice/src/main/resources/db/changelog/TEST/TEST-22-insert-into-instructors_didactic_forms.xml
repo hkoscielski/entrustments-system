@@ -7,63 +7,63 @@
 
     <changeSet author="hkoscielski" id="TEST-21-insert-into-instructors_didactic_forms">
         <insert tableName="Instructors_Didactic_Forms">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'jan.kowalski@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'noreply.team14@o2.pl'))"/>
             <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Ćwiczenia')"/>
         </insert>
         <insert tableName="Instructors_Didactic_Forms">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'jan.kowalski@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'noreply.team14@o2.pl'))"/>
             <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Laboratorium')"/>
         </insert>
         <insert tableName="Instructors_Didactic_Forms">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'jan.kowalski@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'noreply.team14@o2.pl'))"/>
             <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Praca Inżynierska')"/>
         </insert>
         <insert tableName="Instructors_Didactic_Forms">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'jan.kowalski@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'noreply.team14@o2.pl'))"/>
             <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Projekt')"/>
         </insert>
         <insert tableName="Instructors_Didactic_Forms">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'michal.nowak@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'hubson10@op.pl'))"/>
             <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Ćwiczenia')"/>
         </insert>
         <insert tableName="Instructors_Didactic_Forms">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'michal.nowak@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'hubson10@op.pl'))"/>
             <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Laboratorium')"/>
         </insert>
         <insert tableName="Instructors_Didactic_Forms">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'michal.nowak@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'hubson10@op.pl'))"/>
             <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Praca Inżynierska')"/>
         </insert>
         <insert tableName="Instructors_Didactic_Forms">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'michal.nowak@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'hubson10@op.pl'))"/>
             <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Projekt')"/>
         </insert>
         <insert tableName="Instructors_Didactic_Forms">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'andrzej.kruk@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'huberto1010@op.pl'))"/>
             <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Ćwiczenia')"/>
         </insert>
         <insert tableName="Instructors_Didactic_Forms">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'andrzej.kruk@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'huberto1010@op.pl'))"/>
             <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Laboratorium')"/>
         </insert>
         <insert tableName="Instructors_Didactic_Forms">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'andrzej.kruk@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'huberto1010@op.pl'))"/>
             <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Praca Inżynierska')"/>
         </insert>
         <insert tableName="Instructors_Didactic_Forms">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'andrzej.kruk@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'huberto1010@op.pl'))"/>
             <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Praca Magisterska')"/>
         </insert>
         <insert tableName="Instructors_Didactic_Forms">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'andrzej.kruk@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'huberto1010@op.pl'))"/>
             <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Projekt')"/>
         </insert>
         <insert tableName="Instructors_Didactic_Forms">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'andrzej.kruk@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'huberto1010@op.pl'))"/>
             <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Seminarium')"/>
         </insert>
         <insert tableName="Instructors_Didactic_Forms">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'andrzej.kruk@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'huberto1010@op.pl'))"/>
             <column name="id_didactic_form" valueComputed="(select id from Didactic_Forms where name = 'Wykład')"/>
         </insert>
     </changeSet>

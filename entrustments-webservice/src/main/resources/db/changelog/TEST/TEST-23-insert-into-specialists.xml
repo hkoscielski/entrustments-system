@@ -7,7 +7,7 @@
 
     <changeSet author="hkoscielski" id="TEST-23-insert-into-specialists">
         <insert tableName="Specialists">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'andrzej.kruk@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'huberto1010@op.pl'))"/>
         </insert>
     </changeSet>
 
