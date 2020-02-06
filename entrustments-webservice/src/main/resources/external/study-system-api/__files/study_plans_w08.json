@@ -1,6 +1,6 @@
 [
   {
-    "id": 7,
+    "id": 100,
     "faculty": {
       "symbol": "W08",
       "name": "Wydział Informatyki i Zarządzania"
@@ -17,7 +17,7 @@
     "startSemesterName": "WINTER",
     "semesters": [
       {
-        "id": 5,
+        "id": 500,
         "academicYear": "2020/2021",
         "semesterNumber": 1,
         "semesterName": "WINTER",
@@ -88,7 +88,7 @@
         ]
       },
       {
-        "id": 6,
+        "id": 501,
         "academicYear": "2020/2021",
         "semesterNumber": 2,
         "semesterName": "SUMMER",

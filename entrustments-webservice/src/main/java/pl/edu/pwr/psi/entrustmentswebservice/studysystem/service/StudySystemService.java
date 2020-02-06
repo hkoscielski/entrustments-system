@@ -78,9 +78,6 @@ public class StudySystemService {
 		CourseInstructorResponseDTO[] instructors = restTemplate.getForObject(String.format("%s/api/course-instructors", studySystemProperties.getUrl()), CourseInstructorResponseDTO[].class);
 
 		if (instructors != null) {
-			List<User> usersToSaveOrUpdate = new ArrayList<>();
-			List<CourseInstructor> instructorsToSaveOrUpdate = new ArrayList<>();
-
 			Map<String, AcademicDegree> academicDegreeByShortName = academicDegreeRepository.findAll()
 					.stream()
 					.collect(Collectors.toMap(AcademicDegree::getShortName, Function.identity()));
@@ -100,14 +97,14 @@ public class StudySystemService {
 						.collect(Collectors.toSet());
 				FieldOfStudy fieldOfStudy = fieldOfStudyRepository.findByShortNameAndFacultySymbol(instructor.getFieldOfStudy().getShortName(), instructor.getFaculty().getSymbol())
 						.orElseThrow(() -> new ResourceInternalServerError(FieldOfStudy.class.getSimpleName()));
-				User user = User.builder()
+				User userToSaveOrUpdate = User.builder()
 						.id(instructor.getUserId())
 						.email(instructor.getEmail())
 						.username(instructor.getUsername())
 						.password(instructor.getPassword())
 						.fieldOfStudy(fieldOfStudy)
 						.build();
-				usersToSaveOrUpdate.add(user);
+				User user = userRepository.save(userToSaveOrUpdate);
 
 				if (Objects.equals(instructor.getCourseInstructorType(), DoctoralStudent.class.getSimpleName())) {
 					CourseInstructor doctoralStudent = new DoctoralStudent()
@@ -118,7 +115,7 @@ public class StudySystemService {
 							.setAcademicDegree(academicDegree)
 							.setDidacticForms(didacticForms)
 							.setUser(user);
-					instructorsToSaveOrUpdate.add(doctoralStudent);
+					courseInstructorRepository.save(doctoralStudent);
 				} else if (Objects.equals(instructor.getCourseInstructorType(), Specialist.class.getSimpleName())) {
 					CourseInstructor specialist = new Specialist()
 							.setId(instructor.getId())
@@ -127,7 +124,7 @@ public class StudySystemService {
 							.setAcademicDegree(academicDegree)
 							.setDidacticForms(didacticForms)
 							.setUser(user);
-					instructorsToSaveOrUpdate.add(specialist);
+					courseInstructorRepository.save(specialist);
 				} else if (Objects.equals(instructor.getCourseInstructorType(), Teacher.class.getSimpleName())) {
 					Position position = Optional.ofNullable(positionByName.getOrDefault(instructor.getAdditionalAttributes().get("position"), null))
 							.orElseThrow(() -> new ResourceInternalServerError("Position"));
@@ -141,12 +138,9 @@ public class StudySystemService {
 							.setAcademicDegree(academicDegree)
 							.setDidacticForms(didacticForms)
 							.setUser(user);
-					instructorsToSaveOrUpdate.add(teacher);
+					courseInstructorRepository.save(teacher);
 				}
 			}
-
-			userRepository.saveAll(usersToSaveOrUpdate);
-			courseInstructorRepository.saveAll(instructorsToSaveOrUpdate);
 		}
 	}
 
@@ -227,14 +221,8 @@ public class StudySystemService {
 				for (StudyPlanResponseDTO.SemesterResponseDTO s : sp.getSemesters()) {
 					SemesterName semesterName = Optional.ofNullable(semesterNameBySemesterType.getOrDefault(s.getSemesterName(), null))
 							.orElseThrow(() -> new ResourceInternalServerError(SemesterName.class.getSimpleName()));
-					Semester semesterToSaveOrUpdate = Semester.builder()
-							.id(s.getId())
-							.academicYear(s.getAcademicYear())
-							.semesterNumber(s.getSemesterNumber())
-							.semesterName(semesterName)
-							.studyPlan(studyPlan)
-							.build();
-					semesterRepository.save(semesterToSaveOrUpdate);
+					Set<Module> semesterModulesToSaveOrUpdate = new HashSet<>();
+					Set<Course> semesterCoursesToSaveOrUpdate = new HashSet<>();
 
 					for (StudyPlanResponseDTO.CourseResponseDTO c : s.getCourses()) {
 						Module module = null;
@@ -246,6 +234,7 @@ public class StudySystemService {
 							module = moduleRepository.findByCode(c.getModule().getCode())
 									.map(m -> moduleRepository.save(moduleToSaveOrUpdate.setId(m.getId())))
 									.orElse(moduleRepository.save(moduleToSaveOrUpdate));
+							semesterModulesToSaveOrUpdate.add(module);
 						}
 
 						DidacticForm didacticForm = Optional.ofNullable(didacticFormByCode.getOrDefault(c.getDidacticForm(), null))
@@ -258,10 +247,22 @@ public class StudySystemService {
 								.didacticForm(didacticForm)
 								.zzuHours(c.getZzuHours())
 								.build();
-						courseRepository.findByCode(c.getCode())
+						Course course = courseRepository.findByCode(c.getCode())
 								.map(co -> courseRepository.save(courseToSaveOrUpdate.setId(co.getId())))
 								.orElse(courseRepository.save(courseToSaveOrUpdate));
+						semesterCoursesToSaveOrUpdate.add(course);
 					}
+
+					Semester semesterToSaveOrUpdate = Semester.builder()
+							.id(s.getId())
+							.academicYear(s.getAcademicYear())
+							.semesterNumber(s.getSemesterNumber())
+							.semesterName(semesterName)
+							.studyPlan(studyPlan)
+							.modules(semesterModulesToSaveOrUpdate)
+							.courses(semesterCoursesToSaveOrUpdate)
+							.build();
+					semesterRepository.save(semesterToSaveOrUpdate);
 				}
 			}
 		}
