@@ -1,53 +1,53 @@
 
-<select *ngIf="shouldShowFieldOfStudy() && !sharedDataService.actualCourseInstructor" [disabled]="shouldLockFieldOfStudy()" class="form-control" [(ngModel)]="sharedDataService.actualFilterOptions.faculty" (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)">
+<select *ngIf="shouldShowFieldOfStudy() && !sharedDataService.actualCourseInstructor" [disabled]="shouldLockFieldOfStudy()" class="form-control" [(ngModel)]="sharedDataService.actualFilterOptions.faculty" (ngModelChange)="sharedDataService.onFilterOptionsChanged$.next(sharedDataService.actualFilterOptions)">
   <option [selected]="!sharedDataService.actualFilterOptions.faculty" [ngValue]="undefined">Wydział</option>
   <option *ngFor="let x of sharedDataService.faculties" [ngValue]="x" [selected]="sharedDataService.actualFilterOptions.faculty == x">{{x.symbol}} {{x.name}}</option>
 </select>
 <!--<pre>faculty: {{ filterOptions.faculty | json }}</pre>-->
-<select *ngIf="shouldShowFieldOfStudy() && !sharedDataService.actualCourseInstructor" [disabled]="shouldLockFieldOfStudy()" class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.fieldOfStudy" (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)">
+<select *ngIf="shouldShowFieldOfStudy() && !sharedDataService.actualCourseInstructor" [disabled]="shouldLockFieldOfStudy()" class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.fieldOfStudy" (ngModelChange)="sharedDataService.onFilterOptionsChanged$.next(sharedDataService.actualFilterOptions)">
   <option [selected]="!sharedDataService.actualFilterOptions.fieldOfStudy" [ngValue]="undefined">Kierunek</option>
   <option *ngFor="let x of sharedDataService.fieldsOfStudy" [ngValue]="x" [selected]="sharedDataService.actualFilterOptions.fieldOfStudy == x">{{x.name}}</option>
 </select>
 <!--<pre>fieldOfStudy: {{ filterOptions.fieldOfStudy | json }}</pre>-->
-<select *ngIf="!sharedDataService.actualCourseInstructor" class="form-control" [class.top-buffer]="shouldShowFieldOfStudy()" [(ngModel)]="sharedDataService.actualFilterOptions.academicYear" (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)">
+<select *ngIf="!sharedDataService.actualCourseInstructor" class="form-control" [class.top-buffer]="shouldShowFieldOfStudy()" [(ngModel)]="sharedDataService.actualFilterOptions.academicYear" (ngModelChange)="sharedDataService.onFilterOptionsChanged$.next(sharedDataService.actualFilterOptions)">
   <option [selected]="!sharedDataService.actualFilterOptions.academicYear" [ngValue]="undefined">Rok akademicki</option>
   <option *ngFor="let x of filteredAcademicYears" [ngValue]="x" [selected]="sharedDataService.actualFilterOptions.academicYear == x">{{x}}</option>
 </select>
 <!--<pre>pickedAcademicYear: {{ pickedAcademicYear | json }}</pre>-->
-<select class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.semester" (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)">
+<select class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.semester" (ngModelChange)="sharedDataService.onFilterOptionsChanged$.next(sharedDataService.actualFilterOptions)">
   <option [selected]="!sharedDataService.actualFilterOptions.semester" [ngValue]="undefined">Semestr</option>
   <option *ngFor="let x of filteredSemesters" [ngValue]="x" [selected]="sharedDataService.actualFilterOptions.semester == x">{{x.semesterNumber}}</option>
 </select>
 <!--<pre>pickedSemester: {{ pickedSemester | json }}</pre>-->
-<select class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.studyLevel" (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)">
+<select class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.studyLevel" (ngModelChange)="sharedDataService.onFilterOptionsChanged$.next(sharedDataService.actualFilterOptions)">
   <option [selected]="!sharedDataService.actualFilterOptions.studyLevel" [ngValue]="undefined">Stopień</option>
   <option *ngFor="let x of filteredStudyLevels" [ngValue]="x" [selected]="sharedDataService.actualFilterOptions.studyLevel == x">{{x.name}}</option>
 </select>
 <!--<pre>pickedStudyLevel: {{ pickedStudyLevel | json }}</pre>-->
-<select *ngIf="!sharedDataService.actualCourseInstructor" class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.specialty" (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)">
+<select *ngIf="!sharedDataService.actualCourseInstructor" class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.specialty" (ngModelChange)="sharedDataService.onFilterOptionsChanged$.next(sharedDataService.actualFilterOptions)">
   <option [selected]="!sharedDataService.actualFilterOptions.specialty" [ngValue]="undefined">Specjalność</option>
   <option *ngFor="let x of filteredSpecialties" [ngValue]="x" [selected]="sharedDataService.actualFilterOptions.specialty == x">{{x.shortName}} - {{x.name}}</option>
 </select>
 <!--<pre>pickedSpecialty: {{ pickedSpecialty | json }}</pre>-->
 <input type="text" class="form-control top-buffer" [class.is-valid]="sharedDataService.actualFilterOptions.course" placeholder="Wpisz kod lub nazwę kursu"
        [(ngModel)]="sharedDataService.actualFilterOptions.course" [ngbTypeahead]="searchCourses" [resultTemplate]="rtCourse"
-       (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)"
+       (ngModelChange)="sharedDataService.onFilterOptionsChanged$.next(sharedDataService.actualFilterOptions)"
        (focus)="focusCoursesTextBox$.next($event.target.value)"
        (click)="clickCoursesTextBox$.next($event.target.value)"
        [inputFormatter]="formatterCourse"
        [editable]="false"
        #coursesTextBox="ngbTypeahead"/>
-<!--<pre>onPickedCourse: {{ onPickedCourse | json }}</pre>-->
+<!--<pre>onPickedCourse$: {{ onPickedCourse$ | json }}</pre>-->
 <input [hidden]="sharedDataService.actualCourseInstructor" type="text" class="form-control top-buffer" [class.is-valid]="sharedDataService.actualFilterOptions.courseInstrucor" placeholder="Wpisz prowadzącego"
        [(ngModel)]="sharedDataService.actualFilterOptions.courseInstrucor" [ngbTypeahead]="searchCourseInstructors" [resultTemplate]="rtCourseInstructor"
-       (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)"
+       (ngModelChange)="sharedDataService.onFilterOptionsChanged$.next(sharedDataService.actualFilterOptions)"
        (focus)="focusCourseInstructorsTextBox$.next($event.target.value)"
        (click)="clickCourseInstructorsTextBox$.next($event.target.value)"
        [inputFormatter]="formatterCourseInstructor"
        [editable]="false"
        #courseInstructorsTextBox="ngbTypeahead"/>
 <!--<pre>pickedCourseInstrucor: {{ pickedCourseInstrucor | json }}</pre>-->
-<select class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.status" (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)">
+<select class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.status" (ngModelChange)="sharedDataService.onFilterOptionsChanged$.next(sharedDataService.actualFilterOptions)">
   <option [selected]="!sharedDataService.actualFilterOptions.status" [ngValue]="undefined">Status</option>
   <option *ngFor="let x of sharedDataService.statuses" [ngValue]="x" [selected]="sharedDataService.actualFilterOptions.status == x">{{x.toString()}}</option>
 </select>
@@ -70,4 +70,4 @@
   <ngb-highlight class="row-cols-2" [result]="r.academicDegree + ' ' + r.firstName  + ' ' + r.surname" [term]="t"></ngb-highlight>
   <span class="row-cols-1 float-md-right" style="margin-left: 30px;">{{r.entrustedHours}} / {{r.additionalAttributes.pensum}}</span>
 </ng-template>
-<!--<pre>foundEntrustments: {{ foundEntrustments | json }}</pre>-->
+<!--<pre>foundEntrustments$: {{ foundEntrustments$ | json }}</pre>-->

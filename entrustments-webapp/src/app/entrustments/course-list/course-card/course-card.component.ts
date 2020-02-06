@@ -33,7 +33,7 @@ export class CourseCardComponent implements OnInit {
   }
 
   onCardClicked() {
-    this.sharedDataService.onPickedCourse.next(this.course);
+    this.sharedDataService.onPickedCourse$.next(this.course);
   }
 
   isCardEditable() {

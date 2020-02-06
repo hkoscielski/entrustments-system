@@ -16,15 +16,15 @@ import {SharedDataService} from "../shared-data.service";
 })
 export class EntrustmentAddPanelComponent implements OnInit {
 
-  filterOptions = new FilterOptions();
+  // filterOptions = new FilterOptions();
   pickedNumberOfHours: number;
 
-  academicYears: string[];
-  semesters: Semester[];
-  studyLevels: StudyLevel[];
-  specialties: Specialty[];
-  courses: Course[];
-  courseInstructors: CourseInstructor[];
+  // academicYears: string[];
+  // semesters: Semester[];
+  // studyLevels: StudyLevel[];
+  // specialties: Specialty[];
+  // courses: Course[];
+  // courseInstructors: CourseInstructor[];
 
   @ViewChild('coursesTextBox', {static: true}) coursesTextBox: NgbTypeahead;
   focusCoursesTextBox$ = new Subject<string>();
@@ -40,8 +40,8 @@ export class EntrustmentAddPanelComponent implements OnInit {
     const inputFocus$ = this.focusCoursesTextBox$;
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-      map(term => term === '' ? this.courses
-        : this.courses.filter(v => v.code.toLowerCase().concat(' ', v.name.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
+      map(term => term === '' ? this.filteredCourses.slice(0, 10)
+        : this.filteredCourses.filter(v => v.code.toLowerCase().concat(' ', v.name.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
   };
 
   formatterCourse = (x: {code: string, name: string}) => x.code + ' ' + x.name;
@@ -52,8 +52,8 @@ export class EntrustmentAddPanelComponent implements OnInit {
     const inputFocus$ = this.focusCourseInstructorsTextBox$;
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-      map(term => term === '' ? this.courseInstructors
-        : this.courseInstructors.filter(v => v.academicDegree.toLowerCase().concat(' ', v.firstName.toLowerCase(), ' ', v.surname.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
+      map(term => term === '' ? this.filteredCourseInstructors.slice(0, 10)
+        : this.filteredCourseInstructors.filter(v => v.academicDegree.toLowerCase().concat(' ', v.firstName.toLowerCase(), ' ', v.surname.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
   };
 
   formatterCourseInstructor = (x: {academicDegree: string, firstName: string, surname: string}) => `${x.academicDegree} ${x.firstName} ${x.surname}`;
@@ -88,7 +88,19 @@ export class EntrustmentAddPanelComponent implements OnInit {
     //     this.courseInstructors = instructors;
     //   }
     // );
-    this.sharedDataService.onFilterOptionsChanged.asObservable().subscribe(x => this.onFilterOptionsChanged(x));
+    this.sharedDataService.onFilterOptionsChanged$.subscribe(x => this.onFilterOptionsChanged(x));
+    this.sharedDataService.onPickedCourse$.subscribe(x => {
+        this.sharedDataService.actualFilterOptions.course = x;
+        this.sharedDataService.actualFilterOptions.semester = this.sharedDataService.semesters.find(s => s.id = x.semesterId);
+        this.sharedDataService.actualFilterOptions.academicYear = this.sharedDataService.actualFilterOptions.semester.academicYear;
+        this.sharedDataService.actualFilterOptions.studyLevel = this.sharedDataService.actualFilterOptions.semester.studyLevel;
+        this.sharedDataService.actualFilterOptions.specialty = this.sharedDataService.actualFilterOptions.semester.specialty;
+        this.sharedDataService.onFilterOptionsChanged$.next(this.sharedDataService.actualFilterOptions);
+        // this.onFilterOptionsChanged$(this.sharedDataService.actualFilterOptions);
+    });
+
+    console.log("Observers");
+    console.log(JSON.stringify(this.sharedDataService.onFilterOptionsChanged$.observers.map(x => x.toString()).toString()));
   }
 
   filteredAcademicYears: string[] = [];
@@ -121,16 +133,15 @@ export class EntrustmentAddPanelComponent implements OnInit {
     else {
       this.filteredCourses = this.sharedDataService.courses;
     }
-
   }
 
   areAllOptionsPicked() {
-    return this.filterOptions.academicYear &&
-    this.filterOptions.semester &&
-    this.filterOptions.studyLevel &&
-    this.filterOptions.specialty &&
-    this.filterOptions.course &&
-    this.filterOptions.courseInstrucor &&
+    return this.sharedDataService.actualFilterOptions.academicYear &&
+    this.sharedDataService.actualFilterOptions.semester &&
+    this.sharedDataService.actualFilterOptions.studyLevel &&
+    this.sharedDataService.actualFilterOptions.specialty &&
+    this.sharedDataService.actualFilterOptions.course &&
+    this.sharedDataService.actualFilterOptions.courseInstrucor &&
     this.pickedNumberOfHours;
   }
 
@@ -138,12 +149,14 @@ export class EntrustmentAddPanelComponent implements OnInit {
     if (!this.areAllOptionsPicked())
       return;
 
-    if (this.filterOptions.semester.courses.some(c => c.code == this.filterOptions.course.code)) {
-
+    if (this.sharedDataService.actualFilterOptions.semester.courses.some(c => c.code == this.sharedDataService.actualFilterOptions.course.code) && this.pickedNumberOfHours > this.sharedDataService.actualFilterOptions.course.hoursToEntrust) {
+      return;
     }
 
-    this.entrustmentService.addEntrustment(this.filterOptions.semester.id, this.filterOptions.courseInstrucor.id, this.pickedNumberOfHours, this.filterOptions.course.code)
+    this.entrustmentService.addEntrustment(this.sharedDataService.actualFilterOptions.semester.id, this.sharedDataService.actualFilterOptions.courseInstrucor.id, this.pickedNumberOfHours, this.sharedDataService.actualFilterOptions.course.code)
       .subscribe(x => {
+        let cor = this.sharedDataService.semesters.find(s => s.id == this.sharedDataService.actualFilterOptions.semester.id).courses.find(c => c.code == this.sharedDataService.actualFilterOptions.course.code);
+        cor.hoursToEntrust -=  this.pickedNumberOfHours;
         this.location.back();
     });
   }

@@ -9,40 +9,42 @@
         <div class="card-body" style="padding: 1rem; border-top: 1px solid rgb(200, 200, 200)">
           <div class="row">
             <div class="col">
-              <select class="form-control top-buffer"[(ngModel)]="sharedDataService.actualFilterOptions.academicYear" (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)">
+              <select class="form-control top-buffer"[(ngModel)]="sharedDataService.actualFilterOptions.academicYear" (ngModelChange)="sharedDataService.onFilterOptionsChanged$.next(sharedDataService.actualFilterOptions)">
                 <option [selected]="!sharedDataService.actualFilterOptions.academicYear" [ngValue]="undefined">Rok akademicki</option>
                 <option *ngFor="let x of filteredAcademicYears" [ngValue]="x" [selected]="sharedDataService.actualFilterOptions.academicYear == x">{{x}}</option>
               </select>
               <!--<pre>pickedAcademicYear: {{ pickedAcademicYear | json }}</pre>-->
-              <select class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.semester" (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)">
+              <select class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.semester" (ngModelChange)="sharedDataService.onFilterOptionsChanged$.next(sharedDataService.actualFilterOptions)">
                 <option [selected]="!sharedDataService.actualFilterOptions.semester" [ngValue]="undefined">Semestr</option>
                 <option *ngFor="let x of filteredSemesters" [ngValue]="x" [selected]="sharedDataService.actualFilterOptions.semester == x">{{x.semesterNumber}}</option>
               </select>
               <!--<pre>pickedSemester: {{ pickedSemester | json }}</pre>-->
-              <select class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.studyLevel" (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)">
+              <select class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.studyLevel" (ngModelChange)="sharedDataService.onFilterOptionsChanged$.next(sharedDataService.actualFilterOptions)">
                 <option [selected]="!sharedDataService.actualFilterOptions.studyLevel" [ngValue]="undefined">Stopień</option>
                 <option *ngFor="let x of filteredStudyLevels" [ngValue]="x" [selected]="sharedDataService.actualFilterOptions.studyLevel == x">{{x.name}}</option>
               </select>
               <!--<pre>pickedStudyLevel: {{ pickedStudyLevel | json }}</pre>-->
-              <select class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.specialty" (ngModelChange)="sharedDataService.onFilterOptionsChanged.next(sharedDataService.actualFilterOptions)">
+              <select class="form-control top-buffer" [(ngModel)]="sharedDataService.actualFilterOptions.specialty" (ngModelChange)="sharedDataService.onFilterOptionsChanged$.next(sharedDataService.actualFilterOptions)">
                 <option [selected]="!sharedDataService.actualFilterOptions.specialty" [ngValue]="undefined">Specjalność</option>
                 <option *ngFor="let x of filteredSpecialties" [ngValue]="x" [selected]="sharedDataService.actualFilterOptions.specialty == x">{{x.shortName}} - {{x.name}}</option>
               </select>
             </div>
             <div class="col">
-              <input type="text" class="form-control top-buffer" [class.is-valid]="filterOptions.course" style="text-align: center" placeholder="Wpisz kod lub nazwę kursu"
-                     [(ngModel)]="filterOptions.course" [ngbTypeahead]="searchCourses" [resultTemplate]="rtCourse"
+              <input type="text" class="form-control top-buffer" [class.is-valid]="sharedDataService.actualFilterOptions.course" placeholder="Wpisz kod lub nazwę kursu"
+                     [(ngModel)]="sharedDataService.actualFilterOptions.course" [ngbTypeahead]="searchCourses" [resultTemplate]="rtCourse"
+                     (ngModelChange)="sharedDataService.onFilterOptionsChanged$.next(sharedDataService.actualFilterOptions)"
                      (focus)="focusCoursesTextBox$.next($event.target.value)"
                      (click)="clickCoursesTextBox$.next($event.target.value)"
                      [inputFormatter]="formatterCourse"
                      [editable]="false"
                      #coursesTextBox="ngbTypeahead"/>
-              <!--<pre>onPickedCourse: {{ onPickedCourse | json }}</pre>-->
+              <!--<pre>onPickedCourse$: {{ onPickedCourse$ | json }}</pre>-->
               <div class="row top-buffer" style="margin-top: 10%">
                 <label for="prowadzacyId" class="col-5 col-form-label">Prowadzący:</label>
                 <div class="col-7">
-                  <input id="prowadzacyId" type="text" class="form-control" [class.is-valid]="filterOptions.courseInstrucor" style="text-align: center" placeholder="Prowadzący"
-                         [(ngModel)]="filterOptions.courseInstrucor" [ngbTypeahead]="searchCourseInstructors" [resultTemplate]="rtCourseInstructor"
+                  <input id="prowadzacyId" type="text" class="form-control top-buffer" [class.is-valid]="sharedDataService.actualFilterOptions.courseInstrucor" placeholder="Wpisz prowadzącego"
+                         [(ngModel)]="sharedDataService.actualFilterOptions.courseInstrucor" [ngbTypeahead]="searchCourseInstructors" [resultTemplate]="rtCourseInstructor"
+                         (ngModelChange)="sharedDataService.onFilterOptionsChanged$.next(sharedDataService.actualFilterOptions)"
                          (focus)="focusCourseInstructorsTextBox$.next($event.target.value)"
                          (click)="clickCourseInstructorsTextBox$.next($event.target.value)"
                          [inputFormatter]="formatterCourseInstructor"
@@ -62,7 +64,6 @@
             </div>
           </div>
         </div>
-
       </div>
       <button class="d-block float-md-right btn-link top-buffer" style="border: none; background: none" (click)="onBackClicked()">< Anuluj</button>
     </div>

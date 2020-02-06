@@ -32,8 +32,8 @@ export class CruMainViewComponent implements OnInit, AfterViewInit {
   }
 
   // shouldShowList() {
-  //   if (this.entrustmentFilterComponent && this.entrustmentFilterComponent.foundEntrustments)
-  //     return this.entrustmentFilterComponent.foundEntrustments.length > 0;
+  //   if (this.entrustmentFilterComponent && this.entrustmentFilterComponent.foundEntrustments$)
+  //     return this.entrustmentFilterComponent.foundEntrustments$.length > 0;
   //   return false;
   //   // return true;
   // }

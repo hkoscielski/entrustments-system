@@ -29,7 +29,7 @@ export class CourseListComponent implements OnInit {
 
   ngOnInit() {
     this.prefilteredCourses = this.sharedDataService.courses;
-    this.filteredCourses = this.prefilteredCourses;
+    this.filteredCourses = this.sharedDataService.courses;
 
     // this.studyPlanService.findAllFaculties()
     //   .subscribe(faculties => {
@@ -46,14 +46,19 @@ export class CourseListComponent implements OnInit {
     //       })
     //     );
     //   });
-    this.sharedDataService.onFilterOptionsChanged.asObservable().subscribe(x => this.onFilterOptionsChanged(x));
+    this.sharedDataService.onFilterOptionsChanged$.subscribe(x => {console.log("card list subsribed"); this.onFilterOptionsChangedCard(x);});
+    // this.onCourseFilterChanged();
+    this.onFilterOptionsChangedCard(this.sharedDataService.actualFilterOptions);
+    this.onCourseFilterChanged();
   }
 
   onCourseFilterChanged() {
     this.filteredCourses = this.prefilteredCourses.filter(v => v.code.toLowerCase().concat(' ', v.name.toLowerCase()).indexOf(this.courseTextBoxValue.toLowerCase()) > -1);
+    this.filteredCourses = this.filteredCourses.sort((a, b) => a.hoursToEntrust > b.hoursToEntrust ? -1 : 1);
   }
 
-  onFilterOptionsChanged(newFilter: FilterOptions) {
+  onFilterOptionsChangedCard(newFilter: FilterOptions) {
+    console.log('on card filter options changed');
     // this.onClearFiltersClicked();
     // this.sharedDataService.actualFilterOptions = newFilter;
     this.filteredAcademicYears = [...new Set(this.sharedDataService.semesters.map(x => x.academicYear))].sort();
@@ -76,5 +81,6 @@ export class CourseListComponent implements OnInit {
       this.prefilteredCourses = this.sharedDataService.courses;
     }
     this.filteredCourses = this.prefilteredCourses.filter(v => v.code.toLowerCase().concat(' ', v.name.toLowerCase()).indexOf(this.courseTextBoxValue.toLowerCase()) > -1);
+    this.filteredCourses = this.filteredCourses.sort((a, b) => a.hoursToEntrust > b.hoursToEntrust ? -1 : 1);
   }
 }

@@ -9,13 +9,13 @@ import {FilterOptions} from "./entrustment-filter/entrustment-filter.component";
   providedIn: 'root'
 })
 export class SharedDataService {
-  public actualEntrustment: Entrustment;
-  public actualCourseInstructor: CourseInstructor;
-  public actualFaculty: Faculty;
-  public actualFieldOfStudy: FieldOfStudy;
-  public actualFilterOptions: FilterOptions = new FilterOptions();
-  public onFilterOptionsChanged: BehaviorSubject<FilterOptions> = new BehaviorSubject<FilterOptions>(new FilterOptions());
-  public onPickedCourse: BehaviorSubject<Course> = new BehaviorSubject<Course>(undefined);
+  actualEntrustment: Entrustment;
+  actualCourseInstructor: CourseInstructor;
+  actualFaculty: Faculty;
+  actualFieldOfStudy: FieldOfStudy;
+  actualFilterOptions: FilterOptions = new FilterOptions();
+  onFilterOptionsChanged$: BehaviorSubject<FilterOptions> = new BehaviorSubject<FilterOptions>(new FilterOptions());
+  onPickedCourse$: BehaviorSubject<Course> = new BehaviorSubject<Course>(undefined);
 
   faculties: Faculty[];
   fieldsOfStudy: FieldOfStudy[] = [];
@@ -28,7 +28,8 @@ export class SharedDataService {
   statuses: Status[];
 
   constructor(private studyPlanService: StudyPlanService, private courseInstructorService: CourseInstructorService, private entrustmentService: EntrustmentService) {
-    // this.onFilterOptionsChanged.asObservable().subscribe(options => {
+    console.log("Shared Data Constructor");
+    // this.onFilterOptionsChanged$.asObservable().subscribe(options => {
     //   this.actualFilterOptions = options;
     // })
     this.downloadData();
