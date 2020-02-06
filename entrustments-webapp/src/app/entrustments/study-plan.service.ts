@@ -23,6 +23,10 @@ export class StudyPlanService {
     return this.httpClient.get<Semester[]>(`${environment.apiBaseUrl}/api/v1/fields-of-study/${fieldOfStudyId}/semesters`);
   }
 
+  findSemesterByFieldOfStudyIdAndSemesterId(fieldOfStudyId: number, semesterId: number): Observable<Semester> {
+    return this.httpClient.get<Semester>(`${environment.apiBaseUrl}/api/v1/fields-of-study/${fieldOfStudyId}/semesters/${semesterId}`);
+  }
+
   findAllFieldsOfStudyByFacultySymbol(facultySymbol: string): Observable<FieldOfStudy[]> {
     return this.httpClient.get<FieldOfStudy[]>(`${environment.apiBaseUrl}/api/v1/faculties/${facultySymbol}/fields-of-study`);
   }
@@ -76,6 +80,7 @@ export class FieldOfStudy {
   id?: number;
   name: string;
   shortName: string;
+  facultySymbol?: string;
 
   constructor(id?: number, name?: string, shortName?: string) {
     this.id = id;

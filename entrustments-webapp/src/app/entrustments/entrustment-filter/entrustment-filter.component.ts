@@ -14,17 +14,17 @@ import {SharedDataService} from "../shared-data.service";
 })
 export class EntrustmentFilterComponent implements OnInit, AfterViewInit {
   public foundEntrustments: BehaviorSubject<Entrustment[]> = new BehaviorSubject<Entrustment[]>(undefined);
-  public filterOptions = new FilterOptions();
+  // public filterOptions = new FilterOptions();
 
-  faculties: Faculty[];
-  fieldsOfStudy: FieldOfStudy[] = [];
-  academicYears: string[];
-  semesters: Semester[];
-  studyLevels: StudyLevel[];
-  specialties: Specialty[];
-  courses: Course[];
-  courseInstructors: CourseInstructor[];
-  statuses: Status[];
+  // faculties: Faculty[];
+  // fieldsOfStudy: FieldOfStudy[] = [];
+  // academicYears: string[];
+  // semesters: Semester[];
+  // studyLevels: StudyLevel[];
+  // specialties: Specialty[];
+  // courses: Course[];
+  // courseInstructors: CourseInstructor[];
+  // statuses: Status[];
 
   showFoundHint = false;
   foundCount = 0;
@@ -43,8 +43,8 @@ export class EntrustmentFilterComponent implements OnInit, AfterViewInit {
     const inputFocus$ = this.focusCoursesTextBox$;
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-      map(term => term === '' ? this.courses
-        : this.courses.filter(v => v.code.toLowerCase().concat(' ', v.name.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
+      map(term => term === '' ? this.sharedDataService.courses
+        : this.sharedDataService.courses.filter(v => v.code.toLowerCase().concat(' ', v.name.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
   };
 
   formatterCourse = (x: {code: string, name: string}) => x.code + ' ' + x.name;
@@ -55,8 +55,8 @@ export class EntrustmentFilterComponent implements OnInit, AfterViewInit {
     const inputFocus$ = this.focusCourseInstructorsTextBox$;
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-      map(term => term === '' ? this.courseInstructors
-        : this.courseInstructors.filter(v => v.academicDegree.toLowerCase().concat(' ', v.firstName.toLowerCase(), ' ', v.surname.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
+      map(term => term === '' ? this.sharedDataService.courseInstructors
+        : this.sharedDataService.courseInstructors.filter(v => v.academicDegree.toLowerCase().concat(' ', v.firstName.toLowerCase(), ' ', v.surname.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
   };
 
   formatterCourseInstructor = (x: {academicDegree: string, firstName: string, surname: string}) => `${x.academicDegree} ${x.firstName} ${x.surname}`;
@@ -70,82 +70,86 @@ export class EntrustmentFilterComponent implements OnInit, AfterViewInit {
       // this.filterOptions.faculty = this.sharedDataService.actualFaculty;
       // this.filterOptions.fieldOfStudy = this.sharedDataService.actualFieldOfStudy;
     // }
-
-    this.studyPlanService.findAllFaculties().subscribe(
-      faculties => {
-        this.faculties = faculties;
-        this.filterOptions.faculty = this.faculties.find(f => f.id == this.sharedDataService.actualFaculty.id);
-        faculties.forEach(x => this.studyPlanService.findAllFieldsOfStudyByFacultySymbol(x.symbol).subscribe(
-          fieldsOfStudy => {
-            this.fieldsOfStudy = this.fieldsOfStudy.concat(fieldsOfStudy);
-            this.filterOptions.fieldOfStudy = this.fieldsOfStudy.find(f => f.id == this.sharedDataService.actualFieldOfStudy.id);
-        }));
-      }
-    );
-
-    this.studyPlanService.findAllSemesters().subscribe(
-      semesters => {
-        this.academicYears = [...new Set(semesters.map(x => x.academicYear))].sort();
-        this.semesters = semesters.sort(x => x.semesterNumber);
-
-        let allStudyLevels = semesters.map(x => x.studyLevel).filter(x => x);
-        let uniqueStudyLevelNames = [...new Set(allStudyLevels.map(x => x.name))];
-        this.studyLevels = uniqueStudyLevelNames.map(unique => allStudyLevels.find(all => unique == all.name))
-          .sort((a, b) => a.name > b.name ? -1 : 1);
-
-        let allSpecialties = semesters.map(x => x.specialty).filter(x => x);
-        let uniqueSpecialtyNames = [...new Set(allSpecialties.map(x => x.shortName))];
-        this.specialties = uniqueSpecialtyNames.map(unique => allSpecialties.find(all => unique == all.shortName))
-          .sort((a, b) => a.name > b.name ? -1 : 1);
-
-        let allCourses = semesters.map(x => x.courses).reduce((accum, next) => accum.concat(next), []);
-        let uniqueCourseCodes = [...new Set(allCourses.map(x => x.code))];
-        this.courses = uniqueCourseCodes.map(unique => allCourses.find(all => unique == all.code));
-        this.courses.sort((a, b) => (a.name + a.code) >  (b.name + b.code) ? -1 : 1);
-      }
-    );
-
-    this.courseInstructorService.findAll().subscribe(
-      instructors => {
-        this.courseInstructors = instructors;
-        this.filterOptions.courseInstrucor = this.sharedDataService.actualCourseInstructor;
-      }
-    );
-
-    this.statuses = Object.values(Status);
+    //
+    // this.studyPlanService.findAllFaculties().subscribe(
+    //   faculties => {
+    //     this.faculties = faculties;
+    //     this.filterOptions.faculty = this.faculties.find(f => f.id == this.sharedDataService.actualFaculty.id);
+    //     faculties.forEach(x => this.studyPlanService.findAllFieldsOfStudyByFacultySymbol(x.symbol).subscribe(
+    //       fieldsOfStudy => {
+    //         this.fieldsOfStudy = this.fieldsOfStudy.concat(fieldsOfStudy);
+    //         this.filterOptions.fieldOfStudy = this.fieldsOfStudy.find(f => f.id == this.sharedDataService.actualFieldOfStudy.id);
+    //     }));
+    //   }
+    // );
+    //
+    // this.studyPlanService.findAllSemesters().subscribe(
+    //   semesters => {
+    //     this.academicYears = [...new Set(semesters.map(x => x.academicYear))].sort();
+    //     this.semesters = semesters.sort(x => x.semesterNumber);
+    //
+    //     let allStudyLevels = semesters.map(x => x.studyLevel).filter(x => x);
+    //     let uniqueStudyLevelNames = [...new Set(allStudyLevels.map(x => x.name))];
+    //     this.studyLevels = uniqueStudyLevelNames.map(unique => allStudyLevels.find(all => unique == all.name))
+    //       .sort((a, b) => a.name > b.name ? -1 : 1);
+    //
+    //     let allSpecialties = semesters.map(x => x.specialty).filter(x => x);
+    //     let uniqueSpecialtyNames = [...new Set(allSpecialties.map(x => x.shortName))];
+    //     this.specialties = uniqueSpecialtyNames.map(unique => allSpecialties.find(all => unique == all.shortName))
+    //       .sort((a, b) => a.name > b.name ? -1 : 1);
+    //
+    //     let allCourses = semesters.map(x => x.courses).reduce((accum, next) => accum.concat(next), []);
+    //     let uniqueCourseCodes = [...new Set(allCourses.map(x => x.code))];
+    //     this.courses = uniqueCourseCodes.map(unique => allCourses.find(all => unique == all.code));
+    //     this.courses.sort((a, b) => (a.name + a.code) >  (b.name + b.code) ? -1 : 1);
+    //   }
+    // );
+    //
+    // this.courseInstructorService.findAll().subscribe(
+    //   instructors => {
+    //     this.courseInstructors = instructors;
+    //     this.filterOptions.courseInstrucor = this.sharedDataService.actualCourseInstructor;
+    //   }
+    // );
+    //
+    // this.statuses = Object.values(Status);
   }
 
   ngAfterViewInit() {
-    this.filterOptions = this.sharedDataService.actualFilterOptions;
+    // this.filterOptions = this.sharedDataService.actualFilterOptions;
   }
 
   onSearchClicked() {
-    this.sharedDataService.onFilterOptionsChanged.next(this.filterOptions);
+    // this.sharedDataService.onFilterOptionsChanged.next(this.filterOptions);
     this.entrustmentService.findAllEntrustments(
-      this.filterOptions.academicYear,
-      this.filterOptions.semester ? this.filterOptions.semester.semesterNumber : undefined,
-      this.filterOptions.studyLevel ? this.filterOptions.studyLevel.code : undefined,
-      this.filterOptions.specialty ? this.filterOptions.specialty.shortName : undefined,
-      this.filterOptions.course ? this.filterOptions.course.code : undefined,
-      ReversedStatus[this.filterOptions.status],
-      this.filterOptions.courseInstrucor ? this.filterOptions.courseInstrucor.id : undefined
+      this.sharedDataService.actualFilterOptions.academicYear,
+      this.sharedDataService.actualFilterOptions.semester ? this.sharedDataService.actualFilterOptions.semester.semesterNumber : undefined,
+      this.sharedDataService.actualFilterOptions.studyLevel ? this.sharedDataService.actualFilterOptions.studyLevel.code : undefined,
+      this.sharedDataService.actualFilterOptions.specialty ? this.sharedDataService.actualFilterOptions.specialty.shortName : undefined,
+      this.sharedDataService.actualFilterOptions.course ? this.sharedDataService.actualFilterOptions.course.code : undefined,
+      ReversedStatus[this.sharedDataService.actualFilterOptions.status],
+      this.sharedDataService.actualFilterOptions.courseInstrucor ? this.sharedDataService.actualFilterOptions.courseInstrucor.id : undefined
       ).subscribe(
         entrustments => {
           this.showFoundHint = true;
           this.foundCount = entrustments.length;
           this.foundEntrustments.next(entrustments);
-      console.log(JSON.stringify(entrustments));
+      // console.log(JSON.stringify(entrustments));
     });
   }
 
   onClearFiltersClicked() {
     let newFilterOptions = new FilterOptions();
     if (this.shouldLockFieldOfStudy()) {
-      newFilterOptions.faculty = this.filterOptions.faculty;
-      newFilterOptions.fieldOfStudy = this.filterOptions.fieldOfStudy;
+      newFilterOptions.faculty = this.sharedDataService.actualFaculty;
+      newFilterOptions.fieldOfStudy = this.sharedDataService.actualFieldOfStudy;
     }
 
-    this.filterOptions = newFilterOptions;
+    if (this.sharedDataService.actualCourseInstructor) {
+      newFilterOptions.courseInstrucor = this.sharedDataService.actualCourseInstructor;
+    }
+
+    this.sharedDataService.actualFilterOptions = newFilterOptions;
 
     // this.showFoundHint = false;
     // this.foundCount = 0;
@@ -160,15 +164,15 @@ export class EntrustmentFilterComponent implements OnInit, AfterViewInit {
   }
 
   areFilterOptionsEmpty() {
-    return !this.filterOptions.faculty &&
-      !this.filterOptions.fieldOfStudy &&
-      !this.filterOptions.academicYear &&
-      !this.filterOptions.semester &&
-      !this.filterOptions.studyLevel &&
-      !this.filterOptions.specialty &&
-      !this.filterOptions.course &&
-      !this.filterOptions.courseInstrucor &&
-      !this.filterOptions.status;
+    return !this.sharedDataService.actualFilterOptions.faculty &&
+      !this.sharedDataService.actualFilterOptions.fieldOfStudy &&
+      !this.sharedDataService.actualFilterOptions.academicYear &&
+      !this.sharedDataService.actualFilterOptions.semester &&
+      !this.sharedDataService.actualFilterOptions.studyLevel &&
+      !this.sharedDataService.actualFilterOptions.specialty &&
+      !this.sharedDataService.actualFilterOptions.course &&
+      !this.sharedDataService.actualFilterOptions.courseInstrucor &&
+      !this.sharedDataService.actualFilterOptions.status;
   }
 }
 

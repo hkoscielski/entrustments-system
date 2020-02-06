@@ -15,7 +15,7 @@ export class EntrustmentPreviewPanelComponent implements OnInit {
   constructor(private location: Location, private entrustmentService: EntrustmentService, private sharedDataService: SharedDataService) { }
 
   ngOnInit() {
-    this.pickedNumberOfHours = this.sharedDataService.actualCard.numberOfHours;
+    this.pickedNumberOfHours = this.sharedDataService.actualEntrustment.numberOfHours;
   }
 
   onBackClicked() {
@@ -23,36 +23,36 @@ export class EntrustmentPreviewPanelComponent implements OnInit {
   }
 
   onAcceptClicked() {
-    this.entrustmentService.acceptEntrustment(0, this.sharedDataService.actualCard.id).subscribe(x => {
-      this.sharedDataService.actualCard.status = Status.ACCEPTED;
+    this.entrustmentService.acceptEntrustment(0, this.sharedDataService.actualEntrustment.id).subscribe(x => {
+      this.sharedDataService.actualEntrustment.status = Status.ACCEPTED;
       this.location.back();
     });
   }
 
   onRejectClicked() {
-    this.entrustmentService.rejectEntrustment(0, this.sharedDataService.actualCard.id).subscribe(x => {
-      this.sharedDataService.actualCard.status = Status.REJECTED;
+    this.entrustmentService.rejectEntrustment(0, this.sharedDataService.actualEntrustment.id).subscribe(x => {
+      this.sharedDataService.actualEntrustment.status = Status.REJECTED;
       this.location.back();
     });
   }
 
   onSuggestClicked() {
-    this.entrustmentService.modifyEntrustmentHours(0, this.sharedDataService.actualCard.id, this.pickedNumberOfHours).subscribe(x => {
-      this.sharedDataService.actualCard = x;
+    this.entrustmentService.modifyEntrustmentHours(0, this.sharedDataService.actualEntrustment.id, this.pickedNumberOfHours).subscribe(x => {
+      this.sharedDataService.actualEntrustment = x;
       this.location.back();
     });
   }
 
   onUndoClicked() {
-    this.pickedNumberOfHours = this.sharedDataService.actualCard.numberOfHours;
+    this.pickedNumberOfHours = this.sharedDataService.actualEntrustment.numberOfHours;
     this.onValueChanged();
   }
 
   onValueChanged() {
-    this.difference = this.pickedNumberOfHours - this.sharedDataService.actualCard.numberOfHours;
+    this.difference = this.pickedNumberOfHours - this.sharedDataService.actualEntrustment.numberOfHours;
   }
 
   wasChanged() {
-    return this.pickedNumberOfHours !== this.sharedDataService.actualCard.numberOfHours;
+    return this.pickedNumberOfHours !== this.sharedDataService.actualEntrustment.numberOfHours;
   }
 }

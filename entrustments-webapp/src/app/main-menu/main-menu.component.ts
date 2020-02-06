@@ -35,25 +35,32 @@ export class MainMenuComponent implements OnInit {
   constructor(private router: Router, private courseInstructorService: CourseInstructorService, private sharedDataService: SharedDataService, private studyPlanService: StudyPlanService) { }
 
   ngOnInit() {
-    this.sharedDataService.resetAllData();
-    this.courseInstructorService.findAll().subscribe(
-      instructors => {
-        this.courseInstructors = instructors;
-      }
-    );
+    this.sharedDataService.resetActualAllData();
+    // this.courseInstructorService.findAll().subscribe(
+    //   instructors => {
+    //     this.courseInstructors = instructors;
+    //   }
+    // );
+    this.courseInstructors = this.sharedDataService.courseInstructors;
   }
 
   onCruClicked() {
-    this.studyPlanService.findAllFaculties().subscribe(
-      faculties => {
-        this.sharedDataService.actualFaculty = faculties[0];
-        this.studyPlanService.findAllFieldsOfStudyByFacultySymbol(faculties[0].symbol).subscribe(
-          fieldsOfStudy => {
-            this.sharedDataService.actualFieldOfStudy = fieldsOfStudy[0];
-            this.router.navigate(['/cru-main-view']);
-          });
-      }
-    );
+    // this.studyPlanService.findAllFaculties().subscribe(
+    //   faculties => {
+    //     this.sharedDataService.actualFaculty = faculties[0];
+    //     this.studyPlanService.findAllFieldsOfStudyByFacultySymbol(faculties[0].symbol).subscribe(
+    //       fieldsOfStudy => {
+    //         this.sharedDataService.actualFieldOfStudy = fieldsOfStudy[0];
+    //         this.router.navigate(['/cru-main-view']);
+    //       });
+    //   }
+    // );
+    this.sharedDataService.actualFaculty = this.sharedDataService.faculties[0];
+    this.sharedDataService.actualFieldOfStudy = this.sharedDataService.fieldsOfStudy.find(fos => fos.facultySymbol == this.sharedDataService.actualFaculty.symbol);
+    this.sharedDataService.actualFilterOptions.faculty = this.sharedDataService.actualFaculty;
+    this.sharedDataService.actualFilterOptions.fieldOfStudy = this.sharedDataService.actualFieldOfStudy;
+
+    this.router.navigate(['/cru-main-view']);
   }
 
   onSuggestionsClicked() {

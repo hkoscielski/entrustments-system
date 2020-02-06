@@ -25,7 +25,11 @@ export class EntrustmentService {
     return this.httpClient.get<Entrustment[]>(`${environment.apiBaseUrl}/api/v1/entrustments`, { params: params});
   }
 
-  findAll(courseInstructorId: number): Observable<number> {
+  findAllEntrustmentsByCourseInstructorId(courseInstructorId: number): Observable<Entrustment[]> {
+    return this.httpClient.get<Entrustment[]>(`${environment.apiBaseUrl}/api/v1/course-instructors/${courseInstructorId}/entrustments`);
+  }
+
+  findEntrustedHoursByCourseInstructorId(courseInstructorId: number): Observable<number> {
     return this.httpClient.get<number>(`${environment.apiBaseUrl}/api/v1/course-instructors/${courseInstructorId}/entrustments/hours`);
   }
 

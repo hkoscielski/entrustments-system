@@ -39,7 +39,7 @@ export class EntrustmentCardComponent implements OnInit {
   }
 
   onEditClicked() {
-    this.sharedDataService.actualCard = this.entrustment;
+    this.sharedDataService.actualEntrustment = this.entrustment;
     this.router.navigate(['/entrustment-preview-panel']);
   }
 
