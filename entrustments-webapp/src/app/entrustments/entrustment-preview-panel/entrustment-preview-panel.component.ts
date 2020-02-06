@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Location} from '@angular/common';
+import {EntrustmentService, Status} from "../entrustment.service";
+import {SharedDataService} from "../shared-data.service";
 
 @Component({
   selector: 'app-entrustment-preview-panel',
@@ -7,13 +9,13 @@ import {Location} from '@angular/common';
   styleUrls: ['./entrustment-preview-panel.component.css']
 })
 export class EntrustmentPreviewPanelComponent implements OnInit {
-  numberOfHours = 90;
-  initialNumberOfHours = 90;
+  pickedNumberOfHours: number;
   difference = 0;
 
-  constructor(private location: Location) { }
+  constructor(private location: Location, private entrustmentService: EntrustmentService, private sharedDataService: SharedDataService) { }
 
   ngOnInit() {
+    this.pickedNumberOfHours = this.sharedDataService.actualCard.numberOfHours;
   }
 
   onBackClicked() {
@@ -21,27 +23,36 @@ export class EntrustmentPreviewPanelComponent implements OnInit {
   }
 
   onAcceptClicked() {
-    // this.location.back();
+    this.entrustmentService.acceptEntrustment(0, this.sharedDataService.actualCard.id).subscribe(x => {
+      this.sharedDataService.actualCard.status = Status.ACCEPTED;
+      this.location.back();
+    });
   }
 
-  onDiscardClicked() {
-    // this.location.back();
+  onRejectClicked() {
+    this.entrustmentService.rejectEntrustment(0, this.sharedDataService.actualCard.id).subscribe(x => {
+      this.sharedDataService.actualCard.status = Status.REJECTED;
+      this.location.back();
+    });
   }
 
   onSuggestClicked() {
-    // this.location.back();
+    this.entrustmentService.modifyEntrustmentHours(0, this.sharedDataService.actualCard.id, this.pickedNumberOfHours).subscribe(x => {
+      this.sharedDataService.actualCard = x;
+      this.location.back();
+    });
   }
 
   onUndoClicked() {
-    this.numberOfHours = this.initialNumberOfHours;
+    this.pickedNumberOfHours = this.sharedDataService.actualCard.numberOfHours;
     this.onValueChanged();
   }
 
   onValueChanged() {
-    this.difference = this.numberOfHours - this.initialNumberOfHours;
+    this.difference = this.pickedNumberOfHours - this.sharedDataService.actualCard.numberOfHours;
   }
 
   wasChanged() {
-    return this.numberOfHours !== this.initialNumberOfHours;
+    return this.pickedNumberOfHours !== this.sharedDataService.actualCard.numberOfHours;
   }
 }

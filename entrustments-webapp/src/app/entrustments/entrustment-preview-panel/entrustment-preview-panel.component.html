@@ -12,20 +12,20 @@
         <label style="margin: 0">Inżynieria Oprogramowania</label>
       </div>
       <div>
-        <label style="margin: 0">INZ003854P</label>
+        <label style="margin: 0">{{sharedDataService.actualCard.course.code}}</label>
         <span style="margin: 0"> &#9679; </span>
-        <label style="margin: 0">Projektowanie sys. informat.</label>
+        <label style="margin: 0">{{sharedDataService.actualCard.course.name}}</label>
       </div>
       <div>
-        <label style="margin: 0">Prowadzący: Dr inż. Bogumiła Hnatkowska</label>
+        <label style="margin: 0">Prowadzący: {{sharedDataService.actualCard.courseInstructor.academicDegree + ' ' + sharedDataService.actualCard.courseInstructor.firstName + ' ' + sharedDataService.actualCard.courseInstructor.surname}}Dr inż. Bogumiła Hnatkowska</label>
       </div>
       <div>
         <div class="row" style="width: 100%; margin-top: 20px">
           <label for="liczbaGodzinId" class="col col-form-label">Liczba godzin:</label>
           <div class="col">
-            <input type="number" class="form-control" style="text-align: center" id="liczbaGodzinId" (keyup)="onValueChanged()" [(ngModel)]="numberOfHours">
+            <input type="number" class="form-control" style="text-align: center" id="liczbaGodzinId" (keyup)="onValueChanged()" [(ngModel)]="pickedNumberOfHours">
           </div>
-          <label class="col col-form-label" style="margin-left: -20px; color: blue">{{ this.difference > 0 ? "+"+ this.difference : difference}}</label>
+          <label class="col col-form-label" style="margin-left: -20px; color: blue">{{ this.difference > 0 ? "+"+ this.difference : difference }}</label>
         </div>
         <div style="margin-top: 20px">
           <span>Status: </span>
@@ -45,7 +45,7 @@
           <button class="btn btn-secondary top-buffer d-block mx-auto" style="width: 80%" [disabled]="!wasChanged()" (click)="onUndoClicked()">Cofnij zmiany</button>
         </div>
         <div class="col">
-          <button class="btn btn-secondary top-buffer d-block mx-auto" style="width: 80%" [disabled]="wasChanged()" (click)="onDiscardClicked()">Odrzuć</button>
+          <button class="btn btn-secondary top-buffer d-block mx-auto" style="width: 80%" [disabled]="wasChanged()" (click)="onRejectClicked()">Odrzuć</button>
         </div>
       </div>
     </div>

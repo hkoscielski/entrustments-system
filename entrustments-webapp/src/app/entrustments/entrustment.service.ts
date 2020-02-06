@@ -3,6 +3,7 @@ import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {CourseInstructor} from "./course-instructor.service";
+import {Faculty, FieldOfStudy, Semester, Specialty, StudyLevel} from "./study-plan.service";
 
 @Injectable({
   providedIn: 'root'
@@ -36,14 +37,20 @@ export class EntrustmentService {
     return this.httpClient.patch(`${environment.apiBaseUrl}/api/v1/semesters/${semesterId}/entrustments/${entrustmentId}/reject`, { description: "Rejected entrustment" });
   }
 
-  addEntrustment(semesterId: number, courseInstructorId: number, numberOfHours: number, courseCode: string): Observable<Object>  {
-    let body =
-      {
+  addEntrustment(semesterId: number, courseInstructorId: number, numberOfHours: number, courseCode: string): Observable<Entrustment>  {
+    let body = {
         "courseInstructorId": courseInstructorId,
         "numberOfHours": numberOfHours,
         "courseCode": courseCode
       };
-    return this.httpClient.post(`${environment.apiBaseUrl}/api/v1/semesters/${semesterId}/entrustments`, body, {observe: 'response'});
+    return this.httpClient.post<Entrustment>(`${environment.apiBaseUrl}/api/v1/semesters/${semesterId}/entrustments`, body);
+  }
+
+  modifyEntrustmentHours(semesterId: number, entrustmentId: number, numberOfHours: number): Observable<Entrustment> {
+    let body = {
+      "numberOfHours": numberOfHours
+    };
+    return this.httpClient.patch<Entrustment>(`${environment.apiBaseUrl}/api/v1/semesters/${semesterId}/entrustments/${entrustmentId}`, body);
   }
 }
 
@@ -53,6 +60,11 @@ export class Entrustment {
   course: Course;
   courseInstructor: EntrustmentCourseInstructor;
   status: Status;
+  semester?: Semester;
+  faculty?: Faculty;
+  studyLevel?: StudyLevel;
+  fieldOfStudy?: FieldOfStudy;
+  specialty?: Specialty;
 
   constructor(id?: number, numberOfHours?: number, course?: Course, courseInstructor?: EntrustmentCourseInstructor, status?: Status) {
     this.id = id;

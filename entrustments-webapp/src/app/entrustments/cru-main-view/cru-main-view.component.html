@@ -4,18 +4,17 @@
       <div class="card card-outline-secondary mx-auto shadow-sm rounded">
         <div class="card-header-pills" style="margin: 10px; font-size: medium; text-align: center">Wyszukiwarka</div>
         <div class="card-body" style="padding: 1rem; border-top: 1px solid rgb(200, 200, 200)">
-          <app-entrustment-filter [isCourseInstructor]="false" ></app-entrustment-filter>
+          <app-entrustment-filter></app-entrustment-filter>
         </div>
       </div>
     </div>
     <div class="col-8" style="width: 60%">
       <button class="btn btn-primary" style="margin-bottom: 20px" routerLink="/entrustment-add-panel">Dodaj powierzenie</button>
       <div>
-        <label class="text-center top-buffer d-block mx-auto" >Parametry wyszukiwania</label>
+<!--        <label class="text-center top-buffer d-block mx-auto" >Parametry wyszukiwania</label>-->
         <p *ngIf="shouldShowInstructionsText()" class="text-center d-block mx-auto">Użyj wyszukiwarki, aby znaleźć powierzenia lub dodaj nowe powierzenie.</p>
         <p *ngIf="shouldShowNoResultsText()" class="text-center d-block mx-auto">Nie znaleziono powierzeń spełniających wyniki wyszukiwania.</p>
         <div class="overflow-auto" style="height: 70vh">
-<!--          <app-entrustment-list [foundEntrustments]="this.entrustmentFilterComponent.foundEntrustments" [hidden]="this.entrustmentFilterComponent.foundEntrustments.length > 0"></app-entrustment-list>-->
           <app-entrustment-list></app-entrustment-list>
         </div>
       </div>

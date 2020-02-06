@@ -103,8 +103,9 @@ export class EntrustmentAddPanelComponent implements OnInit {
     if (!this.areAllOptionsPicked())
       return;
 
-    this.entrustmentService.addEntrustment(this.filterOptions.semester.id, this.filterOptions.courseInstrucor.id, this.pickedNumberOfHours, this.filterOptions.course.code).subscribe(x => {
-      // this.location.back();
+    this.entrustmentService.addEntrustment(this.filterOptions.semester.id, this.filterOptions.courseInstrucor.id, this.pickedNumberOfHours, this.filterOptions.course.code)
+      .subscribe(x => {
+        this.location.back();
     });
   }
 

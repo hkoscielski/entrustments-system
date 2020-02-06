@@ -64,8 +64,6 @@
   <ngb-highlight [result]="r.code + ' - ' + r.name " [term]="t"></ngb-highlight>
 </ng-template>
 <ng-template ngbPanelContent #rtCourseInstructor let-r="result" let-t="term">
-  <ngb-highlight class="col" [result]="r.academicDegree + ' ' + r.firstName  + ' ' + r.surname" [term]="t"></ngb-highlight>
-  <!--    <ngb-highlight class="col" [result]="r.name" [term]="t"></ngb-highlight>-->
-  <span [hidden]="r.pensum" class="col flex-column justify-content-end"><span [ngStyle]="{ color: r.entrustedHours > r.additionalAttributes.pensum ? 'red' : 'green' }"> {{r.entrustedHours}}</span> / {{r.additionalAttributes.pensum}}</span>
-  <span [hidden]="!r.pensum" class="col flex-column justify-content-end" [ngStyle]="{ color: 'green' }"> {{r.entrustedHours}}</span>
+  <ngb-highlight class="row-cols-2" [result]="r.academicDegree + ' ' + r.firstName  + ' ' + r.surname" [term]="t"></ngb-highlight>
+  <span class="row-cols-1 float-right" style="margin-left: 30px;">{{r.entrustedHours}} / {{r.additionalAttributes.pensum}}</span>
 </ng-template>

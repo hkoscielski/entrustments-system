@@ -6,6 +6,7 @@ import {CourseInstructor, CourseInstructorService} from "../course-instructor.se
 import {Entrustment, EntrustmentService, ReversedStatus, Status} from "../entrustment.service";
 import {Course, Faculty, FieldOfStudy, Semester, Specialty, StudyLevel, StudyPlanService} from "../study-plan.service";
 import {identifierModuleUrl} from "@angular/compiler";
+import {SharedDataService} from "../shared-data.service";
 
 @Component({
   selector: 'app-entrustment-filter',
@@ -29,8 +30,6 @@ export class EntrustmentFilterComponent implements OnInit {
   showFoundHint = false;
   foundCount = 0;
 
-  @Input() isCourseInstructor = false;
-
   @ViewChild('coursesTextBox', {static: true}) coursesTextBox: NgbTypeahead;
   focusCoursesTextBox$ = new Subject<string>();
   clickCoursesTextBox$ = new Subject<string>();
@@ -47,7 +46,7 @@ export class EntrustmentFilterComponent implements OnInit {
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
       map(term => term === '' ? this.courses
         : this.courses.filter(v => v.code.toLowerCase().concat(' ', v.name.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
-  }
+  };
 
   formatterCourse = (x: {code: string, name: string}) => x.code + ' ' + x.name;
 
@@ -59,14 +58,19 @@ export class EntrustmentFilterComponent implements OnInit {
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
       map(term => term === '' ? this.courseInstructors
         : this.courseInstructors.filter(v => v.academicDegree.toLowerCase().concat(' ', v.firstName.toLowerCase(), ' ', v.surname.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
-  }
+  };
 
   formatterCourseInstructor = (x: {academicDegree: string, firstName: string, surname: string}) => `${x.academicDegree} ${x.firstName} ${x.surname}`;
 
-  constructor(private courseInstructorService: CourseInstructorService, private entrustmentService: EntrustmentService, private studyPlanService: StudyPlanService) { }
+  constructor(private courseInstructorService: CourseInstructorService, private entrustmentService: EntrustmentService, private studyPlanService: StudyPlanService, private sharedDataService: SharedDataService) { }
 
   ngOnInit() {
     // fieldsOfStudy: FieldOfStudy[];
+    // if (this.sharedDataService.actualCourseInstructor) {
+      this.filterOptions.courseInstrucor = this.sharedDataService.actualCourseInstructor;
+      this.filterOptions.faculty = this.sharedDataService.actualFaculty;
+      this.filterOptions.fieldOfStudy = this.sharedDataService.actualFieldOfStudy;
+    // }
 
     this.studyPlanService.findAllFaculties().subscribe(
       faculties => {
@@ -148,7 +152,7 @@ export class EntrustmentFilterComponent implements OnInit {
   }
 
   shouldLockFieldOfStudy() {
-    return !this.isCourseInstructor;
+    return !this.sharedDataService.actualCourseInstructor;
   }
 
   areFilterOptionsEmpty() {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {SharedDataService} from "./entrustments/shared-data.service";
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'entrustments-webapp';
-  isLogged = true;
-  userName = 'Jan Kowalski';
+
+  constructor(private sharedDataService: SharedDataService) {
+  }
 }

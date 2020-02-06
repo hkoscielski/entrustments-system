@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {NgbDropdown} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from "@angular/router";
 import {Entrustment, EntrustmentService, Status} from "../entrustment.service";
+import {SharedDataService} from "../shared-data.service";
 
 @Component({
   selector: 'app-entrustment-card',
@@ -9,7 +10,7 @@ import {Entrustment, EntrustmentService, Status} from "../entrustment.service";
   styleUrls: ['./entrustment-card.component.css']
 })
 export class EntrustmentCardComponent implements OnInit {
-  constructor(private router: Router, private entrustmentService: EntrustmentService) {
+  constructor(private router: Router, private entrustmentService: EntrustmentService, private sharedDataService: SharedDataService) {
   }
 
   static x = 0;
@@ -38,6 +39,7 @@ export class EntrustmentCardComponent implements OnInit {
   }
 
   onEditClicked() {
+    this.sharedDataService.actualCard = this.entrustment;
     this.router.navigate(['/entrustment-preview-panel']);
   }
 

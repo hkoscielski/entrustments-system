@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { EntrustmentsModule } from './entrustments/entrustments.module';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { EntrustmentsModule } from './entrustments/entrustments.module';
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
-    EntrustmentsModule
+    EntrustmentsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,10 +3,12 @@
   <option [selected]="!filterOptions.faculty" [ngValue]="undefined">Wydział</option>
   <option *ngFor="let x of faculties" [ngValue]="x" [selected]="filterOptions.faculty == x">{{x.symbol}} {{x.name}}</option>
 </select>
+<!--<pre>faculty: {{ filterOptions.faculty | json }}</pre>-->
 <select *ngIf="shouldShowFieldOfStudy()" [disabled]="shouldLockFieldOfStudy()" class="form-control top-buffer" [(ngModel)]="filterOptions.fieldOfStudy">
   <option [selected]="!filterOptions.fieldOfStudy" [ngValue]="undefined">Kierunek</option>
   <option *ngFor="let x of fieldsOfStudy" [ngValue]="x" [selected]="filterOptions.fieldOfStudy == x">{{x.name}}</option>
 </select>
+<!--<pre>fieldOfStudy: {{ filterOptions.fieldOfStudy | json }}</pre>-->
 <select class="form-control" [class.top-buffer]="shouldShowFieldOfStudy()" [(ngModel)]="filterOptions.academicYear">
   <option [selected]="!filterOptions.academicYear" [ngValue]="undefined">Rok akademicki</option>
   <option *ngFor="let x of academicYears" [ngValue]="x" [selected]="filterOptions.academicYear == x">{{x}}</option>
@@ -35,7 +37,7 @@
        [editable]="false"
        #coursesTextBox="ngbTypeahead"/>
 <!--<pre>pickedCourse: {{ pickedCourse | json }}</pre>-->
-<input [hidden]="isCourseInstructor" type="text" class="form-control top-buffer" [class.is-valid]="filterOptions.courseInstrucor" placeholder="Wpisz prowadzącego"
+<input [hidden]="sharedDataService.actualCourseInstructor" type="text" class="form-control top-buffer" [class.is-valid]="filterOptions.courseInstrucor" placeholder="Wpisz prowadzącego"
        [(ngModel)]="filterOptions.courseInstrucor" [ngbTypeahead]="searchCourseInstructors" [resultTemplate]="rtCourseInstructor"
        (focus)="focusCourseInstructorsTextBox$.next($event.target.value)"
        (click)="clickCourseInstructorsTextBox$.next($event.target.value)"
@@ -50,8 +52,8 @@
 <!--<pre>pickedStatus: {{ pickedStatus | json }}</pre>-->
 <div class="row top-buffer">
   <div class="col">
-    <button *ngIf="!isCourseInstructor" class="btn btn-secondary" style="width: 100%" (click)="onSearchClicked()">Szukaj</button>
-    <button *ngIf="isCourseInstructor" class="btn btn-secondary" style="width: 100%" (click)="onSearchClicked()">Filtruj</button>
+    <button *ngIf="!sharedDataService.actualCourseInstructor" class="btn btn-secondary" style="width: 100%" (click)="onSearchClicked()">Szukaj</button>
+    <button *ngIf="sharedDataService.actualCourseInstructor" class="btn btn-secondary" style="width: 100%" (click)="onSearchClicked()">Filtruj</button>
   </div>
   <div class="col">
     <button class="btn btn-secondary" [disabled]="areFilterOptionsEmpty()" style="width: 100%; height: 100%; font-size: 14px" (click)="onClearFiltersClicked()">Czyść filtry</button>
@@ -63,8 +65,7 @@
   <ngb-highlight [result]="r.code + ' - ' + r.name " [term]="t"></ngb-highlight>
 </ng-template>
 <ng-template ngbPanelContent #rtCourseInstructor let-r="result" let-t="term">
-    <ngb-highlight class="col" [result]="r.academicDegree + ' ' + r.firstName  + ' ' + r.surname" [term]="t"></ngb-highlight>
-<!--    <ngb-highlight class="col" [result]="r.name" [term]="t"></ngb-highlight>-->
-    <span class="col flex-column justify-content-end"><span [ngStyle]="{ color: r.entrustedHours > r.additionalAttributes.pensum ? 'red' : 'green' }"> {{r.entrustedHours}}</span> / {{r.additionalAttributes.pensum}}</span>
+  <ngb-highlight class="row-cols-2" [result]="r.academicDegree + ' ' + r.firstName  + ' ' + r.surname" [term]="t"></ngb-highlight>
+  <span class="row-cols-1 float-md-right" style="margin-left: 30px;">{{r.entrustedHours}} / {{r.additionalAttributes.pensum}}</span>
 </ng-template>
 <!--<pre>foundEntrustments: {{ foundEntrustments | json }}</pre>-->
