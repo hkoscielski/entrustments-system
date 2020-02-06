@@ -7,19 +7,19 @@
 
     <changeSet author="hkoscielski" id="TEST-21-insert-into-course_instructors">
         <insert tableName="Course_Instructors">
-            <column name="id_user" valueComputed="(select id from Users where email = 'jan.kowalski@pwr.edu.pl')"/>
+            <column name="id_user" valueComputed="(select id from Users where email = 'noreply.team14@o2.pl')"/>
             <column name="id_academic_degree" valueComputed="(select id from Academic_Degrees where short_name = 'mgr')"/>
             <column name="firstname">Jan</column>
             <column name="surname">Kowalski</column>
         </insert>
         <insert tableName="Course_Instructors">
-            <column name="id_user" valueComputed="(select id from Users where email = 'michal.nowak@pwr.edu.pl')"/>
+            <column name="id_user" valueComputed="(select id from Users where email = 'hubson10@op.pl')"/>
             <column name="id_academic_degree" valueComputed="(select id from Academic_Degrees where short_name = 'mgr')"/>
             <column name="firstname">Michał</column>
             <column name="surname">Nowak</column>
         </insert>
         <insert tableName="Course_Instructors">
-            <column name="id_user" valueComputed="(select id from Users where email = 'andrzej.kruk@pwr.edu.pl')"/>
+            <column name="id_user" valueComputed="(select id from Users where email = 'huberto1010@op.pl')"/>
             <column name="id_academic_degree" valueComputed="(select id from Academic_Degrees where short_name = 'dr')"/>
             <column name="firstname">Andrzej</column>
             <column name="surname">Kruk</column>

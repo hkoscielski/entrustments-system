@@ -7,25 +7,25 @@
 
     <changeSet author="hkoscielski" id="TEST-20-insert-into-users">
         <insert tableName="Users">
-            <column name="email" >jan.kowalski@pwr.edu.pl</column>
+            <column name="email" >noreply.team14@o2.pl</column>
             <column name="username">pwr111111</column>
             <column name="password">password</column>
             <column name="id_field_of_study" valueComputed="(select id from Fields_Of_Study where id_faculty = (select id from Faculties where symbol = 'W08') and short_name = 'inf')"/>
         </insert>
         <insert tableName="Users">
-            <column name="email" >michal.nowak@pwr.edu.pl</column>
+            <column name="email" >hubson10@op.pl</column>
             <column name="username">pwr222222</column>
             <column name="password">password2</column>
             <column name="id_field_of_study" valueComputed="(select id from Fields_Of_Study where id_faculty = (select id from Faculties where symbol = 'W08') and short_name = 'inf')"/>
         </insert>
         <insert tableName="Users">
-            <column name="email" >andrzej.kruk@pwr.edu.pl</column>
+            <column name="email" >huberto1010@op.pl</column>
             <column name="username">pwr333333</column>
             <column name="password">password3</column>
             <column name="id_field_of_study" valueComputed="(select id from Fields_Of_Study where id_faculty = (select id from Faculties where symbol = 'W08') and short_name = 'inf')"/>
         </insert>
         <insert tableName="Users">
-            <column name="email" >anna.sekretarz@pwr.edu.pl</column>
+            <column name="email" >anna444444.sekretarz@pwr.edu.pl</column>
             <column name="username">pwr444444</column>
             <column name="password">password4</column>
         </insert>

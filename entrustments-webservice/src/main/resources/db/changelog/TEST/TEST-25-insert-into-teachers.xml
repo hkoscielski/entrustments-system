@@ -7,7 +7,7 @@
 
     <changeSet author="hkoscielski" id="TEST-25-insert-into-teachers">
         <insert tableName="Teachers">
-            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'jan.kowalski@pwr.edu.pl'))"/>
+            <column name="id_course_instructor" valueComputed="(select id from Course_Instructors where id_user = (select id from Users where email = 'noreply.team14@o2.pl'))"/>
             <column name="pensum">150</column>
             <column name="time_basis">0.75</column>
             <column name="id_position" valueComputed="(select id from Positions where name = 'Wykładowca')"/>
