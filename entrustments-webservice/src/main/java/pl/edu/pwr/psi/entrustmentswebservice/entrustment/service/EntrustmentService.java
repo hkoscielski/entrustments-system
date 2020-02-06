@@ -127,7 +127,10 @@ public class EntrustmentService {
 				.changeType(EntrustmentLog.ChangeType.I)
 				.build();
 		entrustmentLogRepository.save(entrustmentLog);
-		return complexModelMapper.map(ventrustmentCreated, EntrustmentResponseDTO.class);
+
+		long entrustmentPlanId = ventrustmentCreated.getId().getEntrustment().getEntrustmentPlan().getId();
+		return complexModelMapper.map(ventrustmentCreated, EntrustmentResponseDTO.class)
+				.setSemesterId(entrustmentPlanRepository.findByEntrustmentPlanId(entrustmentPlanId).orElseThrow(() -> new ResourceInternalServerError(Semester.class.getSimpleName())).getId());
 	}
 
 	@Transactional
@@ -161,7 +164,9 @@ public class EntrustmentService {
 				.build();
 		entrustmentLogRepository.save(entrustmentLog);
 
-		return complexModelMapper.map(ventrustmentUpdated, EntrustmentResponseDTO.class);
+		long entrustmentPlanId = ventrustmentUpdated.getId().getEntrustment().getEntrustmentPlan().getId();
+		return complexModelMapper.map(ventrustmentUpdated, EntrustmentResponseDTO.class)
+				.setSemesterId(entrustmentPlanRepository.findByEntrustmentPlanId(entrustmentPlanId).orElseThrow(() -> new ResourceInternalServerError(Semester.class.getSimpleName())).getId());
 	}
 
 	@Transactional
@@ -207,7 +212,9 @@ public class EntrustmentService {
 				.build();
 		entrustmentLogRepository.save(entrustmentLog);
 
-		return complexModelMapper.map(ventrustmentUpdated, EntrustmentResponseDTO.class);
+		long entrustmentPlanId = ventrustmentUpdated.getId().getEntrustment().getEntrustmentPlan().getId();
+		return complexModelMapper.map(ventrustmentUpdated, EntrustmentResponseDTO.class)
+				.setSemesterId(entrustmentPlanRepository.findByEntrustmentPlanId(entrustmentPlanId).orElseThrow(() -> new ResourceInternalServerError(Semester.class.getSimpleName())).getId());
 	}
 
 	public int findSumOfEntrustmentsHoursForCourseInstructor(Long courseInstructorId) {

@@ -35,6 +35,13 @@ public class StudySystemExternalService {
 						.withStatus(HttpStatus.OK.value())
 						.withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 						.withBodyFile("study_plans_w08.json")));
+
+		server.stubFor(get(urlMatching("/api/faculties/.*?/study-plans"))
+				.atPriority(2)
+				.willReturn(aResponse()
+						.withStatus(HttpStatus.OK.value())
+						.withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+						.withBody("[]")));
 	}
 
 	public void startServer() {
