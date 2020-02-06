@@ -48,6 +48,11 @@ public class EntrustmentController {
 		return ResponseEntity.ok(entrustments);
 	}
 
+	@GetMapping("semesters/{semesterId}/course/{courseId}/entrustments/hours-to-entrust")
+	public ResponseEntity<Integer> getHoursToEntrustForCourseAndSemester(@PathVariable Long semesterId, @PathVariable Long courseId) {
+		return ResponseEntity.ok(entrustmentService.findRemainingHoursToEntrustForSemesterAndCourse(semesterId, courseId));
+	}
+
 	@GetMapping("/course-instructors/{courseInstructorId}/entrustments/hours")
 	public ResponseEntity<Integer> getEntrustedHours(@PathVariable Long courseInstructorId) {
 		return ResponseEntity.ok(entrustmentService.findSumOfEntrustmentsHoursForCourseInstructor(courseInstructorId));

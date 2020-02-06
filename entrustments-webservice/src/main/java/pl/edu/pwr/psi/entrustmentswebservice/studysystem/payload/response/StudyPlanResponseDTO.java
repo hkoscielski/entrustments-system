@@ -111,6 +111,9 @@ public class StudyPlanResponseDTO {
 		private String semesterName;
 
 		@NotNull
+		private Integer numberOfStudents;
+
+		@NotNull
 		private Set<CourseResponseDTO> courses;
 	}
 
@@ -135,6 +138,10 @@ public class StudyPlanResponseDTO {
 		@NotNull
 		@Positive
 		private Integer zzuHours;
+
+		@NotNull
+		@Positive
+		private Integer studentsPerGroup;
 	}
 
 	@NoArgsConstructor
