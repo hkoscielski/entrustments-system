@@ -12,7 +12,6 @@ import pl.edu.pwr.psi.entrustmentswebservice.common.exception.ResourceNotFoundEx
 import pl.edu.pwr.psi.entrustmentswebservice.common.mapping.ComplexModelMapper;
 import pl.edu.pwr.psi.entrustmentswebservice.common.repository.CourseInstructorRepository;
 import pl.edu.pwr.psi.entrustmentswebservice.common.repository.CourseRepository;
-import pl.edu.pwr.psi.entrustmentswebservice.common.repository.SemesterRepository;
 import pl.edu.pwr.psi.entrustmentswebservice.common.repository.UserRepository;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.*;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.request.EntrustmentCreateRequestDTO;
@@ -24,7 +23,6 @@ import pl.edu.pwr.psi.entrustmentswebservice.entrustment.repository.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -219,5 +217,17 @@ public class EntrustmentService {
 
 	public int findSumOfEntrustmentsHoursForCourseInstructor(Long courseInstructorId) {
 		return ventrustmentRepository.calculateSumOfEntrustedHoursForCourseInstructor(courseInstructorId);
+	}
+
+	public int findRemainingHoursToEntrustForSemesterAndCourse(Long semesterId, Long courseId) {
+		EntrustmentPlan entrustmentPlan = entrustmentPlanRepository.findBySemesterId(semesterId)
+				.orElseThrow(() -> new ResourceNotFoundException("EntrustmentPlan", "semester_id", String.valueOf(semesterId)));
+		List<VEntrustment> entrustments = ventrustmentRepository.findAllActualByCourseAndEntrustmentPlan(courseId, entrustmentPlan.getId());
+		if (entrustments.size() == 0) {
+			return 0;
+		}
+		Course course = entrustments.get(0).getCourse();
+		int entrustedHours = entrustments.stream().mapToInt(VEntrustment::getNumberOfHours).sum();
+		return course.getZzuHours() * entrustmentPlan.getNumberOfStudents() / course.getStudentsPerGroup() - entrustedHours;
 	}
 }

@@ -6,6 +6,8 @@ import org.springframework.web.client.RestTemplate;
 import pl.edu.pwr.psi.entrustmentswebservice.common.entity.*;
 import pl.edu.pwr.psi.entrustmentswebservice.common.exception.ResourceInternalServerError;
 import pl.edu.pwr.psi.entrustmentswebservice.common.repository.*;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.EntrustmentPlan;
+import pl.edu.pwr.psi.entrustmentswebservice.entrustment.repository.EntrustmentPlanRepository;
 import pl.edu.pwr.psi.entrustmentswebservice.studysystem.config.StudySystemProperties;
 import pl.edu.pwr.psi.entrustmentswebservice.studysystem.payload.response.CourseInstructorResponseDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.studysystem.payload.response.StudyPlanResponseDTO;
@@ -30,6 +32,9 @@ public class StudySystemService {
 
 	@Autowired
 	private DidacticFormRepository didacticFormRepository;
+
+	@Autowired
+	private EntrustmentPlanRepository entrustmentPlanRepository;
 
 	@Autowired
 	private FacultyRepository facultyRepository;
@@ -246,6 +251,7 @@ public class StudySystemService {
 								.name(c.getName())
 								.didacticForm(didacticForm)
 								.zzuHours(c.getZzuHours())
+								.studentsPerGroup(c.getStudentsPerGroup())
 								.build();
 						Course course = courseRepository.findByCode(c.getCode())
 								.map(co -> courseRepository.save(courseToSaveOrUpdate.setId(co.getId())))
@@ -262,7 +268,15 @@ public class StudySystemService {
 							.modules(semesterModulesToSaveOrUpdate)
 							.courses(semesterCoursesToSaveOrUpdate)
 							.build();
-					semesterRepository.save(semesterToSaveOrUpdate);
+					Semester semester = semesterRepository.save(semesterToSaveOrUpdate);
+
+					EntrustmentPlan entrustmentPlanToSaveOrUpdate = EntrustmentPlan.builder()
+							.numberOfStudents(s.getNumberOfStudents())
+							.semester(semester)
+							.build();
+					entrustmentPlanRepository.findBySemesterId(semester.getId())
+							.map(ep -> entrustmentPlanRepository.save(entrustmentPlanToSaveOrUpdate.setId(ep.getId())))
+							.orElse(entrustmentPlanRepository.save(entrustmentPlanToSaveOrUpdate));
 				}
 			}
 		}

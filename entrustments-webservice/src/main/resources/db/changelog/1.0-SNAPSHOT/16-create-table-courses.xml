@@ -24,6 +24,10 @@
                 <constraints
                         nullable="false" notNullConstraintName="courses_zzu_hours_nn"/>
             </column>
+            <column name="students_per_group" type="int">
+                <constraints
+                        nullable="false" notNullConstraintName="courses_students_per_group_nn"/>
+            </column>
             <column name="id_module" type="bigint">
                 <constraints
                         referencedTableName="Modules" referencedColumnNames="id" foreignKeyName="courses_id_module_fk"/>

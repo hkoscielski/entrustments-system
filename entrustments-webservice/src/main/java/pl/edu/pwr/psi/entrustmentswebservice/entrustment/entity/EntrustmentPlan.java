@@ -1,9 +1,7 @@
 package pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.Accessors;
 import pl.edu.pwr.psi.entrustmentswebservice.common.entity.Semester;
 
 import javax.persistence.*;
@@ -14,6 +12,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@Accessors(chain = true)
+@Builder
 public class EntrustmentPlan {
 
 	@Id

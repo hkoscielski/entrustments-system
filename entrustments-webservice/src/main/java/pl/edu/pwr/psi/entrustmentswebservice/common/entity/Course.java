@@ -31,6 +31,9 @@ public class Course {
 	@Column(name = "zzu_hours", nullable = false)
 	private int zzuHours;
 
+	@Column(name = "students_per_group", nullable = false)
+	private int studentsPerGroup;
+
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "id_didactic_form", referencedColumnName = "id", nullable = false)
 	private DidacticForm didacticForm;

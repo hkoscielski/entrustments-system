@@ -16,7 +16,6 @@ import java.util.Set;
 public class Semester {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false, nullable = false)
 	private Long id;
 

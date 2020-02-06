@@ -14,7 +14,6 @@ import javax.persistence.*;
 public class StudyPlan {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false, nullable = false)
 	private Long id;
 
