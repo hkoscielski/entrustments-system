@@ -4,15 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.CourseResponseDTO;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Accessors(chain = true)
 public class EntrustmentResponseDTO {
 
 	private long id;
+	private long semesterId;
 	private int numberOfHours;
 	private CourseResponseDTO course;
 	private CourseInstructorResponseDTO courseInstructor;

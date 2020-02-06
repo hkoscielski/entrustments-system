@@ -2,17 +2,18 @@ package pl.edu.pwr.psi.entrustmentswebservice.entrustment.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.edu.pwr.psi.entrustmentswebservice.common.entity.FieldOfStudy;
-import pl.edu.pwr.psi.entrustmentswebservice.common.mapping.ComplexModelMapper;
-import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.FieldOfStudyDTO;
-import pl.edu.pwr.psi.entrustmentswebservice.common.repository.FieldOfStudyRepository;
-import pl.edu.pwr.psi.entrustmentswebservice.common.util.DateUtil;
 import pl.edu.pwr.psi.entrustmentswebservice.common.entity.Faculty;
+import pl.edu.pwr.psi.entrustmentswebservice.common.entity.FieldOfStudy;
 import pl.edu.pwr.psi.entrustmentswebservice.common.entity.Semester;
+import pl.edu.pwr.psi.entrustmentswebservice.common.exception.ResourceNotFoundException;
+import pl.edu.pwr.psi.entrustmentswebservice.common.mapping.ComplexModelMapper;
 import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.FacultyResponseDTO;
+import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.FieldOfStudyDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.common.payload.response.SemesterResponseDTO;
 import pl.edu.pwr.psi.entrustmentswebservice.common.repository.FacultyRepository;
+import pl.edu.pwr.psi.entrustmentswebservice.common.repository.FieldOfStudyRepository;
 import pl.edu.pwr.psi.entrustmentswebservice.common.repository.SemesterRepository;
+import pl.edu.pwr.psi.entrustmentswebservice.common.util.DateUtil;
 
 import java.util.List;
 
@@ -45,6 +46,13 @@ public class StudyPlanService {
 		int currentStartAcademicYear = DateUtil.getCurrentStartAcademicYear();
 		List<Semester> semesters = semesterRepository.findAllSemestersForFieldOfStudyAfterDate(fieldOfStudyId, currentStartAcademicYear);
 		return complexModelMapper.mapAll(semesters, SemesterResponseDTO.class);
+	}
+
+	public SemesterResponseDTO findActualSemestersForFieldOfStudyAndSemester(long fieldOfStudyId, long semesterId) {
+		int currentStartAcademicYear = DateUtil.getCurrentStartAcademicYear();
+		Semester semester = semesterRepository.findByFieldOfStudyAndSemesterAfterDate(fieldOfStudyId, semesterId, currentStartAcademicYear)
+				.orElseThrow(() -> new ResourceNotFoundException(Semester.class.getSimpleName(), "id", String.valueOf(semesterId)));
+		return complexModelMapper.map(semester, SemesterResponseDTO.class);
 	}
 
 	public List<SemesterResponseDTO> findActualSemesters() {

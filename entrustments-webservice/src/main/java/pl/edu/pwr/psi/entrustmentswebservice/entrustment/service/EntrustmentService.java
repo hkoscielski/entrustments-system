@@ -5,12 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.edu.pwr.psi.entrustmentswebservice.common.entity.Course;
 import pl.edu.pwr.psi.entrustmentswebservice.common.entity.CourseInstructor;
+import pl.edu.pwr.psi.entrustmentswebservice.common.entity.Semester;
 import pl.edu.pwr.psi.entrustmentswebservice.common.entity.User;
 import pl.edu.pwr.psi.entrustmentswebservice.common.exception.ResourceInternalServerError;
 import pl.edu.pwr.psi.entrustmentswebservice.common.exception.ResourceNotFoundException;
 import pl.edu.pwr.psi.entrustmentswebservice.common.mapping.ComplexModelMapper;
 import pl.edu.pwr.psi.entrustmentswebservice.common.repository.CourseInstructorRepository;
 import pl.edu.pwr.psi.entrustmentswebservice.common.repository.CourseRepository;
+import pl.edu.pwr.psi.entrustmentswebservice.common.repository.SemesterRepository;
 import pl.edu.pwr.psi.entrustmentswebservice.common.repository.UserRepository;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.entity.*;
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.request.EntrustmentCreateRequestDTO;
@@ -21,6 +23,9 @@ import pl.edu.pwr.psi.entrustmentswebservice.entrustment.payload.response.Entrus
 import pl.edu.pwr.psi.entrustmentswebservice.entrustment.repository.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EntrustmentService {
@@ -63,7 +68,11 @@ public class EntrustmentService {
 				entrustmentCriteria.getCourseInstructorId(),
 				entrustmentCriteria.getEntrustmentStatus()
 		);
-		return complexModelMapper.mapAll(entrustments, EntrustmentResponseDTO.class);
+		Map<Long, Long> entrustmentPlanIdsByEntrustmentId = entrustments.stream()
+				.collect(Collectors.toMap(ve -> ve.getId().getEntrustment().getId(), ve -> ve.getId().getEntrustment().getEntrustmentPlan().getId()));
+		return complexModelMapper.mapAll(entrustments, EntrustmentResponseDTO.class)
+				.stream().map(e -> e.setSemesterId(entrustmentPlanRepository.findByEntrustmentPlanId(entrustmentPlanIdsByEntrustmentId.get(e.getId())).map(ep -> ep.getSemester().getId()).orElseThrow(() -> new ResourceInternalServerError(Semester.class.getSimpleName()))))
+				.collect(Collectors.toList());
 	}
 
 	@Transactional(readOnly = true)
@@ -77,7 +86,11 @@ public class EntrustmentService {
 				courseInstructorId,
 				entrustmentCriteria.getEntrustmentStatus()
 		);
-		return complexModelMapper.mapAll(entrustments, EntrustmentResponseDTO.class);
+		Map<Long, Long> entrustmentPlanIdsByEntrustmentId = entrustments.stream()
+				.collect(Collectors.toMap(ve -> ve.getId().getEntrustment().getId(), ve -> ve.getId().getEntrustment().getEntrustmentPlan().getId()));
+		return complexModelMapper.mapAll(entrustments, EntrustmentResponseDTO.class)
+				.stream().map(e -> e.setSemesterId(entrustmentPlanRepository.findByEntrustmentPlanId(entrustmentPlanIdsByEntrustmentId.get(e.getId())).map(ep -> ep.getSemester().getId()).orElseThrow(() -> new ResourceInternalServerError(Semester.class.getSimpleName()))))
+				.collect(Collectors.toList());
 	}
 
 	@Transactional

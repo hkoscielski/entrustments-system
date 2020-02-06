@@ -46,6 +46,12 @@ public class StudyPlanController {
 		return ResponseEntity.ok(semesters);
 	}
 
+	@GetMapping("/fields-of-study/{fieldOfStudyId}/semesters/{semesterId}")
+	public ResponseEntity<SemesterResponseDTO> getSemestersForFieldOfStudyAndSemester(@PathVariable long fieldOfStudyId, @PathVariable long semesterId) {
+		SemesterResponseDTO semester = studyPlanService.findActualSemestersForFieldOfStudyAndSemester(fieldOfStudyId, semesterId);
+		return ResponseEntity.ok(semester);
+	}
+
 	@GetMapping("/semesters")
 	public ResponseEntity<List<SemesterResponseDTO>> getSemesters() {
 		List<SemesterResponseDTO> semesters = studyPlanService.findActualSemesters();
