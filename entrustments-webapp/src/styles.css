@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+@media (min-width: 768px) {
+  .col-20p {
+    width: 20%;
+  }
+  .col-30p {
+    width: 30%;
+  }
+  .col-40p {
+    width: 40%;
+  }
+  .col-50p {
+    width: 50%;
+  }
+  .col-60p {
+    width: 60%;
+  }
+  .col-70p {
+    width: 70%;
+  }
+  .col-80p {
+    width: 80%;
+  }
+}

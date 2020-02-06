@@ -1,6 +1,9 @@
-<div class="container-lg">
-  <div class="row">
-    <div class="col">
+<!--<div class="container-fluid d-flex justify-content-center" style="width: 92%; background-color: red">-->
+<div class="container-fluid d-flex justify-content-center" style="width: 90%;">
+<!--  <div class="row justify-content-center" style="background-color: green">-->
+  <div class="row justify-content-center">
+<!--    <div class="col-3" style="background-color: yellow">-->
+    <div class="col-3">
       <div class="card card-outline-secondary mx-auto shadow-sm rounded">
         <div class="card-header-pills" style="margin: 10px; font-size: medium; text-align: center">Wyszukiwarka</div>
         <div class="card-body" style="padding: 1rem; border-top: 1px solid rgb(200, 200, 200)">
@@ -8,15 +11,22 @@
         </div>
       </div>
     </div>
-    <div class="col-8" style="width: 60%">
+<!--    <div class="col-5 justify-content-center" style="background-color: yellowgreen">-->
+    <div class="col-5 justify-content-center">
       <button class="btn btn-primary" style="margin-bottom: 20px" routerLink="/entrustment-add-panel">Dodaj powierzenie</button>
       <div>
-<!--        <label class="text-center top-buffer d-block mx-auto" >Parametry wyszukiwania</label>-->
+        <label *ngIf="!shouldShowInstructionsText()" class="text-center top-buffer d-block mx-auto" style="font-size: small">{{filterOptionsString}}</label>
         <p *ngIf="shouldShowInstructionsText()" class="text-center d-block mx-auto">Użyj wyszukiwarki, aby znaleźć powierzenia lub dodaj nowe powierzenie.</p>
         <p *ngIf="shouldShowNoResultsText()" class="text-center d-block mx-auto">Nie znaleziono powierzeń spełniających wyniki wyszukiwania.</p>
-        <div class="overflow-auto" style="height: 70vh">
+        <div class="overflow-auto" style="height: 100%">
           <app-entrustment-list></app-entrustment-list>
         </div>
+      </div>
+    </div>
+<!--    <div class="col-4" style="background-color: greenyellow">-->
+    <div class="col-4">
+      <div class="justify-content-start" style="width: 95%; height: 85vh">
+        <app-course-list></app-course-list>
       </div>
     </div>
   </div>

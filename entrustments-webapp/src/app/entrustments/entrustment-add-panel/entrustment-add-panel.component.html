@@ -1,64 +1,78 @@
-<div class="container" style="width: 50%">
-  <div class="card card-outline-secondary mx-auto shadow-sm rounded">
-    <div class="card-header-pills" style="margin: 10px; font-size: medium; text-align: center; ">Dodawanie powierzenia</div>
-    <div class="card-body" style="padding: 1rem; border-top: 1px solid rgb(200, 200, 200)">
-      <div class="row">
-        <div class="col">
-          <select class="form-control top-buffer" [(ngModel)]="filterOptions.academicYear">
-            <option [selected]="!filterOptions.academicYear" [ngValue]="undefined">Rok akademicki</option>
-            <option *ngFor="let x of academicYears" [ngValue]="x" [selected]="filterOptions.academicYear == x">{{x}}</option>
-          </select>
-          <!--<pre>pickedAcademicYear: {{ pickedAcademicYear | json }}</pre>-->
-          <select class="form-control top-buffer" [(ngModel)]="filterOptions.semester">
-            <option [selected]="!filterOptions.semester" [ngValue]="undefined">Semestr</option>
-            <option *ngFor="let x of semesters" [ngValue]="x" [selected]="filterOptions.semester == x">{{x.semesterNumber}}</option>
-          </select>
-          <!--<pre>pickedSemester: {{ pickedSemester | json }}</pre>-->
-          <select class="form-control top-buffer" [(ngModel)]="filterOptions.studyLevel">
-            <option [selected]="!filterOptions.studyLevel" [ngValue]="undefined">Stopień</option>
-            <option *ngFor="let x of studyLevels" [ngValue]="x" [selected]="filterOptions.studyLevel == x">{{x.name}}</option>
-          </select>
-          <!--<pre>pickedStudyLevel: {{ pickedStudyLevel | json }}</pre>-->
-          <select class="form-control top-buffer" [(ngModel)]="filterOptions.specialty">
-            <option [selected]="!filterOptions.specialty" [ngValue]="undefined">Specjalność</option>
-            <option *ngFor="let x of specialties" [ngValue]="x" [selected]="filterOptions.specialty == x">{{x.shortName}} - {{x.name}}</option>
-          </select>
-        </div>
-        <div class="col">
-          <input type="text" class="form-control top-buffer" [class.is-valid]="filterOptions.course" style="text-align: center" placeholder="Wpisz kod lub nazwę kursu"
-                 [(ngModel)]="filterOptions.course" [ngbTypeahead]="searchCourses" [resultTemplate]="rtCourse"
-                 (focus)="focusCoursesTextBox$.next($event.target.value)"
-                 (click)="clickCoursesTextBox$.next($event.target.value)"
-                 [inputFormatter]="formatterCourse"
-                 [editable]="false"
-                 #coursesTextBox="ngbTypeahead"/>
-          <!--<pre>pickedCourse: {{ pickedCourse | json }}</pre>-->
-          <div class="row top-buffer" style="margin-top: 10%">
-            <label for="prowadzacyId" class="col-5 col-form-label">Prowadzący:</label>
-            <div class="col-7">
-              <input id="prowadzacyId" type="text" class="form-control" [class.is-valid]="filterOptions.courseInstrucor" style="text-align: center" placeholder="Prowadzący"
-                     [(ngModel)]="filterOptions.courseInstrucor" [ngbTypeahead]="searchCourseInstructors" [resultTemplate]="rtCourseInstructor"
-                     (focus)="focusCourseInstructorsTextBox$.next($event.target.value)"
-                     (click)="clickCourseInstructorsTextBox$.next($event.target.value)"
-                     [inputFormatter]="formatterCourseInstructor"
+<!--<div class="container-fluid d-flex justify-content-center" style="width: 90%; background-color: yellow">-->
+<div class="container-fluid d-flex justify-content-center" style="width: 90%;">
+  <div class="row">
+<!--    <div class="col-0"></div>-->
+<!--    <div class="col-7" style="background-color: green">-->
+    <div class="col-7">
+      <div class="card card-outline-secondary mx-auto shadow-sm rounded">
+        <div class="card-header-pills" style="margin: 10px; font-size: medium; text-align: center; ">Dodawanie powierzenia</div>
+        <div class="card-body" style="padding: 1rem; border-top: 1px solid rgb(200, 200, 200)">
+          <div class="row">
+            <div class="col">
+              <select class="form-control top-buffer" [(ngModel)]="filterOptions.academicYear">
+                <option [selected]="!filterOptions.academicYear" [ngValue]="undefined">Rok akademicki</option>
+                <option *ngFor="let x of academicYears" [ngValue]="x" [selected]="filterOptions.academicYear == x">{{x}}</option>
+              </select>
+              <!--<pre>pickedAcademicYear: {{ pickedAcademicYear | json }}</pre>-->
+              <select class="form-control top-buffer" [(ngModel)]="filterOptions.semester">
+                <option [selected]="!filterOptions.semester" [ngValue]="undefined">Semestr</option>
+                <option *ngFor="let x of semesters" [ngValue]="x" [selected]="filterOptions.semester == x">{{x.semesterNumber}}</option>
+              </select>
+              <!--<pre>pickedSemester: {{ pickedSemester | json }}</pre>-->
+              <select class="form-control top-buffer" [(ngModel)]="filterOptions.studyLevel">
+                <option [selected]="!filterOptions.studyLevel" [ngValue]="undefined">Stopień</option>
+                <option *ngFor="let x of studyLevels" [ngValue]="x" [selected]="filterOptions.studyLevel == x">{{x.name}}</option>
+              </select>
+              <!--<pre>pickedStudyLevel: {{ pickedStudyLevel | json }}</pre>-->
+              <select class="form-control top-buffer" [(ngModel)]="filterOptions.specialty">
+                <option [selected]="!filterOptions.specialty" [ngValue]="undefined">Specjalność</option>
+                <option *ngFor="let x of specialties" [ngValue]="x" [selected]="filterOptions.specialty == x">{{x.shortName}} - {{x.name}}</option>
+              </select>
+            </div>
+            <div class="col">
+              <input type="text" class="form-control top-buffer" [class.is-valid]="filterOptions.course" style="text-align: center" placeholder="Wpisz kod lub nazwę kursu"
+                     [(ngModel)]="filterOptions.course" [ngbTypeahead]="searchCourses" [resultTemplate]="rtCourse"
+                     (focus)="focusCoursesTextBox$.next($event.target.value)"
+                     (click)="clickCoursesTextBox$.next($event.target.value)"
+                     [inputFormatter]="formatterCourse"
                      [editable]="false"
-                     #courseInstructorsTextBox="ngbTypeahead"/>
-              <!--<pre>pickedCourseInstrucor: {{ pickedCourseInstrucor | json }}</pre>-->
+                     #coursesTextBox="ngbTypeahead"/>
+              <!--<pre>onPickedCourse: {{ onPickedCourse | json }}</pre>-->
+              <div class="row top-buffer" style="margin-top: 10%">
+                <label for="prowadzacyId" class="col-5 col-form-label">Prowadzący:</label>
+                <div class="col-7">
+                  <input id="prowadzacyId" type="text" class="form-control" [class.is-valid]="filterOptions.courseInstrucor" style="text-align: center" placeholder="Prowadzący"
+                         [(ngModel)]="filterOptions.courseInstrucor" [ngbTypeahead]="searchCourseInstructors" [resultTemplate]="rtCourseInstructor"
+                         (focus)="focusCourseInstructorsTextBox$.next($event.target.value)"
+                         (click)="clickCourseInstructorsTextBox$.next($event.target.value)"
+                         [inputFormatter]="formatterCourseInstructor"
+                         [editable]="false"
+                         #courseInstructorsTextBox="ngbTypeahead"/>
+                  <!--<pre>pickedCourseInstrucor: {{ pickedCourseInstrucor | json }}</pre>-->
+                </div>
+              </div>
+    <!--          <label *ngIf="showFoundHint" [style.color]="foundCount > 0 ? 'green' : 'red'" class="mx-auto d-block top-buffer" style="font-size: small; margin-bottom: 0">Dostępne godziny: {{}}</label>-->
+              <div class="row top-buffer">
+                <label for="liczbaGodzinId" class="col-5 col-form-label">Liczba godzin:</label>
+                <div class="col-7">
+                  <input type="number" class="form-control" style="text-align: center" id="liczbaGodzinId" [(ngModel)]="pickedNumberOfHours">
+                </div>
+              </div>
+              <button class="btn btn-secondary top-buffer d-flex mx-auto" style="margin-top: 10%" [disabled]="!areAllOptionsPicked()" (click)="onAddClicked()">Dodaj</button>
             </div>
           </div>
-<!--          <label *ngIf="showFoundHint" [style.color]="foundCount > 0 ? 'green' : 'red'" class="mx-auto d-block top-buffer" style="font-size: small; margin-bottom: 0">Dostępne godziny: {{}}</label>-->
-          <div class="row top-buffer">
-            <label for="liczbaGodzinId" class="col-5 col-form-label">Liczba godzin:</label>
-            <div class="col-7">
-              <input type="number" class="form-control" style="text-align: center" id="liczbaGodzinId" [(ngModel)]="pickedNumberOfHours">
-            </div>
-          </div>
-          <button class="btn btn-secondary top-buffer d-flex mx-auto" style="margin-top: 10%" [disabled]="!areAllOptionsPicked()" (click)="onAddClicked()">Dodaj</button>
         </div>
+
+      </div>
+      <button class="d-block float-md-right btn-link top-buffer" style="border: none; background: none" (click)="onBackClicked()">< Anuluj</button>
+    </div>
+<!--    <div class="col-4" style="background-color: red">-->
+    <div class="col-5">
+      <div class="overflow-auto" style="width: 90%; height: 85vh">
+        <app-course-list></app-course-list>
       </div>
     </div>
   </div>
-  <button class="d-block float-md-right btn-link top-buffer" style="border: none; background: none" (click)="onBackClicked()">< Anuluj</button>
 </div>
 <ng-template ngbPanelContent #rtCourse let-r="result" let-t="term">
   <ngb-highlight [result]="r.code + ' - ' + r.name " [term]="t"></ngb-highlight>

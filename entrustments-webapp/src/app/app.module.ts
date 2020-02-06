@@ -12,7 +12,7 @@ import {FormsModule} from "@angular/forms";
 @NgModule({
   declarations: [
     AppComponent,
-    MainMenuComponent
+    MainMenuComponent,
   ],
   imports: [
     BrowserModule,

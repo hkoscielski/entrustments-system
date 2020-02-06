@@ -56,6 +56,7 @@ export class EntrustmentService {
 
 export class Entrustment {
   id?: number;
+  semesterId: number;
   numberOfHours: number;
   course: Course;
   courseInstructor: EntrustmentCourseInstructor;
@@ -66,8 +67,9 @@ export class Entrustment {
   fieldOfStudy?: FieldOfStudy;
   specialty?: Specialty;
 
-  constructor(id?: number, numberOfHours?: number, course?: Course, courseInstructor?: EntrustmentCourseInstructor, status?: Status) {
+  constructor(id?: number, semesterId?: number, numberOfHours?: number, course?: Course, courseInstructor?: EntrustmentCourseInstructor, status?: Status) {
     this.id = id;
+    this.semesterId = semesterId;
     this.numberOfHours = numberOfHours;
     this.course = course;
     this.courseInstructor = courseInstructor;

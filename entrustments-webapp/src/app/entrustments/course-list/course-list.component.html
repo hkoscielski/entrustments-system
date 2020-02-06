@@ -1,0 +1,9 @@
+<div style="margin: 5px">
+  <div style="margin-right: 20px">
+    <input type="text" class="form-control" style="text-align: center; alignment: left" placeholder="Wpisz kod lub nazwę kursu"
+         [(ngModel)]="courseTextBoxValue" (ngModelChange)="onCourseFilterChanged()"/>
+  </div>
+  <div class="overflow-auto" style="height: 75vh; padding-right: 5px;">
+    <app-course-card *ngFor="let c of filteredCourses" [course]="c"></app-course-card>
+  </div>
+</div>

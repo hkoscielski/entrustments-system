@@ -10,10 +10,12 @@ import { SuggestionsMainViewComponent } from './suggestions-main-view/suggestion
 import {AppRoutingModule} from '../app-routing.module';
 import {NgbAccordionModule, NgbDropdownModule, NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
+import { CourseListComponent } from './course-list/course-list.component';
+import { CourseCardComponent } from './course-list/course-card/course-card.component';
 
 
 @NgModule({
-  declarations: [EntrustmentListComponent, EntrustmentCardComponent, EntrustmentFilterComponent, CruMainViewComponent, EntrustmentAddPanelComponent, EntrustmentPreviewPanelComponent, SuggestionsMainViewComponent],
+  declarations: [EntrustmentListComponent, EntrustmentCardComponent, EntrustmentFilterComponent, CruMainViewComponent, EntrustmentAddPanelComponent, EntrustmentPreviewPanelComponent, SuggestionsMainViewComponent, CourseListComponent, CourseCardComponent],
   exports: [
     EntrustmentFilterComponent
   ],

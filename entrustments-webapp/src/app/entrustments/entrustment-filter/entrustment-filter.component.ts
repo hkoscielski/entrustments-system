@@ -1,11 +1,10 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {BehaviorSubject, merge, Observable, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, map, switchAll} from 'rxjs/operators';
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 import {CourseInstructor, CourseInstructorService} from "../course-instructor.service";
 import {Entrustment, EntrustmentService, ReversedStatus, Status} from "../entrustment.service";
 import {Course, Faculty, FieldOfStudy, Semester, Specialty, StudyLevel, StudyPlanService} from "../study-plan.service";
-import {identifierModuleUrl} from "@angular/compiler";
 import {SharedDataService} from "../shared-data.service";
 
 @Component({
@@ -13,12 +12,12 @@ import {SharedDataService} from "../shared-data.service";
   templateUrl: './entrustment-filter.component.html',
   styleUrls: ['./entrustment-filter.component.css']
 })
-export class EntrustmentFilterComponent implements OnInit {
+export class EntrustmentFilterComponent implements OnInit, AfterViewInit {
   public foundEntrustments: BehaviorSubject<Entrustment[]> = new BehaviorSubject<Entrustment[]>(undefined);
   public filterOptions = new FilterOptions();
 
   faculties: Faculty[];
-  fieldsOfStudy: FieldOfStudy[];
+  fieldsOfStudy: FieldOfStudy[] = [];
   academicYears: string[];
   semesters: Semester[];
   studyLevels: StudyLevel[];
@@ -67,20 +66,19 @@ export class EntrustmentFilterComponent implements OnInit {
   ngOnInit() {
     // fieldsOfStudy: FieldOfStudy[];
     // if (this.sharedDataService.actualCourseInstructor) {
-      this.filterOptions.courseInstrucor = this.sharedDataService.actualCourseInstructor;
-      this.filterOptions.faculty = this.sharedDataService.actualFaculty;
-      this.filterOptions.fieldOfStudy = this.sharedDataService.actualFieldOfStudy;
+    //   this.filterOptions.courseInstrucor = this.sharedDataService.actualCourseInstructor;
+      // this.filterOptions.faculty = this.sharedDataService.actualFaculty;
+      // this.filterOptions.fieldOfStudy = this.sharedDataService.actualFieldOfStudy;
     // }
 
     this.studyPlanService.findAllFaculties().subscribe(
       faculties => {
         this.faculties = faculties;
+        this.filterOptions.faculty = this.faculties.find(f => f.id == this.sharedDataService.actualFaculty.id);
         faculties.forEach(x => this.studyPlanService.findAllFieldsOfStudyByFacultySymbol(x.symbol).subscribe(
           fieldsOfStudy => {
-          if (this.fieldsOfStudy)
-            this.fieldsOfStudy.concat(fieldsOfStudy);
-          else
-            this.fieldsOfStudy = fieldsOfStudy;
+            this.fieldsOfStudy = this.fieldsOfStudy.concat(fieldsOfStudy);
+            this.filterOptions.fieldOfStudy = this.fieldsOfStudy.find(f => f.id == this.sharedDataService.actualFieldOfStudy.id);
         }));
       }
     );
@@ -110,13 +108,19 @@ export class EntrustmentFilterComponent implements OnInit {
     this.courseInstructorService.findAll().subscribe(
       instructors => {
         this.courseInstructors = instructors;
+        this.filterOptions.courseInstrucor = this.sharedDataService.actualCourseInstructor;
       }
     );
 
     this.statuses = Object.values(Status);
   }
 
+  ngAfterViewInit() {
+    this.filterOptions = this.sharedDataService.actualFilterOptions;
+  }
+
   onSearchClicked() {
+    this.sharedDataService.onFilterOptionsChanged.next(this.filterOptions);
     this.entrustmentService.findAllEntrustments(
       this.filterOptions.academicYear,
       this.filterOptions.semester ? this.filterOptions.semester.semesterNumber : undefined,

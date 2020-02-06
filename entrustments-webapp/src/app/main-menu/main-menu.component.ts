@@ -50,10 +50,10 @@ export class MainMenuComponent implements OnInit {
         this.studyPlanService.findAllFieldsOfStudyByFacultySymbol(faculties[0].symbol).subscribe(
           fieldsOfStudy => {
             this.sharedDataService.actualFieldOfStudy = fieldsOfStudy[0];
+            this.router.navigate(['/cru-main-view']);
           });
       }
     );
-    this.router.navigate(['/cru-main-view']);
   }
 
   onSuggestionsClicked() {

@@ -7,6 +7,7 @@ import {FilterOptions} from "../entrustment-filter/entrustment-filter.component"
 import {NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
 import {merge, Observable, Subject} from "rxjs";
 import {debounceTime, distinctUntilChanged, filter, map} from "rxjs/operators";
+import {SharedDataService} from "../shared-data.service";
 
 @Component({
   selector: 'app-entrustment-add-panel',
@@ -41,7 +42,7 @@ export class EntrustmentAddPanelComponent implements OnInit {
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
       map(term => term === '' ? this.courses
         : this.courses.filter(v => v.code.toLowerCase().concat(' ', v.name.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
-  }
+  };
 
   formatterCourse = (x: {code: string, name: string}) => x.code + ' ' + x.name;
 
@@ -53,11 +54,11 @@ export class EntrustmentAddPanelComponent implements OnInit {
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
       map(term => term === '' ? this.courseInstructors
         : this.courseInstructors.filter(v => v.academicDegree.toLowerCase().concat(' ', v.firstName.toLowerCase(), ' ', v.surname.toLowerCase()).indexOf(term.toLowerCase()) > -1).slice(0, 10)));
-  }
+  };
 
   formatterCourseInstructor = (x: {academicDegree: string, firstName: string, surname: string}) => `${x.academicDegree} ${x.firstName} ${x.surname}`;
 
-  constructor(private location: Location, private courseInstructorService: CourseInstructorService, private entrustmentService: EntrustmentService, private studyPlanService: StudyPlanService) { }
+  constructor(private location: Location, private courseInstructorService: CourseInstructorService, private entrustmentService: EntrustmentService, private studyPlanService: StudyPlanService, private sharedDataService: SharedDataService) { }
 
   ngOnInit() {
     this.studyPlanService.findAllSemesters().subscribe(
@@ -102,6 +103,10 @@ export class EntrustmentAddPanelComponent implements OnInit {
   onAddClicked() {
     if (!this.areAllOptionsPicked())
       return;
+
+    if (this.filterOptions.semester.courses.some(c => c.code == this.filterOptions.course.code)) {
+
+    }
 
     this.entrustmentService.addEntrustment(this.filterOptions.semester.id, this.filterOptions.courseInstrucor.id, this.pickedNumberOfHours, this.filterOptions.course.code)
       .subscribe(x => {

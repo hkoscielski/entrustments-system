@@ -1,15 +1,15 @@
 
-<select *ngIf="shouldShowFieldOfStudy()" [disabled]="shouldLockFieldOfStudy()" class="form-control" [(ngModel)]="filterOptions.faculty">
+<select *ngIf="shouldShowFieldOfStudy() && !sharedDataService.actualCourseInstructor" [disabled]="shouldLockFieldOfStudy()" class="form-control" [(ngModel)]="filterOptions.faculty">
   <option [selected]="!filterOptions.faculty" [ngValue]="undefined">Wydział</option>
   <option *ngFor="let x of faculties" [ngValue]="x" [selected]="filterOptions.faculty == x">{{x.symbol}} {{x.name}}</option>
 </select>
 <!--<pre>faculty: {{ filterOptions.faculty | json }}</pre>-->
-<select *ngIf="shouldShowFieldOfStudy()" [disabled]="shouldLockFieldOfStudy()" class="form-control top-buffer" [(ngModel)]="filterOptions.fieldOfStudy">
+<select *ngIf="shouldShowFieldOfStudy() && !sharedDataService.actualCourseInstructor" [disabled]="shouldLockFieldOfStudy()" class="form-control top-buffer" [(ngModel)]="filterOptions.fieldOfStudy">
   <option [selected]="!filterOptions.fieldOfStudy" [ngValue]="undefined">Kierunek</option>
   <option *ngFor="let x of fieldsOfStudy" [ngValue]="x" [selected]="filterOptions.fieldOfStudy == x">{{x.name}}</option>
 </select>
 <!--<pre>fieldOfStudy: {{ filterOptions.fieldOfStudy | json }}</pre>-->
-<select class="form-control" [class.top-buffer]="shouldShowFieldOfStudy()" [(ngModel)]="filterOptions.academicYear">
+<select *ngIf="!sharedDataService.actualCourseInstructor" class="form-control" [class.top-buffer]="shouldShowFieldOfStudy()" [(ngModel)]="filterOptions.academicYear">
   <option [selected]="!filterOptions.academicYear" [ngValue]="undefined">Rok akademicki</option>
   <option *ngFor="let x of academicYears" [ngValue]="x" [selected]="filterOptions.academicYear == x">{{x}}</option>
 </select>
@@ -24,7 +24,7 @@
   <option *ngFor="let x of studyLevels" [ngValue]="x" [selected]="filterOptions.studyLevel == x">{{x.name}}</option>
 </select>
 <!--<pre>pickedStudyLevel: {{ pickedStudyLevel | json }}</pre>-->
-<select class="form-control top-buffer" [(ngModel)]="filterOptions.specialty">
+<select *ngIf="!sharedDataService.actualCourseInstructor" class="form-control top-buffer" [(ngModel)]="filterOptions.specialty">
   <option [selected]="!filterOptions.specialty" [ngValue]="undefined">Specjalność</option>
   <option *ngFor="let x of specialties" [ngValue]="x" [selected]="filterOptions.specialty == x">{{x.shortName}} - {{x.name}}</option>
 </select>
@@ -36,7 +36,7 @@
        [inputFormatter]="formatterCourse"
        [editable]="false"
        #coursesTextBox="ngbTypeahead"/>
-<!--<pre>pickedCourse: {{ pickedCourse | json }}</pre>-->
+<!--<pre>onPickedCourse: {{ onPickedCourse | json }}</pre>-->
 <input [hidden]="sharedDataService.actualCourseInstructor" type="text" class="form-control top-buffer" [class.is-valid]="filterOptions.courseInstrucor" placeholder="Wpisz prowadzącego"
        [(ngModel)]="filterOptions.courseInstrucor" [ngbTypeahead]="searchCourseInstructors" [resultTemplate]="rtCourseInstructor"
        (focus)="focusCourseInstructorsTextBox$.next($event.target.value)"
