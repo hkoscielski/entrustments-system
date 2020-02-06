@@ -10,7 +10,7 @@ public final class DateUtil {
 
 	public static int getCurrentStartAcademicYear() {
 		LocalDateTime currentDateTime = LocalDateTime.now();
-		int year = currentDateTime.getYear();
+		int year = currentDateTime.getYear() - 5;
 		LocalDateTime academicYearChangeDateTime = LocalDateTime.of(currentDateTime.getYear(), 7, 1, 0, 0);
 
 		return currentDateTime.isBefore(academicYearChangeDateTime) ? year - 1 : year;
