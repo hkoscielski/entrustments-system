@@ -38,10 +38,10 @@ pipeline {
             }
         }
 
-        stage('Start application') {
+        stage('Start applications') {
            steps {
-                sh 'docker stop entrustments-webservice || true && docker run -p 8080:8080 --name entrustments-webservice entrustments-webservice || true'
-                sh 'docker stop entrustments-webapp || true && docker run -p 4200:80 --name entrustments-webapp entrustments-webapp || true'
+                sh 'docker stop entrustments-webservice || true && docker rm entrustments-webservice || true && docker run -p 8081:8081 --name entrustments-webservice entrustments-webservice && sleep 60'
+                sh 'docker stop entrustments-webapp || true && docker rm entrustments-webapp || true && docker run -p 4200:80 --name entrustments-webapp entrustments-webapp || true'
             }
         }
     }
