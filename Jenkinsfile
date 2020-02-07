@@ -6,6 +6,7 @@ pipeline {
             steps {
                 git branch: 'twwo', url: 'https://github.com/hkoscielski/entrustments-system.git'
                 sh 'chmod +x mvnw'
+                VERSION = sh (script: './mvnw help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true)
             }
         }
 
