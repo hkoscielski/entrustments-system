@@ -20,5 +20,11 @@ pipeline {
                 sh './mvnw test'
             }
         }
+
+        stage('Package') {
+           steps {
+                sh './mvnw clean package'
+            }
+        }
     }
 }
