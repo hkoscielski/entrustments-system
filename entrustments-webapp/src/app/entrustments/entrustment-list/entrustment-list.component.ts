@@ -9,7 +9,7 @@ import {EntrustmentFilterComponent} from "../entrustment-filter/entrustment-filt
   styleUrls: ['./entrustment-list.component.css']
 })
 export class EntrustmentListComponent implements OnInit {
-  actualList: Entrustment[];
+  actualList: Entrustment[] = [];
 
   constructor() { }
 

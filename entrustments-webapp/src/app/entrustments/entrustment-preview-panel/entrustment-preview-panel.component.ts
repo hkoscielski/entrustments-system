@@ -55,4 +55,13 @@ export class EntrustmentPreviewPanelComponent implements OnInit {
   wasChanged() {
     return this.pickedNumberOfHours !== this.sharedDataService.actualEntrustment.numberOfHours;
   }
+
+  getStatusColor() {
+    switch (this.sharedDataService.actualEntrustment.status) {
+      case Status.ACCEPTED: return 'green';
+      case Status.MODIFIED: return 'orange';
+      case Status.PROPOSED: return 'orange';
+      case Status.REJECTED: return 'red';
+    }
+  }
 }

@@ -24,7 +24,7 @@ export class CruMainViewComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.entrustmentFilterComponent.foundEntrustments.asObservable().subscribe(
+    this.entrustmentFilterComponent.foundEntrustments$.asObservable().subscribe(
       entrustments => {
         this.entrustmentListComponent.showList(entrustments);
         this.filterOptionsString = this.getFilterOptionsString();

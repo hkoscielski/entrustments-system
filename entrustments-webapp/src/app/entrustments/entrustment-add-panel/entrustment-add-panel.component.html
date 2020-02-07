@@ -40,7 +40,7 @@
                      #coursesTextBox="ngbTypeahead"/>
               <!--<pre>onPickedCourse$: {{ onPickedCourse$ | json }}</pre>-->
               <div class="row top-buffer" style="margin-top: 10%">
-                <label for="prowadzacyId" class="col-5 col-form-label">Prowadzący:</label>
+                <label for="prowadzacyId" class="col-5 col-form-label" style="margin-top: 10px">Prowadzący:</label>
                 <div class="col-7">
                   <input id="prowadzacyId" type="text" class="form-control top-buffer" [class.is-valid]="sharedDataService.actualFilterOptions.courseInstrucor" placeholder="Wpisz prowadzącego"
                          [(ngModel)]="sharedDataService.actualFilterOptions.courseInstrucor" [ngbTypeahead]="searchCourseInstructors" [resultTemplate]="rtCourseInstructor"

@@ -4,20 +4,20 @@
     <div class="card-body" style="padding: 1rem; border-top: 1px solid rgb(200, 200, 200)">
       <div>
         <label style="margin: 0">W08</label>
-        <span style="margin: 0"> &#9679; </span>
+        <span style="margin: 0"> - </span>
         <label style="margin: 0">II st.</label>
-        <span style="margin: 0"> &#9679; </span>
+        <span style="margin: 0"> - </span>
         <label style="margin: 0">Informatyka</label>
-        <span style="margin: 0"> &#9679; </span>
+        <span style="margin: 0"> - </span>
         <label style="margin: 0">Inżynieria Oprogramowania</label>
       </div>
       <div>
         <label style="margin: 0">{{sharedDataService.actualEntrustment.course.code}}</label>
-        <span style="margin: 0"> &#9679; </span>
+        <span style="margin: 0"> - </span>
         <label style="margin: 0">{{sharedDataService.actualEntrustment.course.name}}</label>
       </div>
       <div>
-        <label style="margin: 0">Prowadzący: {{sharedDataService.actualEntrustment.courseInstructor.academicDegree + ' ' + sharedDataService.actualEntrustment.courseInstructor.firstName + ' ' + sharedDataService.actualEntrustment.courseInstructor.surname}}Dr inż. Bogumiła Hnatkowska</label>
+        <label style="margin: 0">Prowadzący: {{sharedDataService.actualEntrustment.courseInstructor.academicDegree + ' ' + sharedDataService.actualEntrustment.courseInstructor.firstName + ' ' + sharedDataService.actualEntrustment.courseInstructor.surname}}</label>
       </div>
       <div>
         <div class="row" style="width: 100%; margin-top: 20px">
@@ -29,7 +29,7 @@
         </div>
         <div style="margin-top: 20px">
           <span>Status: </span>
-          <label style="margin: 0; color: forestgreen;">ZATWIERDZONE</label>
+          <label [style.color]="getStatusColor()" style="margin: 0;">{{sharedDataService.actualEntrustment.status.toString().toUpperCase()}}</label>
         </div>
       </div>
       <div class="row" style="margin-top: 5%">
