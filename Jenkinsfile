@@ -10,12 +10,35 @@ pipeline {
             }
         }
 
+        stage('Compile') {
+            steps {
+                sh './mvnw compile'
+            }
+        }
 
+        stage('Test') {
+           steps {
+                sh './mvnw test'
+            }
+        }
+
+        stage('Package') {
+           steps {
+                sh './mvnw clean package'
+            }
+        }
+
+        stage('Build Docker images') {
+           steps {
+                sh 'docker build -t entrustments-webservice entrustments-webservice/'
+                sh 'docker build -t entrustments-webapp entrustments-webapp/'
+            }
+        }
 
         stage('Upgrade database') {
            steps {
                 sh 'docker start app-team14-mysql || true'
-
+                sh 'cd entrustments-webservice && ./mvnw liquibase:update'
             }
         }
 
