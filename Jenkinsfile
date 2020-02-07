@@ -10,12 +10,27 @@ pipeline {
             }
         }
 
+        stage('Compile') {
+            steps {
+                sh './mvnw compile'
+            }
+        }
 
-
-        stage('Start applications') {
+        stage('Test') {
            steps {
-                sh 'docker stop entrustments-webservice || true && docker rm entrustments-webservice || true && docker-compose up entrustments-webservice && sleep 60'
-                sh 'docker stop entrustments-webapp || true && docker rm entrustments-webapp || true && docker-compose up entrustments-webapp || true'
+                sh './mvnw test'
+            }
+        }
+
+        stage('Package') {
+           steps {
+                sh './mvnw clean package'
+            }
+        }
+
+        stage('Build Docker images') {
+           steps {
+                sh 'docker-compose build'
             }
         }
     }
