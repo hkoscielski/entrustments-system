@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout code') {
+        stage('Checkout') {
             steps {
-                git 'https://github.com/hkoscielski/entrustments-system.git'
+                git branch: 'twwo', url: 'https://github.com/hkoscielski/entrustments-system.git'
                 sh 'chmod +x mvnw'
             }
         }
@@ -16,7 +16,7 @@ pipeline {
         }
 
         stage('Test') {
-            steps {
+           steps {
                 sh './mvnw test'
             }
         }
