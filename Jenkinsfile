@@ -33,7 +33,15 @@ pipeline {
 
         stage('Build Docker images') {
            steps {
-                sh 'docker-compose build'
+                sh 'docker build -t entrustments-webservice entrustments-webservice/'
+                sh 'docker build -t entrustments-webapp entrustments-webapp/'
+            }
+        }
+
+        stage('Start application') {
+           steps {
+                sh 'docker stop entrustments-webservice || true && docker run -p 8080:8080 --name entrustments-webservice entrustments-webservice || true'
+                sh 'docker stop entrustments-webapp || true && docker run -p 4200:80 --name entrustments-webapp entrustments-webapp || true'
             }
         }
     }
