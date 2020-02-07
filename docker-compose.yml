@@ -1,0 +1,32 @@
+version: '3'
+services:
+  app-team14-mysql:
+    container_name: app-team14-mysql
+    image: mysql:8.0.18
+    environment:
+      MYSQL_DATABASE: entrustments
+      MYSQL_ROOT_PASSWORD: rootpassword1!
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_USER: entrustments_user
+      MYSQL_PASSWORD: password1!
+    restart: always
+  entrustments-webservice:
+    container_name: entrustments-webservice
+    image: entrustments-webservice
+    build: ./entrustments-webservice
+    ports:
+      - "8081:8081"
+    links:
+      - app-team14-mysql
+    depends_on:
+      - app-team14-mysql
+  entrustments-webapp:
+    container_name: entrustments-webapp
+    image: entrustments-webapp
+    build: ./entrustments-webapp
+    ports:
+      - "4200:80"
+    links:
+      - entrustments-webservice
+    depends_on:
+      - entrustments-webservice
