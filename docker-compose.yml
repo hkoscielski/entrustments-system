@@ -10,6 +10,8 @@ services:
       MYSQL_USER: entrustments_user
       MYSQL_PASSWORD: password1!
     restart: always
+    ports:
+      - "3306:3306"
   entrustments-webservice:
     container_name: entrustments-webservice
     image: entrustments-webservice
@@ -17,8 +19,6 @@ services:
     ports:
       - "8081:8081"
     links:
-      - app-team14-mysql
-    depends_on:
       - app-team14-mysql
   entrustments-webapp:
     container_name: entrustments-webapp

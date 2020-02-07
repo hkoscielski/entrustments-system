@@ -10,29 +10,7 @@ pipeline {
             }
         }
 
-        stage('Compile') {
-            steps {
-                sh './mvnw compile'
-            }
-        }
 
-        stage('Test') {
-           steps {
-                sh './mvnw test'
-            }
-        }
-
-        stage('Package') {
-           steps {
-                sh './mvnw clean package'
-            }
-        }
-
-        stage('Build Docker images') {
-           steps {
-                sh 'docker-compose build'
-            }
-        }
 
         stage('Start applications') {
            steps {
